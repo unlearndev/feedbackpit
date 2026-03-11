@@ -1,9 +1,15 @@
 <script setup>
-import { ref } from 'vue';
-import { usePage } from '@inertiajs/vue3';
+import { ref, computed } from 'vue';
+import { usePage, router } from '@inertiajs/vue3';
 
 const appName = usePage().props.appName;
 const mobileMenuOpen = ref(false);
+
+const user = computed(() => usePage().props.auth?.user ?? null);
+
+const logout = () => {
+    router.post('/logout');
+};
 </script>
 
 <template>
@@ -21,15 +27,6 @@ const mobileMenuOpen = ref(false);
 
                     <!-- Right: Auth + CTA + User (hidden on mobile) -->
                     <div class="hidden md:flex items-center space-x-4">
-                        <a href="/login" class="text-sm font-medium text-gray-700 hover:text-neutral-900 transition-colors">
-                            Login
-                        </a>
-                        <a
-                            href="/register"
-                            class="inline-flex items-center px-4 py-2 text-sm font-medium text-neutral-900 border border-neutral-900 rounded-lg hover:bg-neutral-50 transition-colors"
-                        >
-                            Register
-                        </a>
                         <a
                             href="#"
                             class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-neutral-900 rounded-lg hover:bg-neutral-800 transition-colors"
@@ -37,25 +34,43 @@ const mobileMenuOpen = ref(false);
                             New Idea
                         </a>
 
-                        <!-- User avatar -->
-                        <a href="#" class="flex-shrink-0">
+                        <template v-if="user">
+                            <!-- User avatar -->
                             <img
-                                src="https://ui-avatars.com/api/?name=A&background=171717&color=fff&size=32"
-                                alt="User avatar"
+                                :src="`https://ui-avatars.com/api/?name=${encodeURIComponent(user.name)}&background=171717&color=fff&size=32`"
+                                :alt="`${user.name} avatar`"
                                 class="h-8 w-8 rounded-full"
                             />
-                        </a>
+
+                            <button
+                                type="button"
+                                class="text-sm font-medium text-gray-700 hover:text-neutral-900 transition-colors"
+                                @click="logout"
+                            >
+                                Log out
+                            </button>
+                        </template>
+                        <template v-else>
+                            <a href="/login" class="text-sm font-medium text-gray-700 hover:text-neutral-900 transition-colors">
+                                Login
+                            </a>
+                            <a
+                                href="/register"
+                                class="inline-flex items-center px-4 py-2 text-sm font-medium text-neutral-900 border border-neutral-900 rounded-lg hover:bg-neutral-50 transition-colors"
+                            >
+                                Register
+                            </a>
+                        </template>
                     </div>
 
-                    <!-- Mobile: Hamburger + Avatar -->
+                    <!-- Mobile: Hamburger (+ Avatar when logged in) -->
                     <div class="flex items-center space-x-3 md:hidden">
-                        <a href="#" class="flex-shrink-0">
-                            <img
-                                src="https://ui-avatars.com/api/?name=A&background=171717&color=fff&size=32"
-                                alt="User avatar"
-                                class="h-8 w-8 rounded-full"
-                            />
-                        </a>
+                        <img
+                            v-if="user"
+                            :src="`https://ui-avatars.com/api/?name=${encodeURIComponent(user.name)}&background=171717&color=fff&size=32`"
+                            :alt="`${user.name} avatar`"
+                            class="h-8 w-8 rounded-full"
+                        />
 
                         <button
                             type="button"
@@ -74,12 +89,23 @@ const mobileMenuOpen = ref(false);
             <!-- Mobile menu panel -->
             <div v-if="mobileMenuOpen" class="md:hidden border-t border-gray-200 bg-white">
                 <div class="space-y-1 px-4 py-3">
-                    <a href="/login" class="block rounded-lg px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100">
-                        Login
-                    </a>
-                    <a href="/register" class="block rounded-lg px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100">
-                        Register
-                    </a>
+                    <template v-if="user">
+                        <button
+                            type="button"
+                            class="w-full text-left rounded-lg px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100"
+                            @click="logout"
+                        >
+                            Log out
+                        </button>
+                    </template>
+                    <template v-else>
+                        <a href="/login" class="block rounded-lg px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100">
+                            Login
+                        </a>
+                        <a href="/register" class="block rounded-lg px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100">
+                            Register
+                        </a>
+                    </template>
                     <a href="#" class="block rounded-lg px-3 py-2 text-sm font-medium text-white bg-neutral-900 hover:bg-neutral-800">
                         New Idea
                     </a>
