@@ -21,11 +21,11 @@ const mobileMenuOpen = ref(false);
 
                     <!-- Right: Auth + CTA + User (hidden on mobile) -->
                     <div class="hidden md:flex items-center space-x-4">
-                        <a href="#" class="text-sm font-medium text-gray-700 hover:text-neutral-900 transition-colors">
+                        <a href="/login" class="text-sm font-medium text-gray-700 hover:text-neutral-900 transition-colors">
                             Login
                         </a>
                         <a
-                            href="#"
+                            href="/register"
                             class="inline-flex items-center px-4 py-2 text-sm font-medium text-neutral-900 border border-neutral-900 rounded-lg hover:bg-neutral-50 transition-colors"
                         >
                             Register
@@ -74,10 +74,10 @@ const mobileMenuOpen = ref(false);
             <!-- Mobile menu panel -->
             <div v-if="mobileMenuOpen" class="md:hidden border-t border-gray-200 bg-white">
                 <div class="space-y-1 px-4 py-3">
-                    <a href="#" class="block rounded-lg px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100">
+                    <a href="/login" class="block rounded-lg px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100">
                         Login
                     </a>
-                    <a href="#" class="block rounded-lg px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100">
+                    <a href="/register" class="block rounded-lg px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100">
                         Register
                     </a>
                     <a href="#" class="block rounded-lg px-3 py-2 text-sm font-medium text-white bg-neutral-900 hover:bg-neutral-800">
