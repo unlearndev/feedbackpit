@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rule;
 use Inertia\Inertia;
+use Laravel\Fortify\Contracts\UpdatesUserPasswords;
+use Laravel\Fortify\Contracts\UpdatesUserProfileInformation;
 
 class AccountSettingsController extends Controller
 {
@@ -14,37 +14,17 @@ class AccountSettingsController extends Controller
         return Inertia::render('Account/Settings');
     }
 
-    public function update(Request $request)
+    public function update(Request $request, UpdatesUserProfileInformation $updater)
     {
-        $validated = $request->validate([
-            'email' => [
-                'required',
-                'string',
-                'email',
-                'max:255',
-                'indisposable',
-                Rule::unique('users')->ignore($request->user()->id),
-            ],
-        ]);
+        $updater->update($request->user(), array_merge($request->all(), ['name' => $request->user()->name]));
 
-        $request->user()->update($validated);
-
-        return redirect('/account/settings');
+        return redirect('/account/settings')->with('message', 'Your changes have been saved.');
     }
 
-    public function updatePassword(Request $request)
+    public function updatePassword(Request $request, UpdatesUserPasswords $updater)
     {
-        $request->validate([
-            'current_password' => ['required', 'string', 'current_password:web'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-        ], [
-            'current_password.current_password' => 'The provided password does not match your current password.',
-        ]);
+        $updater->update($request->user(), $request->all());
 
-        $request->user()->update([
-            'password' => Hash::make($request->input('password')),
-        ]);
-
-        return redirect('/account/settings');
+        return redirect('/account/settings')->with('message', 'Your password has been updated.');
     }
 }
