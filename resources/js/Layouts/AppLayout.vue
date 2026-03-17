@@ -40,7 +40,7 @@ const logout = () => {
                                 :src="`https://ui-avatars.com/api/?name=${encodeURIComponent(user.name)}&background=171717&color=fff&size=32`"
                                 :alt="`${user.name} avatar`"
                                 class="h-8 w-8 rounded-full"
-                            />
+                            >
 
                             <button
                                 type="button"
@@ -70,7 +70,7 @@ const logout = () => {
                             :src="`https://ui-avatars.com/api/?name=${encodeURIComponent(user.name)}&background=171717&color=fff&size=32`"
                             :alt="`${user.name} avatar`"
                             class="h-8 w-8 rounded-full"
-                        />
+                        >
 
                         <button
                             type="button"
