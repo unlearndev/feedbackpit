@@ -4,6 +4,7 @@ import { usePage, router } from '@inertiajs/vue3';
 
 const appName = usePage().props.appName;
 const mobileMenuOpen = ref(false);
+const dropdownOpen = ref(false);
 
 const user = computed(() => usePage().props.auth?.user ?? null);
 
@@ -35,20 +36,35 @@ const logout = () => {
                         </a>
 
                         <template v-if="user">
-                            <!-- User avatar -->
-                            <img
-                                :src="`https://ui-avatars.com/api/?name=${encodeURIComponent(user.name)}&background=171717&color=fff&size=32`"
-                                :alt="`${user.name} avatar`"
-                                class="h-8 w-8 rounded-full"
-                            >
+                            <div class="relative">
+                                <button type="button" class="flex items-center" @click="dropdownOpen = !dropdownOpen">
+                                    <img
+                                        :src="`https://ui-avatars.com/api/?name=${encodeURIComponent(user.name)}&background=171717&color=fff&size=32`"
+                                        :alt="`${user.name} avatar`"
+                                        class="h-8 w-8 rounded-full"
+                                    >
+                                </button>
 
-                            <button
-                                type="button"
-                                class="text-sm font-medium text-gray-700 hover:text-neutral-900 transition-colors"
-                                @click="logout"
-                            >
-                                Log out
-                            </button>
+                                <!-- Click-outside overlay -->
+                                <div v-if="dropdownOpen" class="fixed inset-0 z-10" @click="dropdownOpen = false" />
+
+                                <!-- Dropdown menu -->
+                                <div v-if="dropdownOpen" class="absolute right-0 mt-2 w-48 rounded-lg bg-white border border-gray-200 shadow-lg py-1 z-20">
+                                    <a
+                                        href="/account/settings"
+                                        class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                    >
+                                        Account
+                                    </a>
+                                    <button
+                                        type="button"
+                                        class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                        @click="logout"
+                                    >
+                                        Log out
+                                    </button>
+                                </div>
+                            </div>
                         </template>
                         <template v-else>
                             <a href="/login" class="text-sm font-medium text-gray-700 hover:text-neutral-900 transition-colors">
@@ -90,6 +106,9 @@ const logout = () => {
             <div v-if="mobileMenuOpen" class="md:hidden border-t border-gray-200 bg-white">
                 <div class="space-y-1 px-4 py-3">
                     <template v-if="user">
+                        <a href="/account/settings" class="block rounded-lg px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100">
+                            Account
+                        </a>
                         <button
                             type="button"
                             class="w-full text-left rounded-lg px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100"
