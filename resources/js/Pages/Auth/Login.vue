@@ -23,7 +23,7 @@ const submit = () => {
                 These credentials are incorrect. Please try again.
             </div>
 
-            <form @submit.prevent="submit" class="space-y-5">
+            <form class="space-y-5" @submit.prevent="submit">
                 <div>
                     <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email address</label>
                     <input
@@ -33,7 +33,7 @@ const submit = () => {
                         autocomplete="email"
                         required
                         class="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm text-neutral-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-neutral-900 focus:border-transparent"
-                    />
+                    >
                 </div>
 
                 <div>
@@ -48,7 +48,7 @@ const submit = () => {
                         autocomplete="current-password"
                         required
                         class="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm text-neutral-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-neutral-900 focus:border-transparent"
-                    />
+                    >
                 </div>
 
                 <button
