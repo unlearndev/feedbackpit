@@ -21,7 +21,7 @@ const submit = () => {
         <div class="max-w-md mx-auto">
             <h1 class="text-2xl font-bold text-neutral-900 mb-8">Create an account</h1>
 
-            <form @submit.prevent="submit" class="space-y-5">
+            <form class="space-y-5" @submit.prevent="submit">
                 <div>
                     <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Name</label>
                     <input
@@ -31,7 +31,7 @@ const submit = () => {
                         autocomplete="name"
                         required
                         class="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm text-neutral-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-neutral-900 focus:border-transparent"
-                    />
+                    >
                     <p v-if="form.errors.name" class="mt-1 text-sm text-red-600">{{ form.errors.name }}</p>
                 </div>
 
@@ -44,7 +44,7 @@ const submit = () => {
                         autocomplete="email"
                         required
                         class="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm text-neutral-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-neutral-900 focus:border-transparent"
-                    />
+                    >
                     <p v-if="form.errors.email" class="mt-1 text-sm text-red-600">{{ form.errors.email }}</p>
                 </div>
 
@@ -57,7 +57,7 @@ const submit = () => {
                         autocomplete="new-password"
                         required
                         class="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm text-neutral-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-neutral-900 focus:border-transparent"
-                    />
+                    >
                     <p v-if="form.errors.password" class="mt-1 text-sm text-red-600">{{ form.errors.password }}</p>
                 </div>
 
@@ -70,7 +70,7 @@ const submit = () => {
                         autocomplete="new-password"
                         required
                         class="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm text-neutral-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-neutral-900 focus:border-transparent"
-                    />
+                    >
                     <p v-if="form.errors.password_confirmation" class="mt-1 text-sm text-red-600">{{ form.errors.password_confirmation }}</p>
                 </div>
 
