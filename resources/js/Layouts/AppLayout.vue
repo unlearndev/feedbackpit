@@ -1,6 +1,7 @@
 <script setup>
 import { ref, computed } from 'vue';
 import { usePage, router } from '@inertiajs/vue3';
+import FlashMessage from '@/Components/FlashMessage.vue';
 
 const appName = usePage().props.appName;
 const mobileMenuOpen = ref(false);
@@ -131,6 +132,8 @@ const logout = () => {
                 </div>
             </div>
         </nav>
+
+        <FlashMessage />
 
         <!-- Content area -->
         <main class="pt-24 pb-12">

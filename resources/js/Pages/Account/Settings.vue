@@ -28,10 +28,6 @@ const submitPassword = () => {
         <div class="max-w-md mx-auto">
             <h1 class="text-2xl font-bold text-neutral-900 mb-8">Account settings</h1>
 
-            <div v-if="form.recentlySuccessful" class="mb-6 rounded-lg bg-green-50 border border-green-200 px-4 py-3 text-sm text-green-700">
-                Your changes have been saved.
-            </div>
-
             <form class="space-y-5" @submit.prevent="submit">
                 <div>
                     <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email address</label>
@@ -58,10 +54,6 @@ const submitPassword = () => {
             <hr class="my-10 border-gray-200">
 
             <h2 class="text-lg font-semibold text-neutral-900 mb-5">Change password</h2>
-
-            <div v-if="passwordForm.recentlySuccessful" class="mb-6 rounded-lg bg-green-50 border border-green-200 px-4 py-3 text-sm text-green-700">
-                Your password has been updated.
-            </div>
 
             <form class="space-y-5" @submit.prevent="submitPassword">
                 <div>
