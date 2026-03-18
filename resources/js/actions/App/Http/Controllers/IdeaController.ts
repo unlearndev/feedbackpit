@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\IdeaController::create
-* @see app/Http/Controllers/IdeaController.php:25
+* @see app/Http/Controllers/IdeaController.php:22
 * @route '/ideas/create'
 */
 export const create = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -16,7 +16,7 @@ create.definition = {
 
 /**
 * @see \App\Http\Controllers\IdeaController::create
-* @see app/Http/Controllers/IdeaController.php:25
+* @see app/Http/Controllers/IdeaController.php:22
 * @route '/ideas/create'
 */
 create.url = (options?: RouteQueryOptions) => {
@@ -25,7 +25,7 @@ create.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\IdeaController::create
-* @see app/Http/Controllers/IdeaController.php:25
+* @see app/Http/Controllers/IdeaController.php:22
 * @route '/ideas/create'
 */
 create.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -35,7 +35,7 @@ create.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\IdeaController::create
-* @see app/Http/Controllers/IdeaController.php:25
+* @see app/Http/Controllers/IdeaController.php:22
 * @route '/ideas/create'
 */
 create.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -45,7 +45,7 @@ create.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\IdeaController::store
-* @see app/Http/Controllers/IdeaController.php:30
+* @see app/Http/Controllers/IdeaController.php:27
 * @route '/ideas'
 */
 export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -60,7 +60,7 @@ store.definition = {
 
 /**
 * @see \App\Http\Controllers\IdeaController::store
-* @see app/Http/Controllers/IdeaController.php:30
+* @see app/Http/Controllers/IdeaController.php:27
 * @route '/ideas'
 */
 store.url = (options?: RouteQueryOptions) => {
@@ -69,7 +69,7 @@ store.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\IdeaController::store
-* @see app/Http/Controllers/IdeaController.php:30
+* @see app/Http/Controllers/IdeaController.php:27
 * @route '/ideas'
 */
 store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({

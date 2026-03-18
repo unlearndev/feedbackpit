@@ -1,21 +1,12 @@
 <?php
 
 use App\Http\Controllers\AccountSettingsController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\IdeaController;
 use App\Http\Controllers\VoteController;
-use App\Models\Idea;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function (\Illuminate\Http\Request $request) {
-    $user = $request->user();
-
-    $ideas = Idea::with('user:id,name')
-        ->when($user, fn ($q) => $q->withExists(['voters as has_voted' => fn ($q) => $q->where('user_id', $user->id)]))
-        ->latest()
-        ->get();
-
-    return inertia('Home', ['ideas' => $ideas]);
-})->name('home');
+Route::get('/', HomeController::class)->name('home');
 
 Route::middleware('auth')->group(function () {
     Route::get('/account/settings', [AccountSettingsController::class, 'edit'])->name('account.settings.edit');
