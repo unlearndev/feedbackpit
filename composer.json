@@ -14,6 +14,7 @@
         "laravel/fortify": "^1.36",
         "laravel/framework": "^12.0",
         "laravel/tinker": "^2.10.1",
+        "laravel/wayfinder": "^0.1.14",
         "propaganistas/laravel-disposable-email": "^2.4"
     },
     "require-dev": {

@@ -13,9 +13,17 @@ class VoteController extends Controller
         $user = request()->user();
 
         DB::transaction(function () use ($idea, $user) {
-            $idea->voters()->toggle($user->id);
-            $idea->votes = $idea->voters()->count();
-            $idea->save();
+            $idea->lockForUpdate();
+
+            $exists = $idea->voters()->where('user_id', $user->id)->exists();
+
+            if ($exists) {
+                $idea->voters()->detach($user->id);
+                $idea->decrement('votes');
+            } else {
+                $idea->voters()->attach($user->id);
+                $idea->increment('votes');
+            }
         });
 
         return redirect()->back();

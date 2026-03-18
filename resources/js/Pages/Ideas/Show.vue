@@ -1,6 +1,7 @@
 <script setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
 import VoteButton from '@/Components/VoteButton.vue';
+import { home } from '@/routes';
 
 const statusLabels = {
     under_review: 'Under Review',
@@ -27,7 +28,7 @@ const formatDate = (dateString) => {
 
 <template>
     <AppLayout>
-        <a href="/" class="inline-flex items-center gap-1 text-sm text-gray-500 hover:text-neutral-900 mb-6">
+        <a :href="home.url()" class="inline-flex items-center gap-1 text-sm text-gray-500 hover:text-neutral-900 mb-6">
             <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
             </svg>
