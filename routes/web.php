@@ -6,10 +6,19 @@ use App\Http\Controllers\VoteController;
 use App\Models\Idea;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return inertia('Home', [
-        'ideas' => Idea::with('user:id,name')->latest()->get(),
-    ]);
+Route::get('/', function (\Illuminate\Http\Request $request) {
+    $user = $request->user();
+
+    $ideas = Idea::with('user:id,name')
+        ->when($user, fn ($q) => $q->with(['voters' => fn ($q) => $q->where('user_id', $user->id)->select('users.id')]))
+        ->latest()
+        ->get()
+        ->each(function ($idea) use ($user) {
+            $idea->has_voted = $user ? $idea->voters->isNotEmpty() : false;
+            $idea->unsetRelation('voters');
+        });
+
+    return inertia('Home', ['ideas' => $ideas]);
 })->name('home');
 
 Route::middleware('auth')->group(function () {
