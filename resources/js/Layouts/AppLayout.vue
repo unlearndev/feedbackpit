@@ -30,7 +30,7 @@ const logout = () => {
                     <!-- Right: Auth + CTA + User (hidden on mobile) -->
                     <div class="hidden md:flex items-center space-x-4">
                         <a
-                            href="#"
+                            :href="user ? '/ideas/create' : '/login'"
                             class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-neutral-900 rounded-lg hover:bg-neutral-800 transition-colors"
                         >
                             New Idea
@@ -126,7 +126,7 @@ const logout = () => {
                             Register
                         </a>
                     </template>
-                    <a href="#" class="block rounded-lg px-3 py-2 text-sm font-medium text-white bg-neutral-900 hover:bg-neutral-800">
+                    <a :href="user ? '/ideas/create' : '/login'" class="block rounded-lg px-3 py-2 text-sm font-medium text-white bg-neutral-900 hover:bg-neutral-800">
                         New Idea
                     </a>
                 </div>

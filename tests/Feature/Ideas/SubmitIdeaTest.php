@@ -1,0 +1,79 @@
+<?php
+
+use App\Models\User;
+
+uses(\Illuminate\Foundation\Testing\RefreshDatabase::class);
+
+$validPayload = fn () => [
+    'title' => 'Dark mode support',
+    'description' => 'It would be great to have a dark mode option for the app.',
+];
+
+// ---------------------------------------------------------------------------
+// Auth guard
+// ---------------------------------------------------------------------------
+
+it('redirects guests to login', function () use ($validPayload) {
+    $this->post(route('ideas.store'), $validPayload())
+        ->assertRedirect(route('login'));
+});
+
+it('shows the form to authenticated users', function () {
+    $this->actingAs(User::factory()->create())
+        ->get(route('ideas.create'))
+        ->assertOk()
+        ->assertInertia(fn ($page) => $page->component('Ideas/Create'));
+});
+
+// ---------------------------------------------------------------------------
+// Successful submission
+// ---------------------------------------------------------------------------
+
+it('creates an idea in the database', function () use ($validPayload) {
+    $user = User::factory()->create();
+
+    $this->actingAs($user)->post(route('ideas.store'), $validPayload());
+
+    $this->assertDatabaseHas('ideas', [
+        'user_id' => $user->id,
+        'title' => 'Dark mode support',
+        'description' => 'It would be great to have a dark mode option for the app.',
+        'status' => 'under_review',
+        'votes' => 0,
+    ]);
+});
+
+it('redirects to home with a flash message after submission', function () use ($validPayload) {
+    $this->actingAs(User::factory()->create())
+        ->post(route('ideas.store'), $validPayload())
+        ->assertRedirect(route('home'))
+        ->assertSessionHas('message');
+});
+
+// ---------------------------------------------------------------------------
+// Validation
+// ---------------------------------------------------------------------------
+
+it('requires a title', function () use ($validPayload) {
+    $this->actingAs(User::factory()->create())
+        ->post(route('ideas.store'), array_merge($validPayload(), ['title' => '']))
+        ->assertSessionHasErrors('title');
+});
+
+it('requires a description', function () use ($validPayload) {
+    $this->actingAs(User::factory()->create())
+        ->post(route('ideas.store'), array_merge($validPayload(), ['description' => '']))
+        ->assertSessionHasErrors('description');
+});
+
+it('rejects a title longer than 255 characters', function () use ($validPayload) {
+    $this->actingAs(User::factory()->create())
+        ->post(route('ideas.store'), array_merge($validPayload(), ['title' => str_repeat('a', 256)]))
+        ->assertSessionHasErrors('title');
+});
+
+it('rejects a description longer than 5000 characters', function () use ($validPayload) {
+    $this->actingAs(User::factory()->create())
+        ->post(route('ideas.store'), array_merge($validPayload(), ['description' => str_repeat('a', 5001)]))
+        ->assertSessionHasErrors('description');
+});
