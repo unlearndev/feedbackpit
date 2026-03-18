@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
+/**
+ * @property bool $has_voted
+ */
 class Idea extends Model
 {
     /** @use HasFactory<\Database\Factories\IdeaFactory> */

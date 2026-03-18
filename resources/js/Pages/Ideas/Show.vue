@@ -1,5 +1,6 @@
 <script setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
+import VoteButton from '@/Components/VoteButton.vue';
 
 const statusLabels = {
     under_review: 'Under Review',
@@ -46,9 +47,7 @@ const formatDate = (dateString) => {
             </p>
 
             <div class="flex items-center gap-2 mb-6">
-                <div class="flex items-center justify-center w-12 h-12 rounded-lg border border-gray-200 text-sm font-semibold text-neutral-900">
-                    {{ idea.votes }}
-                </div>
+                <VoteButton :idea-id="idea.id" :votes="idea.votes" :has-voted="idea.has_voted" />
                 <span class="text-sm text-gray-500">votes</span>
             </div>
 
