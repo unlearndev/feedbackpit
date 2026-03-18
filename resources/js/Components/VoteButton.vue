@@ -1,6 +1,7 @@
 <script setup>
 import { computed } from 'vue';
 import { router, usePage } from '@inertiajs/vue3';
+import VoteController from '@/actions/App/Http/Controllers/VoteController';
 
 const props = defineProps({
     ideaId: {
@@ -21,7 +22,7 @@ const isGuest = computed(() => !usePage().props.auth?.user);
 
 const vote = () => {
     if (isGuest.value) return;
-    router.post(`/ideas/${props.ideaId}/vote`, {}, { preserveScroll: true });
+    router.post(VoteController.url(props.ideaId), {}, { preserveScroll: true });
 };
 </script>
 

@@ -10,13 +10,9 @@ Route::get('/', function (\Illuminate\Http\Request $request) {
     $user = $request->user();
 
     $ideas = Idea::with('user:id,name')
-        ->when($user, fn ($q) => $q->with(['voters' => fn ($q) => $q->where('user_id', $user->id)->select('users.id')]))
+        ->when($user, fn ($q) => $q->withExists(['voters as has_voted' => fn ($q) => $q->where('user_id', $user->id)]))
         ->latest()
-        ->get()
-        ->each(function ($idea) use ($user) {
-            $idea->has_voted = $user ? $idea->voters->isNotEmpty() : false;
-            $idea->unsetRelation('voters');
-        });
+        ->get();
 
     return inertia('Home', ['ideas' => $ideas]);
 })->name('home');
