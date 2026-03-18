@@ -6,7 +6,11 @@ use App\Enums\IdeaStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
+/**
+ * @property bool $has_voted
+ */
 class Idea extends Model
 {
     /** @use HasFactory<\Database\Factories\IdeaFactory> */
@@ -33,5 +37,13 @@ class Idea extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * @return BelongsToMany<User, $this>
+     */
+    public function voters(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'idea_vote');
     }
 }
