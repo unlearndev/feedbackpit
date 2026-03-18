@@ -11,7 +11,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
-use Inertia\Inertia;
 use Laravel\Fortify\Fortify;
 
 class FortifyServiceProvider extends ServiceProvider
@@ -29,10 +28,10 @@ class FortifyServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Fortify::loginView(fn () => Inertia::render('Auth/Login'));
-        Fortify::registerView(fn () => Inertia::render('Auth/Register'));
-        Fortify::requestPasswordResetLinkView(fn () => Inertia::render('Auth/ForgotPassword'));
-        Fortify::resetPasswordView(fn (Request $request) => Inertia::render('Auth/ResetPassword', [
+        Fortify::loginView(fn () => inertia('Auth/Login'));
+        Fortify::registerView(fn () => inertia('Auth/Register'));
+        Fortify::requestPasswordResetLinkView(fn () => inertia('Auth/ForgotPassword'));
+        Fortify::resetPasswordView(fn (Request $request) => inertia('Auth/ResetPassword', [
             'token' => $request->route('token'),
             'email' => $request->query('email'),
         ]));

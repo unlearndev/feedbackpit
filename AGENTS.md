@@ -9,7 +9,10 @@
 - Vue.js
 - Tailwind CSS
 
-# Fortify
+# Conventions
+- Always use the `inertia()` helper instead of `Inertia::render()`.
+- Always use named routes. Never use hardcoded paths in `redirect()` or elsewhere — use `route('name')` instead.
+- Never use `$request->all()`. Only pass the specific fields needed (e.g. `$request->only([...])` or explicit keys).
 - Always reuse existing Fortify actions (in `app/Actions/Fortify/`) before writing authentication or profile-related logic in controllers.
 
 # Verification
