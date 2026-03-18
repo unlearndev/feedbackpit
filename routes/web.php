@@ -2,14 +2,13 @@
 
 use App\Http\Controllers\AccountSettingsController;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
 Route::get('/', function () {
-    return Inertia::render('Home');
-});
+    return inertia('Home');
+})->name('home');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/account/settings', [AccountSettingsController::class, 'edit']);
-    Route::put('/account/settings', [AccountSettingsController::class, 'update']);
-    Route::put('/account/password', [AccountSettingsController::class, 'updatePassword']);
+    Route::get('/account/settings', [AccountSettingsController::class, 'edit'])->name('account.settings.edit');
+    Route::put('/account/settings', [AccountSettingsController::class, 'update'])->name('account.settings.update');
+    Route::put('/account/password', [AccountSettingsController::class, 'updatePassword'])->name('account.password.update');
 });
