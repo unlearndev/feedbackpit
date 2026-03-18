@@ -53,7 +53,7 @@ it('removes the vote when voting again', function () {
     expect($idea->fresh()->votes)->toBe(0);
 });
 
-it('does not allow duplicate votes', function () {
+it('toggles an existing vote off on second click', function () {
     $user = User::factory()->create();
     $idea = Idea::factory()->for(User::factory())->create(['votes' => 0]);
 

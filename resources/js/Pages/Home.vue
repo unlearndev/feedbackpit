@@ -1,6 +1,7 @@
 <script setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
 import VoteButton from '@/Components/VoteButton.vue';
+import { show } from '@/actions/App/Http/Controllers/IdeaController';
 
 const statusLabels = {
     under_review: 'Under Review',
@@ -34,7 +35,7 @@ defineProps({
                 <VoteButton :idea-id="idea.id" :votes="idea.votes" :has-voted="idea.has_voted" />
 
                 <div class="min-w-0 flex-1">
-                    <a :href="`/ideas/${idea.id}`" class="font-semibold text-neutral-900 hover:underline">{{ idea.title }}</a>
+                    <a :href="show.url(idea.id)" class="font-semibold text-neutral-900 hover:underline">{{ idea.title }}</a>
                     <p class="text-sm text-gray-500 truncate">{{ idea.description }}</p>
                 </div>
 

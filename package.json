@@ -9,6 +9,7 @@
         "lint:fix": "eslint resources/js/ --fix"
     },
     "devDependencies": {
+        "@laravel/vite-plugin-wayfinder": "^0.1.7",
         "@tailwindcss/vite": "^4.0.0",
         "axios": "^1.11.0",
         "concurrently": "^9.0.1",
