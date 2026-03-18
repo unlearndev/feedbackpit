@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Inertia\Inertia;
 use Laravel\Fortify\Contracts\UpdatesUserPasswords;
 use Laravel\Fortify\Contracts\UpdatesUserProfileInformation;
 
@@ -11,20 +10,23 @@ class AccountSettingsController extends Controller
 {
     public function edit()
     {
-        return Inertia::render('Account/Settings');
+        return inertia('Account/Settings');
     }
 
     public function update(Request $request, UpdatesUserProfileInformation $updater)
     {
-        $updater->update($request->user(), array_merge($request->all(), ['name' => $request->user()->name]));
+        $updater->update($request->user(), [
+            'name' => $request->user()->name,
+            'email' => $request->input('email'),
+        ]);
 
-        return redirect('/account/settings')->with('message', 'Your changes have been saved.');
+        return redirect()->route('account.settings.edit')->with('message', 'Your changes have been saved.');
     }
 
     public function updatePassword(Request $request, UpdatesUserPasswords $updater)
     {
-        $updater->update($request->user(), $request->all());
+        $updater->update($request->user(), $request->only(['current_password', 'password', 'password_confirmation']));
 
-        return redirect('/account/settings')->with('message', 'Your password has been updated.');
+        return redirect()->route('account.settings.edit')->with('message', 'Your password has been updated.');
     }
 }
