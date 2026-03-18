@@ -1,5 +1,6 @@
 <script setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
+import VoteButton from '@/Components/VoteButton.vue';
 
 const statusLabels = {
     under_review: 'Under Review',
@@ -30,9 +31,7 @@ defineProps({
                 :key="idea.id"
                 class="flex items-center gap-4 rounded-lg border border-gray-200 bg-white p-4"
             >
-                <div class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-lg border border-gray-200 text-sm font-semibold text-neutral-900">
-                    {{ idea.votes }}
-                </div>
+                <VoteButton :idea-id="idea.id" :votes="idea.votes" :has-voted="idea.has_voted" />
 
                 <div class="min-w-0 flex-1">
                     <a :href="`/ideas/${idea.id}`" class="font-semibold text-neutral-900 hover:underline">{{ idea.title }}</a>

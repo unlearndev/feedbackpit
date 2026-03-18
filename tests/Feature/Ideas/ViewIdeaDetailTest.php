@@ -73,3 +73,30 @@ it('includes the vote count', function () {
             ->where('idea.votes', 12)
         );
 });
+
+// ---------------------------------------------------------------------------
+// Vote status
+// ---------------------------------------------------------------------------
+
+it('includes has_voted as true when the user has voted', function () {
+    $user = User::factory()->create();
+    $idea = Idea::factory()->for(User::factory())->create();
+    $idea->voters()->attach($user);
+
+    $this->actingAs($user)
+        ->get(route('ideas.show', $idea))
+        ->assertInertia(fn ($page) => $page
+            ->where('idea.has_voted', true)
+        );
+});
+
+it('includes has_voted as false when the user has not voted', function () {
+    $user = User::factory()->create();
+    $idea = Idea::factory()->for(User::factory())->create();
+
+    $this->actingAs($user)
+        ->get(route('ideas.show', $idea))
+        ->assertInertia(fn ($page) => $page
+            ->where('idea.has_voted', false)
+        );
+});
