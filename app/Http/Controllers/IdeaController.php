@@ -3,11 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreIdeaRequest;
+use App\Models\Idea;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Response;
 
 class IdeaController extends Controller
 {
+    public function show(Idea $idea): Response
+    {
+        $idea->load('user:id,name');
+
+        return inertia('Ideas/Show', [
+            'idea' => $idea,
+        ]);
+    }
+
     public function create(): Response
     {
         return inertia('Ideas/Create');
