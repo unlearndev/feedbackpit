@@ -35,7 +35,7 @@ defineProps({
                 </div>
 
                 <div class="min-w-0 flex-1">
-                    <p class="font-semibold text-neutral-900">{{ idea.title }}</p>
+                    <a :href="`/ideas/${idea.id}`" class="font-semibold text-neutral-900 hover:underline">{{ idea.title }}</a>
                     <p class="text-sm text-gray-500 truncate">{{ idea.description }}</p>
                 </div>
 
