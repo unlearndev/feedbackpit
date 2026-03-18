@@ -32,7 +32,7 @@ These tests will fail until PR 2 lands — that's intentional.
 
 ## PR 2: Backend
 
-**Branch:** same branch as PR 1 (`idea-detail-tests`)
+**Branch:** same branch as PR 1 (`idea-detail-tests`) — **DONE**
 
 ### Modified files
 
@@ -74,7 +74,7 @@ All PR 1 tests should now pass.
 
 ## PR 3: Frontend
 
-**Branch:** `idea-detail-frontend` off `idea-detail-backend`
+**Branch:** same branch as PR 1 (`idea-detail-tests`) — **DONE**
 
 ### Modified files
 
