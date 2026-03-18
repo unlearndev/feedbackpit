@@ -19,3 +19,5 @@ Route::middleware('auth')->group(function () {
     Route::get('/ideas/create', [IdeaController::class, 'create'])->name('ideas.create');
     Route::post('/ideas', [IdeaController::class, 'store'])->name('ideas.store');
 });
+
+Route::get('/ideas/{idea}', [IdeaController::class, 'show'])->name('ideas.show');
