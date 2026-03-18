@@ -3,22 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreIdeaRequest;
+use App\Http\Resources\IdeaResource;
 use App\Models\Idea;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Inertia\Response;
 
 class IdeaController extends Controller
 {
-    public function show(Request $request, Idea $idea): Response
+    public function show(Idea $idea): Response
     {
-        $idea->load('user:id,name');
-
-        $user = $request->user();
-        $idea->has_voted = $user ? $idea->voters()->where('user_id', $user->id)->exists() : false;
+        $idea->load('user', 'voters:id');
 
         return inertia('Ideas/Show', [
-            'idea' => $idea,
+            'idea' => new IdeaResource($idea),
         ]);
     }
 
