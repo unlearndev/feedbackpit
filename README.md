@@ -1,6 +1,6 @@
-# Suggest
+# FeedbackPit
 
-Suggest is a suggestion tracking application and the live project powering all workflows across [Unlearn](https://unlearn.dev).
+FeedbackPit is a suggestion tracking application and the live project powering all workflows across [Unlearn](https://unlearn.dev).
 
 ## Stack
 
