@@ -23,7 +23,7 @@ const logout = () => {
                 <div class="flex items-center justify-between h-16">
                     <!-- Left: Logo -->
                     <div class="flex-shrink-0">
-                        <a href="/" class="text-xl font-semibold tracking-tight text-neutral-900">
+                        <a :href="user ? '/dashboard' : '/'" class="text-xl font-semibold tracking-tight text-neutral-900">
                             {{ appName }}
                         </a>
                     </div>
@@ -159,8 +159,11 @@ const logout = () => {
         <!-- Footer -->
         <footer class="border-t border-black/[0.06]">
             <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex items-center justify-between">
-                <span class="text-xs text-neutral-400">&copy; 2026 BitterBrains</span>
-                <a href="https://unlearn.dev" class="text-xs text-neutral-400 hover:text-neutral-900 transition-colors duration-150">unlearn.dev</a>
+                <a href="https://bitterbrains.com" class="text-xs text-neutral-400 hover:text-neutral-900 transition-colors duration-150">Powered by BitterBrains</a>
+                <div class="flex items-center gap-4">
+                    <a href="https://github.com/unlearndev/feedbackpit" class="text-xs text-neutral-400 hover:text-neutral-900 transition-colors duration-150">GitHub</a>
+                    <a href="https://unlearn.dev" class="text-xs text-neutral-400 hover:text-neutral-900 transition-colors duration-150">unlearn.dev</a>
+                </div>
             </div>
         </footer>
     </div>

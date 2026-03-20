@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AboutController;
 use App\Http\Controllers\AccountSettingsController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\IdeaController;
@@ -8,6 +9,7 @@ use App\Http\Controllers\VoteController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', LandingController::class)->name('landing');
+Route::get('/about', AboutController::class)->name('about');
 Route::get('/dashboard', DashboardController::class)->name('dashboard');
 
 Route::middleware('auth')->group(function () {

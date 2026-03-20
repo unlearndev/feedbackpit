@@ -166,6 +166,50 @@ landing.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 })
 
 /**
+* @see \App\Http\Controllers\AboutController::__invoke
+* @see app/Http/Controllers/AboutController.php:9
+* @route '/about'
+*/
+export const about = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: about.url(options),
+    method: 'get',
+})
+
+about.definition = {
+    methods: ["get","head"],
+    url: '/about',
+} satisfies RouteDefinition<["get","head"]>
+
+/**
+* @see \App\Http\Controllers\AboutController::__invoke
+* @see app/Http/Controllers/AboutController.php:9
+* @route '/about'
+*/
+about.url = (options?: RouteQueryOptions) => {
+    return about.definition.url + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\AboutController::__invoke
+* @see app/Http/Controllers/AboutController.php:9
+* @route '/about'
+*/
+about.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: about.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\AboutController::__invoke
+* @see app/Http/Controllers/AboutController.php:9
+* @route '/about'
+*/
+about.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+    url: about.url(options),
+    method: 'head',
+})
+
+/**
 * @see \App\Http\Controllers\DashboardController::__invoke
 * @see app/Http/Controllers/DashboardController.php:11
 * @route '/dashboard'
