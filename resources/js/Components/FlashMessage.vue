@@ -1,33 +1,40 @@
 <script setup>
-import { ref, watch, onUnmounted } from 'vue';
-import { usePage } from '@inertiajs/vue3';
+import { ref, onMounted, onUnmounted } from 'vue';
+import { usePage, router } from '@inertiajs/vue3';
 
 const show = ref(false);
 const message = ref('');
 let timeout = null;
+let removeListener = null;
 
 function dismiss() {
     show.value = false;
     clearTimeout(timeout);
 }
 
-watch(
-    () => usePage().props.flash?.message,
-    (newMessage) => {
-        clearTimeout(timeout);
+function checkFlash() {
+    clearTimeout(timeout);
 
-        if (newMessage) {
-            message.value = newMessage;
-            show.value = true;
-            timeout = setTimeout(() => {
-                show.value = false;
-            }, 5000);
-        }
-    },
-    { immediate: true },
-);
+    const newMessage = usePage().props.flash?.status;
 
-onUnmounted(() => clearTimeout(timeout));
+    if (newMessage) {
+        message.value = newMessage;
+        show.value = true;
+        timeout = setTimeout(() => {
+            show.value = false;
+        }, 5000);
+    }
+}
+
+onMounted(() => {
+    checkFlash();
+    removeListener = router.on('finish', checkFlash);
+});
+
+onUnmounted(() => {
+    clearTimeout(timeout);
+    removeListener?.();
+});
 </script>
 
 <template>

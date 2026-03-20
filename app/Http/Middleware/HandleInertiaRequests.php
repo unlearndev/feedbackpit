@@ -45,7 +45,7 @@ class HandleInertiaRequests extends Middleware
                 'user' => $user ? new UserResource($user) : null,
             ],
             'flash' => [
-                'message' => $request->session()->get('message'),
+                'status' => $request->session()->get('status'),
             ],
         ];
     }
