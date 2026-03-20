@@ -20,13 +20,13 @@ class AccountSettingsController extends Controller
             'email' => $request->input('email'),
         ]);
 
-        return redirect()->route('account.settings.edit')->with('message', 'Your changes have been saved.');
+        return redirect()->route('account.settings.edit')->with('status', 'Your changes have been saved.');
     }
 
     public function updatePassword(Request $request, UpdatesUserPasswords $updater)
     {
         $updater->update($request->user(), $request->only(['current_password', 'password', 'password_confirmation']));
 
-        return redirect()->route('account.settings.edit')->with('message', 'Your password has been updated.');
+        return redirect()->route('account.settings.edit')->with('status', 'Your password has been updated.');
     }
 }

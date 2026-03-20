@@ -15,7 +15,7 @@ function dismiss() {
 function checkFlash() {
     clearTimeout(timeout);
 
-    const newMessage = usePage().props.flash?.message;
+    const newMessage = usePage().props.flash?.status;
 
     if (newMessage) {
         message.value = newMessage;
