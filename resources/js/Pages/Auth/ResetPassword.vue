@@ -34,10 +34,6 @@ const submit = () => {
         <div class="max-w-md mx-auto">
             <h1 class="text-2xl font-semibold tracking-tight text-neutral-900 mb-8">Set a new password</h1>
 
-            <div v-if="form.errors.email" class="mb-6 rounded-none bg-red-50 border border-red-200 px-4 py-3 text-sm text-red-700">
-                {{ form.errors.email }}
-            </div>
-
             <form class="rounded-none border border-black/[0.06] bg-white p-6 space-y-5" @submit.prevent="submit">
                 <AppInput
                     id="password"
@@ -46,6 +42,7 @@ const submit = () => {
                     type="password"
                     autocomplete="new-password"
                     required
+                    :error="form.errors.email || form.errors.password"
                 />
 
                 <AppInput
