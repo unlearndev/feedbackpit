@@ -2,6 +2,7 @@
 import { ref, computed } from 'vue';
 import { usePage, router } from '@inertiajs/vue3';
 import FlashMessage from '@/Components/FlashMessage.vue';
+import AppButton from '@/Components/AppButton.vue';
 
 const appName = usePage().props.appName;
 const mobileMenuOpen = ref(false);
@@ -15,34 +16,31 @@ const logout = () => {
 </script>
 
 <template>
-    <div class="min-h-screen bg-gray-50">
+    <div class="min-h-screen bg-white">
         <!-- Navbar -->
-        <nav class="fixed top-0 inset-x-0 z-50 bg-white border-b border-gray-200">
+        <nav class="fixed top-0 inset-x-0 z-50 bg-white/80 backdrop-blur-md border-b border-black/[0.06]">
             <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex items-center justify-between h-16">
                     <!-- Left: Logo -->
                     <div class="flex-shrink-0">
-                        <a href="/" class="text-xl font-bold text-neutral-900">
+                        <a href="/" class="text-xl font-semibold tracking-tight text-neutral-900">
                             {{ appName }}
                         </a>
                     </div>
 
                     <!-- Right: Auth + CTA + User (hidden on mobile) -->
                     <div class="hidden md:flex items-center space-x-4">
-                        <a
-                            :href="user ? '/ideas/create' : '/login'"
-                            class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-neutral-900 rounded-lg hover:bg-neutral-800 transition-colors"
-                        >
-                            New Idea
-                        </a>
+                        <AppButton :href="user ? '/ideas/create' : '/login'" size="sm">
+                            New Feedback
+                        </AppButton>
 
                         <template v-if="user">
                             <div class="relative">
-                                <button type="button" class="flex items-center" @click="dropdownOpen = !dropdownOpen">
+                                <button type="button" class="flex items-center p-1" @click="dropdownOpen = !dropdownOpen">
                                     <img
-                                        :src="`https://ui-avatars.com/api/?name=${encodeURIComponent(user.name)}&background=171717&color=fff&size=32`"
+                                        :src="`https://ui-avatars.com/api/?name=${encodeURIComponent(user.name)}&background=171717&color=fff&size=56&font-size=0.38`"
                                         :alt="`${user.name} avatar`"
-                                        class="h-8 w-8 rounded-full"
+                                        class="h-7 w-7 rounded-full"
                                     >
                                 </button>
 
@@ -50,33 +48,39 @@ const logout = () => {
                                 <div v-if="dropdownOpen" class="fixed inset-0 z-10" @click="dropdownOpen = false" />
 
                                 <!-- Dropdown menu -->
-                                <div v-if="dropdownOpen" class="absolute right-0 mt-2 w-48 rounded-lg bg-white border border-gray-200 shadow-lg py-1 z-20">
-                                    <a
-                                        href="/account/settings"
-                                        class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                    >
-                                        Account
-                                    </a>
-                                    <button
-                                        type="button"
-                                        class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                        @click="logout"
-                                    >
-                                        Log out
-                                    </button>
-                                </div>
+                                <Transition
+                                    enter-active-class="transition ease-out duration-200"
+                                    enter-from-class="opacity-0 scale-95"
+                                    enter-to-class="opacity-100 scale-100"
+                                    leave-active-class="transition ease-in duration-75"
+                                    leave-from-class="opacity-100 scale-100"
+                                    leave-to-class="opacity-0 scale-95"
+                                >
+                                    <div v-if="dropdownOpen" class="absolute right-0 mt-2 w-48 origin-top-right rounded-md bg-white border border-neutral-200 shadow-md py-1 z-20">
+                                        <a
+                                            href="/account/settings"
+                                            class="block w-full text-left px-4 py-2 text-xs text-neutral-700 hover:bg-neutral-100 transition-colors duration-150"
+                                        >
+                                            Account
+                                        </a>
+                                        <button
+                                            type="button"
+                                            class="block w-full text-left px-4 py-2 text-xs text-neutral-700 hover:bg-neutral-100 transition-colors duration-150"
+                                            @click="logout"
+                                        >
+                                            Log out
+                                        </button>
+                                    </div>
+                                </Transition>
                             </div>
                         </template>
                         <template v-else>
-                            <a href="/login" class="text-sm font-medium text-gray-700 hover:text-neutral-900 transition-colors">
+                            <a href="/login" class="text-xs font-medium text-neutral-700 hover:text-neutral-900 transition-colors">
                                 Login
                             </a>
-                            <a
-                                href="/register"
-                                class="inline-flex items-center px-4 py-2 text-sm font-medium text-neutral-900 border border-neutral-900 rounded-lg hover:bg-neutral-50 transition-colors"
-                            >
+                            <AppButton href="/register" variant="outline" size="sm">
                                 Register
-                            </a>
+                            </AppButton>
                         </template>
                     </div>
 
@@ -84,14 +88,14 @@ const logout = () => {
                     <div class="flex items-center space-x-3 md:hidden">
                         <img
                             v-if="user"
-                            :src="`https://ui-avatars.com/api/?name=${encodeURIComponent(user.name)}&background=171717&color=fff&size=32`"
+                            :src="`https://ui-avatars.com/api/?name=${encodeURIComponent(user.name)}&background=171717&color=fff&size=56&font-size=0.38`"
                             :alt="`${user.name} avatar`"
-                            class="h-8 w-8 rounded-full"
+                            class="h-7 w-7 rounded-full"
                         >
 
                         <button
                             type="button"
-                            class="p-2 text-gray-500 hover:text-gray-700"
+                            class="p-2 text-neutral-500 hover:text-neutral-700 transition-colors duration-150"
                             @click="mobileMenuOpen = !mobileMenuOpen"
                         >
                             <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
@@ -104,30 +108,30 @@ const logout = () => {
             </div>
 
             <!-- Mobile menu panel -->
-            <div v-if="mobileMenuOpen" class="md:hidden border-t border-gray-200 bg-white">
+            <div v-if="mobileMenuOpen" class="md:hidden border-t border-neutral-200 bg-white/80 backdrop-blur-md">
                 <div class="space-y-1 px-4 py-3">
                     <template v-if="user">
-                        <a href="/account/settings" class="block rounded-lg px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100">
+                        <a href="/account/settings" class="block rounded-md px-3 py-2 text-sm font-medium text-neutral-700 hover:bg-neutral-100 transition-colors duration-150">
                             Account
                         </a>
                         <button
                             type="button"
-                            class="w-full text-left rounded-lg px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100"
+                            class="w-full text-left rounded-md px-3 py-2 text-sm font-medium text-neutral-700 hover:bg-neutral-100 transition-colors duration-150"
                             @click="logout"
                         >
                             Log out
                         </button>
                     </template>
                     <template v-else>
-                        <a href="/login" class="block rounded-lg px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100">
+                        <a href="/login" class="block rounded-md px-3 py-2 text-sm font-medium text-neutral-700 hover:bg-neutral-100 transition-colors duration-150">
                             Login
                         </a>
-                        <a href="/register" class="block rounded-lg px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100">
+                        <a href="/register" class="block rounded-md px-3 py-2 text-sm font-medium text-neutral-700 hover:bg-neutral-100 transition-colors duration-150">
                             Register
                         </a>
                     </template>
-                    <a :href="user ? '/ideas/create' : '/login'" class="block rounded-lg px-3 py-2 text-sm font-medium text-white bg-neutral-900 hover:bg-neutral-800">
-                        New Idea
+                    <a :href="user ? '/ideas/create' : '/login'" class="block rounded-md px-3 py-2 text-sm font-medium text-white bg-neutral-900 hover:bg-neutral-800 transition-colors duration-150">
+                        New Feedback
                     </a>
                 </div>
             </div>
@@ -137,8 +141,18 @@ const logout = () => {
 
         <!-- Content area -->
         <main class="pt-24 pb-12">
-            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-                <slot />
+            <div class="max-w-5xl mx-auto relative blueprint">
+                <div class="blueprint-rule">
+                    <span class="absolute -top-1 -left-1 block h-2 w-2 bg-neutral-200" />
+                    <span class="absolute -top-1 -right-1 block h-2 w-2 bg-neutral-200" />
+                </div>
+                <div class="px-4 sm:px-6 lg:px-8 py-8">
+                    <slot />
+                </div>
+                <div class="blueprint-rule">
+                    <span class="absolute -top-1 -left-1 block h-2 w-2 bg-neutral-200" />
+                    <span class="absolute -top-1 -right-1 block h-2 w-2 bg-neutral-200" />
+                </div>
             </div>
         </main>
     </div>

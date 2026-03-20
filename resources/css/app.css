@@ -10,3 +10,43 @@
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
 }
+
+@layer base {
+    .blueprint {
+        position: relative;
+    }
+
+    .blueprint::before,
+    .blueprint::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 0;
+        border-left: 1px dashed rgba(0, 0, 0, 0.06);
+        pointer-events: none;
+    }
+
+    .blueprint::before {
+        left: 0;
+    }
+
+    .blueprint::after {
+        right: 0;
+    }
+
+    .blueprint-rule {
+        position: relative;
+        height: 0;
+        overflow: visible;
+    }
+
+    .blueprint-rule::before {
+        content: '';
+        position: absolute;
+        left: calc(-50vw + 50%);
+        right: calc(-50vw + 50%);
+        top: 0;
+        border-top: 1px solid rgba(0, 0, 0, 0.06);
+    }
+}

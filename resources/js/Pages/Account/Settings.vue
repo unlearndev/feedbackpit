@@ -1,6 +1,8 @@
 <script setup>
 import { useForm, usePage } from '@inertiajs/vue3';
 import AppLayout from '@/Layouts/AppLayout.vue';
+import AppInput from '@/Components/AppInput.vue';
+import AppButton from '@/Components/AppButton.vue';
 
 const form = useForm({
     email: usePage().props.auth.user.email,
@@ -26,82 +28,64 @@ const submitPassword = () => {
 <template>
     <AppLayout>
         <div class="max-w-md mx-auto">
-            <h1 class="text-2xl font-bold text-neutral-900 mb-8">Account settings</h1>
+            <h1 class="text-2xl font-semibold tracking-tight text-neutral-900 mb-8">Account settings</h1>
 
-            <form class="space-y-5" @submit.prevent="submit">
-                <div>
-                    <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email address</label>
-                    <input
+            <div class="rounded-none border border-black/[0.06] bg-white p-6">
+                <form class="space-y-5" @submit.prevent="submit">
+                    <AppInput
                         id="email"
                         v-model="form.email"
+                        label="Email address"
                         type="email"
                         autocomplete="email"
                         required
-                        class="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm text-neutral-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-neutral-900 focus:border-transparent"
-                    >
-                    <p v-if="form.errors.email" class="mt-1 text-sm text-red-600">{{ form.errors.email }}</p>
-                </div>
+                        :error="form.errors.email"
+                    />
 
-                <button
-                    type="submit"
-                    :disabled="form.processing"
-                    class="w-full inline-flex justify-center items-center px-4 py-2 text-sm font-medium text-white bg-neutral-900 rounded-lg hover:bg-neutral-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                    Save changes
-                </button>
-            </form>
+                    <AppButton type="submit" :disabled="form.processing" class="w-full">
+                        Save changes
+                    </AppButton>
+                </form>
+            </div>
 
-            <hr class="my-10 border-gray-200">
+            <div class="mt-8 rounded-none border border-black/[0.06] bg-white p-6">
+                <h2 class="text-lg font-semibold tracking-tight text-neutral-900 mb-5">Change password</h2>
 
-            <h2 class="text-lg font-semibold text-neutral-900 mb-5">Change password</h2>
-
-            <form class="space-y-5" @submit.prevent="submitPassword">
-                <div>
-                    <label for="current_password" class="block text-sm font-medium text-gray-700 mb-1">Current password</label>
-                    <input
+                <form class="space-y-5" @submit.prevent="submitPassword">
+                    <AppInput
                         id="current_password"
                         v-model="passwordForm.current_password"
+                        label="Current password"
                         type="password"
                         autocomplete="current-password"
                         required
-                        class="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm text-neutral-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-neutral-900 focus:border-transparent"
-                    >
-                    <p v-if="passwordForm.errors.current_password" class="mt-1 text-sm text-red-600">{{ passwordForm.errors.current_password }}</p>
-                </div>
+                        :error="passwordForm.errors.current_password"
+                    />
 
-                <div>
-                    <label for="password" class="block text-sm font-medium text-gray-700 mb-1">New password</label>
-                    <input
+                    <AppInput
                         id="password"
                         v-model="passwordForm.password"
+                        label="New password"
                         type="password"
                         autocomplete="new-password"
                         required
-                        class="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm text-neutral-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-neutral-900 focus:border-transparent"
-                    >
-                    <p v-if="passwordForm.errors.password" class="mt-1 text-sm text-red-600">{{ passwordForm.errors.password }}</p>
-                </div>
+                        :error="passwordForm.errors.password"
+                    />
 
-                <div>
-                    <label for="password_confirmation" class="block text-sm font-medium text-gray-700 mb-1">Confirm new password</label>
-                    <input
+                    <AppInput
                         id="password_confirmation"
                         v-model="passwordForm.password_confirmation"
+                        label="Confirm new password"
                         type="password"
                         autocomplete="new-password"
                         required
-                        class="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm text-neutral-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-neutral-900 focus:border-transparent"
-                    >
-                </div>
+                    />
 
-                <button
-                    type="submit"
-                    :disabled="passwordForm.processing"
-                    class="w-full inline-flex justify-center items-center px-4 py-2 text-sm font-medium text-white bg-neutral-900 rounded-lg hover:bg-neutral-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                    Update password
-                </button>
-            </form>
+                    <AppButton type="submit" :disabled="passwordForm.processing" class="w-full">
+                        Update password
+                    </AppButton>
+                </form>
+            </div>
         </div>
     </AppLayout>
 </template>

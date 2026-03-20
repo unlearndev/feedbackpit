@@ -57,9 +57,4 @@ VoteController.post = (args: { idea: number | { id: number } } | [idea: number |
     method: 'post',
 })
 
-export default VoteControllernition<'post'> => ({
-    url: VoteController.url(args, options),
-    method: 'post',
-})
-
 export default VoteController

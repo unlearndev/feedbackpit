@@ -41,7 +41,7 @@ onUnmounted(() => clearTimeout(timeout));
     >
         <div
             v-if="show"
-            class="fixed bottom-6 left-1/2 z-50 -translate-x-1/2 cursor-pointer rounded-lg bg-neutral-900 px-5 py-3 text-sm font-medium text-white shadow-lg"
+            class="fixed bottom-6 left-1/2 z-50 -translate-x-1/2 cursor-pointer rounded-md border border-neutral-700 bg-neutral-900 px-5 py-3 text-sm font-medium text-white shadow-lg"
             @click="dismiss"
         >
             {{ message }}

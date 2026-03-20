@@ -31,12 +31,12 @@ const vote = () => {
         type="button"
         :disabled="isGuest"
         :class="[
-            'flex flex-shrink-0 flex-col items-center justify-center w-12 h-12 rounded-lg text-sm font-semibold transition-colors',
+            'flex flex-shrink-0 flex-col items-center justify-center w-12 h-12 rounded-none text-sm font-semibold transition-all duration-150',
             hasVoted
                 ? 'bg-neutral-900 text-white'
                 : isGuest
-                    ? 'border border-gray-200 text-gray-400 cursor-not-allowed'
-                    : 'border border-gray-200 text-neutral-900 hover:border-neutral-900 cursor-pointer',
+                    ? 'border border-black/[0.06] text-neutral-400 cursor-not-allowed'
+                    : 'border border-black/[0.06] text-neutral-900 hover:border-neutral-900 cursor-pointer',
         ]"
         @click="vote"
     >
