@@ -73,11 +73,11 @@ return [
     |
     */
 
-    'home' => '/',
+    'home' => '/dashboard',
 
     'redirects' => [
-        'login' => '/',
-        'register' => '/',
+        'login' => '/dashboard',
+        'register' => '/dashboard',
         'logout' => '/',
     ],
 

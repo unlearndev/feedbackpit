@@ -122,46 +122,134 @@ register.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 })
 
 /**
-* @see \App\Http\Controllers\HomeController::__invoke
-* @see app/Http/Controllers/HomeController.php:11
+* @see \App\Http\Controllers\LandingController::__invoke
+* @see app/Http/Controllers/LandingController.php:9
 * @route '/'
 */
-export const home = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
-    url: home.url(options),
+export const landing = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: landing.url(options),
     method: 'get',
 })
 
-home.definition = {
+landing.definition = {
     methods: ["get","head"],
     url: '/',
 } satisfies RouteDefinition<["get","head"]>
 
 /**
-* @see \App\Http\Controllers\HomeController::__invoke
-* @see app/Http/Controllers/HomeController.php:11
+* @see \App\Http\Controllers\LandingController::__invoke
+* @see app/Http/Controllers/LandingController.php:9
 * @route '/'
 */
-home.url = (options?: RouteQueryOptions) => {
-    return home.definition.url + queryParams(options)
+landing.url = (options?: RouteQueryOptions) => {
+    return landing.definition.url + queryParams(options)
 }
 
 /**
-* @see \App\Http\Controllers\HomeController::__invoke
-* @see app/Http/Controllers/HomeController.php:11
+* @see \App\Http\Controllers\LandingController::__invoke
+* @see app/Http/Controllers/LandingController.php:9
 * @route '/'
 */
-home.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
-    url: home.url(options),
+landing.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: landing.url(options),
     method: 'get',
 })
 
 /**
-* @see \App\Http\Controllers\HomeController::__invoke
-* @see app/Http/Controllers/HomeController.php:11
+* @see \App\Http\Controllers\LandingController::__invoke
+* @see app/Http/Controllers/LandingController.php:9
 * @route '/'
 */
-home.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
-    url: home.url(options),
+landing.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+    url: landing.url(options),
+    method: 'head',
+})
+
+/**
+* @see \App\Http\Controllers\AboutController::__invoke
+* @see app/Http/Controllers/AboutController.php:9
+* @route '/about'
+*/
+export const about = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: about.url(options),
+    method: 'get',
+})
+
+about.definition = {
+    methods: ["get","head"],
+    url: '/about',
+} satisfies RouteDefinition<["get","head"]>
+
+/**
+* @see \App\Http\Controllers\AboutController::__invoke
+* @see app/Http/Controllers/AboutController.php:9
+* @route '/about'
+*/
+about.url = (options?: RouteQueryOptions) => {
+    return about.definition.url + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\AboutController::__invoke
+* @see app/Http/Controllers/AboutController.php:9
+* @route '/about'
+*/
+about.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: about.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\AboutController::__invoke
+* @see app/Http/Controllers/AboutController.php:9
+* @route '/about'
+*/
+about.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+    url: about.url(options),
+    method: 'head',
+})
+
+/**
+* @see \App\Http\Controllers\DashboardController::__invoke
+* @see app/Http/Controllers/DashboardController.php:11
+* @route '/dashboard'
+*/
+export const dashboard = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: dashboard.url(options),
+    method: 'get',
+})
+
+dashboard.definition = {
+    methods: ["get","head"],
+    url: '/dashboard',
+} satisfies RouteDefinition<["get","head"]>
+
+/**
+* @see \App\Http\Controllers\DashboardController::__invoke
+* @see app/Http/Controllers/DashboardController.php:11
+* @route '/dashboard'
+*/
+dashboard.url = (options?: RouteQueryOptions) => {
+    return dashboard.definition.url + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\DashboardController::__invoke
+* @see app/Http/Controllers/DashboardController.php:11
+* @route '/dashboard'
+*/
+dashboard.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: dashboard.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\DashboardController::__invoke
+* @see app/Http/Controllers/DashboardController.php:11
+* @route '/dashboard'
+*/
+dashboard.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+    url: dashboard.url(options),
     method: 'head',
 })
 

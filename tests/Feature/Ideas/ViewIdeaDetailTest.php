@@ -12,7 +12,7 @@ uses(\Illuminate\Foundation\Testing\RefreshDatabase::class);
 it('renders the idea detail page', function () {
     $idea = Idea::factory()->for(User::factory())->create();
 
-    $this->get(route('ideas.show', $idea))
+    $this->get(route('feedback.show', $idea))
         ->assertOk()
         ->assertInertia(fn ($page) => $page
             ->component('Ideas/Show')
@@ -23,12 +23,12 @@ it('renders the idea detail page', function () {
 it('is accessible to guests', function () {
     $idea = Idea::factory()->for(User::factory())->create();
 
-    $this->get(route('ideas.show', $idea))
+    $this->get(route('feedback.show', $idea))
         ->assertOk();
 });
 
 it('returns 404 for a non-existent idea', function () {
-    $this->get('/ideas/99999')
+    $this->get('/feedback/99999')
         ->assertNotFound();
 });
 
@@ -40,7 +40,7 @@ it('includes the idea author name', function () {
     $user = User::factory()->create(['name' => 'Jane Doe']);
     $idea = Idea::factory()->for($user)->create();
 
-    $this->get(route('ideas.show', $idea))
+    $this->get(route('feedback.show', $idea))
         ->assertInertia(fn ($page) => $page
             ->where('idea.user.name', 'Jane Doe')
         );
@@ -50,7 +50,7 @@ it('includes the full description', function () {
     $description = 'This is the full description of the idea with lots of detail.';
     $idea = Idea::factory()->for(User::factory())->create(['description' => $description]);
 
-    $this->get(route('ideas.show', $idea))
+    $this->get(route('feedback.show', $idea))
         ->assertInertia(fn ($page) => $page
             ->where('idea.description', $description)
         );
@@ -59,7 +59,7 @@ it('includes the full description', function () {
 it('includes the status', function () {
     $idea = Idea::factory()->for(User::factory())->create(['status' => 'planned']);
 
-    $this->get(route('ideas.show', $idea))
+    $this->get(route('feedback.show', $idea))
         ->assertInertia(fn ($page) => $page
             ->where('idea.status', 'planned')
         );
@@ -68,7 +68,7 @@ it('includes the status', function () {
 it('includes the vote count', function () {
     $idea = Idea::factory()->for(User::factory())->create(['votes' => 12]);
 
-    $this->get(route('ideas.show', $idea))
+    $this->get(route('feedback.show', $idea))
         ->assertInertia(fn ($page) => $page
             ->where('idea.votes', 12)
         );
@@ -84,7 +84,7 @@ it('includes has_voted as true when the user has voted', function () {
     $idea->voters()->attach($user);
 
     $this->actingAs($user)
-        ->get(route('ideas.show', $idea))
+        ->get(route('feedback.show', $idea))
         ->assertInertia(fn ($page) => $page
             ->where('idea.has_voted', true)
         );
@@ -95,7 +95,7 @@ it('includes has_voted as false when the user has not voted', function () {
     $idea = Idea::factory()->for(User::factory())->create();
 
     $this->actingAs($user)
-        ->get(route('ideas.show', $idea))
+        ->get(route('feedback.show', $idea))
         ->assertInertia(fn ($page) => $page
             ->where('idea.has_voted', false)
         );

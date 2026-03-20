@@ -19,7 +19,7 @@ const submit = () => {
 <template>
     <AppLayout>
         <div class="max-w-md mx-auto">
-            <h1 class="text-2xl font-semibold tracking-tight text-neutral-900 mb-8">Log in to your account</h1>
+            <h1 class="text-2xl font-semibold tracking-tight text-neutral-900 mb-8 text-center">Log in to your account</h1>
 
             <div v-if="form.hasErrors" class="mb-6 rounded-none bg-red-50 border border-red-200 px-4 py-3 text-sm text-red-700">
                 These credentials are incorrect. Please try again.
