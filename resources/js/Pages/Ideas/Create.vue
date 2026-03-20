@@ -11,7 +11,7 @@ const form = useForm({
 });
 
 const submit = () => {
-    form.post('/ideas');
+    form.post('/feedback');
 };
 </script>
 

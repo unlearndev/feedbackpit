@@ -2,7 +2,7 @@ import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefa
 /**
 * @see \App\Http\Controllers\IdeaController::create
 * @see app/Http/Controllers/IdeaController.php:22
-* @route '/ideas/create'
+* @route '/feedback/create'
 */
 export const create = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: create.url(options),
@@ -11,13 +11,13 @@ export const create = (options?: RouteQueryOptions): RouteDefinition<'get'> => (
 
 create.definition = {
     methods: ["get","head"],
-    url: '/ideas/create',
+    url: '/feedback/create',
 } satisfies RouteDefinition<["get","head"]>
 
 /**
 * @see \App\Http\Controllers\IdeaController::create
 * @see app/Http/Controllers/IdeaController.php:22
-* @route '/ideas/create'
+* @route '/feedback/create'
 */
 create.url = (options?: RouteQueryOptions) => {
     return create.definition.url + queryParams(options)
@@ -26,7 +26,7 @@ create.url = (options?: RouteQueryOptions) => {
 /**
 * @see \App\Http\Controllers\IdeaController::create
 * @see app/Http/Controllers/IdeaController.php:22
-* @route '/ideas/create'
+* @route '/feedback/create'
 */
 create.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: create.url(options),
@@ -36,7 +36,7 @@ create.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 /**
 * @see \App\Http\Controllers\IdeaController::create
 * @see app/Http/Controllers/IdeaController.php:22
-* @route '/ideas/create'
+* @route '/feedback/create'
 */
 create.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: create.url(options),
@@ -46,7 +46,7 @@ create.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 /**
 * @see \App\Http\Controllers\IdeaController::store
 * @see app/Http/Controllers/IdeaController.php:27
-* @route '/ideas'
+* @route '/feedback'
 */
 export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: store.url(options),
@@ -55,13 +55,13 @@ export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => (
 
 store.definition = {
     methods: ["post"],
-    url: '/ideas',
+    url: '/feedback',
 } satisfies RouteDefinition<["post"]>
 
 /**
 * @see \App\Http\Controllers\IdeaController::store
 * @see app/Http/Controllers/IdeaController.php:27
-* @route '/ideas'
+* @route '/feedback'
 */
 store.url = (options?: RouteQueryOptions) => {
     return store.definition.url + queryParams(options)
@@ -70,7 +70,7 @@ store.url = (options?: RouteQueryOptions) => {
 /**
 * @see \App\Http\Controllers\IdeaController::store
 * @see app/Http/Controllers/IdeaController.php:27
-* @route '/ideas'
+* @route '/feedback'
 */
 store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: store.url(options),
@@ -80,7 +80,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 /**
 * @see \App\Http\Controllers\IdeaController::show
 * @see app/Http/Controllers/IdeaController.php:13
-* @route '/ideas/{idea}'
+* @route '/feedback/{idea}'
 */
 export const show = (args: { idea: number | { id: number } } | [idea: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: show.url(args, options),
@@ -89,13 +89,13 @@ export const show = (args: { idea: number | { id: number } } | [idea: number | {
 
 show.definition = {
     methods: ["get","head"],
-    url: '/ideas/{idea}',
+    url: '/feedback/{idea}',
 } satisfies RouteDefinition<["get","head"]>
 
 /**
 * @see \App\Http\Controllers\IdeaController::show
 * @see app/Http/Controllers/IdeaController.php:13
-* @route '/ideas/{idea}'
+* @route '/feedback/{idea}'
 */
 show.url = (args: { idea: number | { id: number } } | [idea: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
@@ -128,7 +128,7 @@ show.url = (args: { idea: number | { id: number } } | [idea: number | { id: numb
 /**
 * @see \App\Http\Controllers\IdeaController::show
 * @see app/Http/Controllers/IdeaController.php:13
-* @route '/ideas/{idea}'
+* @route '/feedback/{idea}'
 */
 show.get = (args: { idea: number | { id: number } } | [idea: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: show.url(args, options),
@@ -138,7 +138,7 @@ show.get = (args: { idea: number | { id: number } } | [idea: number | { id: numb
 /**
 * @see \App\Http\Controllers\IdeaController::show
 * @see app/Http/Controllers/IdeaController.php:13
-* @route '/ideas/{idea}'
+* @route '/feedback/{idea}'
 */
 show.head = (args: { idea: number | { id: number } } | [idea: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: show.url(args, options),

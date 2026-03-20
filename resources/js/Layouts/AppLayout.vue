@@ -30,7 +30,7 @@ const logout = () => {
 
                     <!-- Right: Auth + CTA + User (hidden on mobile) -->
                     <div class="hidden md:flex items-center space-x-4">
-                        <AppButton :href="user ? '/ideas/create' : '/login'" size="sm">
+                        <AppButton :href="user ? '/feedback/create' : '/login'" size="sm">
                             New Feedback
                         </AppButton>
 
@@ -130,7 +130,7 @@ const logout = () => {
                             Register
                         </a>
                     </template>
-                    <a :href="user ? '/ideas/create' : '/login'" class="block rounded-md px-3 py-2 text-sm font-medium text-white bg-neutral-900 hover:bg-neutral-800 transition-colors duration-150">
+                    <a :href="user ? '/feedback/create' : '/login'" class="block rounded-md px-3 py-2 text-sm font-medium text-white bg-neutral-900 hover:bg-neutral-800 transition-colors duration-150">
                         New Feedback
                     </a>
                 </div>
@@ -155,5 +155,13 @@ const logout = () => {
                 </div>
             </div>
         </main>
+
+        <!-- Footer -->
+        <footer class="border-t border-black/[0.06]">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex items-center justify-between">
+                <span class="text-xs text-neutral-400">&copy; 2026 BitterBrains</span>
+                <a href="https://unlearn.dev" class="text-xs text-neutral-400 hover:text-neutral-900 transition-colors duration-150">unlearn.dev</a>
+            </div>
+        </footer>
     </div>
 </template>

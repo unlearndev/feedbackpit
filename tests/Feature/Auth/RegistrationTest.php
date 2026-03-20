@@ -30,9 +30,9 @@ it('authenticates the user after successful registration', function () use ($val
     $this->assertAuthenticated();
 });
 
-it('redirects to / after successful registration', function () use ($validPayload) {
+it('redirects to /dashboard after successful registration', function () use ($validPayload) {
     $this->post('/register', $validPayload())
-        ->assertRedirect('/');
+        ->assertRedirect('/dashboard');
 });
 
 // ---------------------------------------------------------------------------

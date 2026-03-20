@@ -28,6 +28,6 @@ class IdeaController extends Controller
     {
         $request->user()->ideas()->create($request->only(['title', 'description']));
 
-        return redirect()->route('home')->with('message', 'Your idea has been submitted!');
+        return redirect()->route('dashboard')->with('message', 'Your feedback has been submitted!');
     }
 }

@@ -25,11 +25,11 @@ describe('login', function () {
         $this->assertAuthenticated();
     });
 
-    it('redirects to / after successful login', function () {
+    it('redirects to /dashboard after successful login', function () {
         $this->post('/login', [
             'email' => 'jane@example.com',
             'password' => 'password123',
-        ])->assertRedirect('/');
+        ])->assertRedirect('/dashboard');
     });
 
     it('returns a validation error on incorrect password', function () {
