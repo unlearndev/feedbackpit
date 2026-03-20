@@ -19,7 +19,7 @@ const submit = () => {
 <template>
     <AppLayout>
         <div class="max-w-md mx-auto">
-            <h1 class="text-2xl font-semibold tracking-tight text-neutral-900 mb-8 text-center">Log in to your account</h1>
+            <h1 class="text-2xl font-semibold tracking-tight text-neutral-900 mb-8 text-center">Sign in to your account</h1>
 
             <form class="rounded-none border border-black/[0.06] bg-white p-6 space-y-5" @submit.prevent="submit">
                 <AppInput
@@ -46,11 +46,11 @@ const submit = () => {
                 </AppInput>
 
                 <AppButton type="submit" :disabled="form.processing" class="w-full">
-                    Log in
+                    Sign In
                 </AppButton>
             </form>
 
-            <p class="mt-6 text-sm text-neutral-600">
+            <p class="mt-6 text-sm text-neutral-600 text-center">
                 Don't have an account?
                 <a href="/register" class="font-medium text-neutral-900 hover:underline transition-colors duration-150">Create one</a>
             </p>
