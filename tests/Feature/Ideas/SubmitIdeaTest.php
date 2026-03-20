@@ -47,7 +47,7 @@ it('redirects to home with a flash message after submission', function () use ($
     $this->actingAs(User::factory()->create())
         ->post(route('feedback.store'), $validPayload())
         ->assertRedirect(route('dashboard'))
-        ->assertSessionHas('message');
+        ->assertSessionHas('status');
 });
 
 // ---------------------------------------------------------------------------
