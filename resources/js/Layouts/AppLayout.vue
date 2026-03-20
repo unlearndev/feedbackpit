@@ -76,10 +76,10 @@ const logout = () => {
                         </template>
                         <template v-else>
                             <a href="/login" class="text-xs font-medium text-neutral-700 hover:text-neutral-900 transition-colors">
-                                Login
+                                Sign In
                             </a>
                             <AppButton href="/register" variant="outline" size="sm">
-                                Register
+                                Create Account
                             </AppButton>
                         </template>
                     </div>
@@ -124,10 +124,10 @@ const logout = () => {
                     </template>
                     <template v-else>
                         <a href="/login" class="block rounded-md px-3 py-2 text-sm font-medium text-neutral-700 hover:bg-neutral-100 transition-colors duration-150">
-                            Login
+                            Sign In
                         </a>
                         <a href="/register" class="block rounded-md px-3 py-2 text-sm font-medium text-neutral-700 hover:bg-neutral-100 transition-colors duration-150">
-                            Register
+                            Create Account
                         </a>
                     </template>
                     <a :href="user ? '/feedback/create' : '/login'" class="block rounded-md px-3 py-2 text-sm font-medium text-white bg-neutral-900 hover:bg-neutral-800 transition-colors duration-150">
