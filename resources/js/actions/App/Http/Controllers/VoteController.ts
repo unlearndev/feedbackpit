@@ -2,7 +2,7 @@ import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefa
 /**
 * @see \App\Http\Controllers\VoteController::__invoke
 * @see app/Http/Controllers/VoteController.php:11
-* @route '/ideas/{idea}/vote'
+* @route '/feedback/{idea}/vote'
 */
 const VoteController = (args: { idea: number | { id: number } } | [idea: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: VoteController.url(args, options),
@@ -11,13 +11,13 @@ const VoteController = (args: { idea: number | { id: number } } | [idea: number 
 
 VoteController.definition = {
     methods: ["post"],
-    url: '/ideas/{idea}/vote',
+    url: '/feedback/{idea}/vote',
 } satisfies RouteDefinition<["post"]>
 
 /**
 * @see \App\Http\Controllers\VoteController::__invoke
 * @see app/Http/Controllers/VoteController.php:11
-* @route '/ideas/{idea}/vote'
+* @route '/feedback/{idea}/vote'
 */
 VoteController.url = (args: { idea: number | { id: number } } | [idea: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
@@ -50,7 +50,7 @@ VoteController.url = (args: { idea: number | { id: number } } | [idea: number | 
 /**
 * @see \App\Http\Controllers\VoteController::__invoke
 * @see app/Http/Controllers/VoteController.php:11
-* @route '/ideas/{idea}/vote'
+* @route '/feedback/{idea}/vote'
 */
 VoteController.post = (args: { idea: number | { id: number } } | [idea: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: VoteController.url(args, options),

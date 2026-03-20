@@ -35,6 +35,21 @@
         right: 0;
     }
 
+    .blueprint-center-line {
+        position: relative;
+    }
+
+    .blueprint-center-line::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 50%;
+        width: 0;
+        border-left: 1px dashed rgba(0, 0, 0, 0.06);
+        pointer-events: none;
+    }
+
     .blueprint-rule {
         position: relative;
         height: 0;

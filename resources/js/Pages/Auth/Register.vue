@@ -21,7 +21,7 @@ const submit = () => {
 <template>
     <AppLayout>
         <div class="max-w-md mx-auto">
-            <h1 class="text-2xl font-semibold tracking-tight text-neutral-900 mb-8">Create an account</h1>
+            <h1 class="text-2xl font-semibold tracking-tight text-neutral-900 mb-8 text-center">Create an account</h1>
 
             <form class="rounded-none border border-black/[0.06] bg-white p-6 space-y-5" @submit.prevent="submit">
                 <AppInput

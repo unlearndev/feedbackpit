@@ -14,13 +14,13 @@ $validPayload = fn () => [
 // ---------------------------------------------------------------------------
 
 it('redirects guests to login', function () use ($validPayload) {
-    $this->post(route('ideas.store'), $validPayload())
+    $this->post(route('feedback.store'), $validPayload())
         ->assertRedirect(route('login'));
 });
 
 it('shows the form to authenticated users', function () {
     $this->actingAs(User::factory()->create())
-        ->get(route('ideas.create'))
+        ->get(route('feedback.create'))
         ->assertOk()
         ->assertInertia(fn ($page) => $page->component('Ideas/Create'));
 });
@@ -32,7 +32,7 @@ it('shows the form to authenticated users', function () {
 it('creates an idea in the database', function () use ($validPayload) {
     $user = User::factory()->create();
 
-    $this->actingAs($user)->post(route('ideas.store'), $validPayload());
+    $this->actingAs($user)->post(route('feedback.store'), $validPayload());
 
     $this->assertDatabaseHas('ideas', [
         'user_id' => $user->id,
@@ -45,8 +45,8 @@ it('creates an idea in the database', function () use ($validPayload) {
 
 it('redirects to home with a flash message after submission', function () use ($validPayload) {
     $this->actingAs(User::factory()->create())
-        ->post(route('ideas.store'), $validPayload())
-        ->assertRedirect(route('home'))
+        ->post(route('feedback.store'), $validPayload())
+        ->assertRedirect(route('dashboard'))
         ->assertSessionHas('message');
 });
 
@@ -56,24 +56,24 @@ it('redirects to home with a flash message after submission', function () use ($
 
 it('requires a title', function () use ($validPayload) {
     $this->actingAs(User::factory()->create())
-        ->post(route('ideas.store'), array_merge($validPayload(), ['title' => '']))
+        ->post(route('feedback.store'), array_merge($validPayload(), ['title' => '']))
         ->assertSessionHasErrors('title');
 });
 
 it('requires a description', function () use ($validPayload) {
     $this->actingAs(User::factory()->create())
-        ->post(route('ideas.store'), array_merge($validPayload(), ['description' => '']))
+        ->post(route('feedback.store'), array_merge($validPayload(), ['description' => '']))
         ->assertSessionHasErrors('description');
 });
 
 it('rejects a title longer than 255 characters', function () use ($validPayload) {
     $this->actingAs(User::factory()->create())
-        ->post(route('ideas.store'), array_merge($validPayload(), ['title' => str_repeat('a', 256)]))
+        ->post(route('feedback.store'), array_merge($validPayload(), ['title' => str_repeat('a', 256)]))
         ->assertSessionHasErrors('title');
 });
 
 it('rejects a description longer than 5000 characters', function () use ($validPayload) {
     $this->actingAs(User::factory()->create())
-        ->post(route('ideas.store'), array_merge($validPayload(), ['description' => str_repeat('a', 5001)]))
+        ->post(route('feedback.store'), array_merge($validPayload(), ['description' => str_repeat('a', 5001)]))
         ->assertSessionHasErrors('description');
 });

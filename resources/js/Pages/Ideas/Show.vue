@@ -2,7 +2,7 @@
 import AppLayout from '@/Layouts/AppLayout.vue';
 import VoteButton from '@/Components/VoteButton.vue';
 import StatusBadge from '@/Components/StatusBadge.vue';
-import { home } from '@/routes';
+import { dashboard } from '@/routes';
 
 defineProps({
     idea: {
@@ -22,7 +22,7 @@ const formatDate = (dateString) => {
 
 <template>
     <AppLayout>
-        <a :href="home.url()" class="inline-flex items-center gap-1 text-xs uppercase tracking-wider text-neutral-400 hover:text-neutral-900 transition-colors mb-6">
+        <a :href="dashboard.url()" class="inline-flex items-center gap-1 text-xs uppercase tracking-wider text-neutral-400 hover:text-neutral-900 transition-colors mb-6">
             <svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
             </svg>

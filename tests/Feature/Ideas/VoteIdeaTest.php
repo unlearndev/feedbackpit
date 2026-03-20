@@ -12,7 +12,7 @@ uses(\Illuminate\Foundation\Testing\RefreshDatabase::class);
 it('redirects guests to login', function () {
     $idea = Idea::factory()->for(User::factory())->create();
 
-    $this->post(route('ideas.vote', $idea))
+    $this->post(route('feedback.vote', $idea))
         ->assertRedirect(route('login'));
 });
 
@@ -25,7 +25,7 @@ it('allows an authenticated user to vote', function () {
     $idea = Idea::factory()->for(User::factory())->create(['votes' => 0]);
 
     $this->actingAs($user)
-        ->post(route('ideas.vote', $idea));
+        ->post(route('feedback.vote', $idea));
 
     $this->assertDatabaseHas('idea_vote', [
         'idea_id' => $idea->id,
@@ -43,7 +43,7 @@ it('removes the vote when voting again', function () {
     $idea->voters()->attach($user);
 
     $this->actingAs($user)
-        ->post(route('ideas.vote', $idea));
+        ->post(route('feedback.vote', $idea));
 
     $this->assertDatabaseMissing('idea_vote', [
         'idea_id' => $idea->id,
@@ -58,8 +58,8 @@ it('toggles an existing vote off on second click', function () {
     $idea = Idea::factory()->for(User::factory())->create(['votes' => 0]);
 
     // Vote twice
-    $this->actingAs($user)->post(route('ideas.vote', $idea));
-    $this->actingAs($user)->post(route('ideas.vote', $idea));
+    $this->actingAs($user)->post(route('feedback.vote', $idea));
+    $this->actingAs($user)->post(route('feedback.vote', $idea));
 
     // Second click should toggle off, not create a duplicate
     $this->assertDatabaseMissing('idea_vote', [
@@ -75,7 +75,7 @@ it('redirects back after voting', function () {
     $idea = Idea::factory()->for(User::factory())->create();
 
     $this->actingAs($user)
-        ->from(route('ideas.show', $idea))
-        ->post(route('ideas.vote', $idea))
-        ->assertRedirect(route('ideas.show', $idea));
+        ->from(route('feedback.show', $idea))
+        ->post(route('feedback.vote', $idea))
+        ->assertRedirect(route('feedback.show', $idea));
 });
