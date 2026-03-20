@@ -34,9 +34,9 @@ const submit = () => {
                 </AppButton>
             </form>
 
-            <p class="mt-6 text-sm text-neutral-600">
+            <p class="mt-6 text-sm text-neutral-600 text-center">
                 Remember your password?
-                <a href="/login" class="font-medium text-neutral-900 hover:underline transition-colors duration-150">Log in</a>
+                <a href="/login" class="font-medium text-neutral-900 hover:underline transition-colors duration-150">Sign in</a>
             </p>
         </div>
     </AppLayout>
