@@ -18,6 +18,7 @@ class UserResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'email' => $this->when($this->resource->is($request->user()), $this->email),
+            'is_team_member' => $this->is_team_member,
         ];
     }
 }

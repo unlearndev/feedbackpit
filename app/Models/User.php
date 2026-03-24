@@ -23,6 +23,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'is_team_member',
     ];
 
     /**
@@ -45,7 +46,13 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'is_team_member' => 'boolean',
         ];
+    }
+
+    public function isTeamMember(): bool
+    {
+        return $this->is_team_member;
     }
 
     /**
