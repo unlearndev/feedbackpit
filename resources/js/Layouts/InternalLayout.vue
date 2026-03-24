@@ -16,11 +16,9 @@ const logout = () => {
 
 <template>
     <div class="min-h-screen bg-white">
-        <!-- Navbar -->
         <nav class="fixed top-0 inset-x-0 z-50 bg-white/80 backdrop-blur-md border-b border-black/[0.06]">
             <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex items-center justify-between h-16">
-                    <!-- Left: Logo + Internal label -->
                     <div class="flex items-center gap-3">
                         <a href="/internal" class="text-xl font-semibold tracking-tight text-neutral-900">
                             {{ appName }}
@@ -30,7 +28,6 @@ const logout = () => {
                         </span>
                     </div>
 
-                    <!-- Right: Nav + User (hidden on mobile) -->
                     <div class="hidden md:flex items-center space-x-4">
                         <a href="/internal" class="text-xs font-medium text-neutral-700 hover:text-neutral-900 transition-colors">
                             Ideas
@@ -48,10 +45,8 @@ const logout = () => {
                                 >
                             </button>
 
-                            <!-- Click-outside overlay -->
                             <div v-if="dropdownOpen" class="fixed inset-0 z-10" @click="dropdownOpen = false" />
 
-                            <!-- Dropdown menu -->
                             <Transition
                                 enter-active-class="transition ease-out duration-200"
                                 enter-from-class="opacity-0 scale-95"
@@ -79,7 +74,6 @@ const logout = () => {
                         </div>
                     </div>
 
-                    <!-- Mobile: Hamburger -->
                     <div class="flex items-center space-x-3 md:hidden">
                         <img
                             v-if="user"
@@ -102,7 +96,6 @@ const logout = () => {
                 </div>
             </div>
 
-            <!-- Mobile menu panel -->
             <div v-if="mobileMenuOpen" class="md:hidden border-t border-neutral-200 bg-white/80 backdrop-blur-md">
                 <div class="space-y-1 px-4 py-3">
                     <a href="/internal" class="block rounded-md px-3 py-2 text-sm font-medium text-neutral-700 hover:bg-neutral-100 transition-colors duration-150">
@@ -127,7 +120,6 @@ const logout = () => {
 
         <FlashMessage />
 
-        <!-- Content area -->
         <main class="pt-24 pb-12">
             <div class="max-w-5xl mx-auto relative blueprint">
                 <div class="blueprint-rule">
@@ -144,7 +136,6 @@ const logout = () => {
             </div>
         </main>
 
-        <!-- Footer -->
         <footer class="border-t border-black/[0.06]">
             <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex items-center justify-between">
                 <a href="https://bitterbrains.com" class="text-xs text-neutral-400 hover:text-neutral-900 transition-colors duration-150">Powered by BitterBrains</a>
