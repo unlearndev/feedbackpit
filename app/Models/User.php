@@ -23,6 +23,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'is_team_member',
     ];
 
     /**
@@ -45,7 +46,18 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'is_team_member' => 'boolean',
         ];
+    }
+
+    public function isTeamMember(): bool
+    {
+        return $this->is_team_member;
+    }
+
+    public function avatarUrl(int $size = 56): string
+    {
+        return 'https://ui-avatars.com/api/?name='.urlencode($this->name).'&background=171717&color=fff&size='.$size.'&font-size=0.38';
     }
 
     /**
@@ -62,5 +74,13 @@ class User extends Authenticatable
     public function votedIdeas(): BelongsToMany
     {
         return $this->belongsToMany(Idea::class, 'idea_vote');
+    }
+
+    /**
+     * @return HasMany<Comment, $this>
+     */
+    public function comments(): HasMany
+    {
+        return $this->hasMany(Comment::class);
     }
 }

@@ -4,6 +4,8 @@ import DashboardController from './DashboardController'
 import AccountSettingsController from './AccountSettingsController'
 import IdeaController from './IdeaController'
 import VoteController from './VoteController'
+import CommentController from './CommentController'
+import Internal from './Internal'
 
 const Controllers = {
     LandingController: Object.assign(LandingController, LandingController),
@@ -12,6 +14,8 @@ const Controllers = {
     AccountSettingsController: Object.assign(AccountSettingsController, AccountSettingsController),
     IdeaController: Object.assign(IdeaController, IdeaController),
     VoteController: Object.assign(VoteController, VoteController),
+    CommentController: Object.assign(CommentController, CommentController),
+    Internal: Object.assign(Internal, Internal),
 }
 
 export default Controllers
