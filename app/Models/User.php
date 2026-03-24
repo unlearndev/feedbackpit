@@ -55,6 +55,11 @@ class User extends Authenticatable
         return $this->is_team_member;
     }
 
+    public function avatarUrl(int $size = 56): string
+    {
+        return 'https://ui-avatars.com/api/?name='.urlencode($this->name).'&background=171717&color=fff&size='.$size.'&font-size=0.38';
+    }
+
     /**
      * @return HasMany<Idea, $this>
      */

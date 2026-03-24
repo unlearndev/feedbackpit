@@ -38,7 +38,7 @@ const logout = () => {
                             <div class="relative">
                                 <button type="button" class="flex items-center p-1" @click="dropdownOpen = !dropdownOpen">
                                     <img
-                                        :src="`https://ui-avatars.com/api/?name=${encodeURIComponent(user.name)}&background=171717&color=fff&size=56&font-size=0.38`"
+                                        :src="user.avatar_url"
                                         :alt="`${user.name} avatar`"
                                         class="h-7 w-7 rounded-full"
                                     >
@@ -88,7 +88,7 @@ const logout = () => {
                     <div class="flex items-center space-x-3 md:hidden">
                         <img
                             v-if="user"
-                            :src="`https://ui-avatars.com/api/?name=${encodeURIComponent(user.name)}&background=171717&color=fff&size=56&font-size=0.38`"
+                            :src="user.avatar_url"
                             :alt="`${user.name} avatar`"
                             class="h-7 w-7 rounded-full"
                         >
