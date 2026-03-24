@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Comment;
 use App\Models\Idea;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -88,5 +89,34 @@ class DemoSeeder extends Seeder
             $voterIds = $users->only($data['voters'])->pluck('id');
             $idea->voters()->attach($voterIds);
         }
+
+        // Sample comments on "Dark mode support"
+        $darkMode = Idea::where('title', 'Dark mode support')->first();
+
+        $this->createComment($darkMode, $users[3], 'Yes please! I work night shifts and this would be a game changer.');
+        $this->createComment($darkMode, $users[0], 'Great news — dark mode shipped last week! Let us know if you run into any issues.');
+        $this->createComment($darkMode, $users[4], 'Loving it so far. The contrast is easy on the eyes.');
+
+        // Sample internal notes
+        $emailNotifications = Idea::where('title', 'Email notifications for order updates')->first();
+
+        $this->createNote($emailNotifications, $users[0], 'We should scope this to transactional emails only for v1.');
+        $this->createNote($darkMode, $users[1], 'Confirmed with design — no issues in the latest QA pass.');
+    }
+
+    private function createComment(Idea $idea, User $user, string $body): void
+    {
+        $comment = new Comment(['body' => $body]);
+        $comment->user()->associate($user);
+        $comment->idea()->associate($idea);
+        $comment->save();
+    }
+
+    private function createNote(Idea $idea, User $user, string $body): void
+    {
+        $comment = new Comment(['body' => $body, 'is_internal' => true]);
+        $comment->user()->associate($user);
+        $comment->idea()->associate($idea);
+        $comment->save();
     }
 }
