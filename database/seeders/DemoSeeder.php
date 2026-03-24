@@ -93,22 +93,30 @@ class DemoSeeder extends Seeder
         // Sample comments on "Dark mode support"
         $darkMode = Idea::where('title', 'Dark mode support')->first();
 
-        Comment::create([
-            'idea_id' => $darkMode->id,
-            'user_id' => $users[3]->id,
-            'body' => 'Yes please! I work night shifts and this would be a game changer.',
-        ]);
+        $this->createComment($darkMode, $users[3], 'Yes please! I work night shifts and this would be a game changer.');
+        $this->createComment($darkMode, $users[0], 'Great news — dark mode shipped last week! Let us know if you run into any issues.');
+        $this->createComment($darkMode, $users[4], 'Loving it so far. The contrast is easy on the eyes.');
 
-        Comment::create([
-            'idea_id' => $darkMode->id,
-            'user_id' => $users[0]->id,
-            'body' => 'Great news — dark mode shipped last week! Let us know if you run into any issues.',
-        ]);
+        // Sample internal notes
+        $emailNotifications = Idea::where('title', 'Email notifications for order updates')->first();
 
-        Comment::create([
-            'idea_id' => $darkMode->id,
-            'user_id' => $users[4]->id,
-            'body' => 'Loving it so far. The contrast is easy on the eyes.',
-        ]);
+        $this->createNote($emailNotifications, $users[0], 'We should scope this to transactional emails only for v1.');
+        $this->createNote($darkMode, $users[1], 'Confirmed with design — no issues in the latest QA pass.');
+    }
+
+    private function createComment(Idea $idea, User $user, string $body): void
+    {
+        $comment = new Comment(['body' => $body]);
+        $comment->user()->associate($user);
+        $comment->idea()->associate($idea);
+        $comment->save();
+    }
+
+    private function createNote(Idea $idea, User $user, string $body): void
+    {
+        $comment = new Comment(['body' => $body, 'is_internal' => true]);
+        $comment->user()->associate($user);
+        $comment->idea()->associate($idea);
+        $comment->save();
     }
 }

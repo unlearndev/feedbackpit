@@ -15,15 +15,11 @@ class IdeaController extends Controller
     {
         $idea->load('user', 'voters:id');
 
-        $comments = $idea->comments()
-            ->where('is_internal', false)
-            ->with('user')
-            ->oldest()
-            ->get();
-
         return inertia('Ideas/Show', [
             'idea' => new IdeaResource($idea),
-            'comments' => CommentResource::collection($comments),
+            'comments' => CommentResource::collection(
+                $idea->comments()->where('is_internal', false)->with('user')->oldest()->get()
+            ),
         ]);
     }
 

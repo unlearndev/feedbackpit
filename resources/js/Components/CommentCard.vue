@@ -21,7 +21,7 @@ const formatDate = (dateString) => {
     <div class="rounded-none border border-black/[0.06] bg-white p-4">
         <div class="flex items-center gap-2 mb-2">
             <img
-                :src="`https://ui-avatars.com/api/?name=${encodeURIComponent(comment.user.name)}&background=171717&color=fff&size=56&font-size=0.38`"
+                :src="comment.user.avatar_url"
                 :alt="`${comment.user.name} avatar`"
                 class="h-6 w-6 rounded-full"
             >

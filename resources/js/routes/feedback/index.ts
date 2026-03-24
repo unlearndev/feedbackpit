@@ -2,7 +2,7 @@ import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefa
 import comments from './comments'
 /**
 * @see \App\Http\Controllers\IdeaController::create
-* @see app/Http/Controllers/IdeaController.php:30
+* @see app/Http/Controllers/IdeaController.php:26
 * @route '/feedback/create'
 */
 export const create = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -17,7 +17,7 @@ create.definition = {
 
 /**
 * @see \App\Http\Controllers\IdeaController::create
-* @see app/Http/Controllers/IdeaController.php:30
+* @see app/Http/Controllers/IdeaController.php:26
 * @route '/feedback/create'
 */
 create.url = (options?: RouteQueryOptions) => {
@@ -26,7 +26,7 @@ create.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\IdeaController::create
-* @see app/Http/Controllers/IdeaController.php:30
+* @see app/Http/Controllers/IdeaController.php:26
 * @route '/feedback/create'
 */
 create.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -36,7 +36,7 @@ create.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\IdeaController::create
-* @see app/Http/Controllers/IdeaController.php:30
+* @see app/Http/Controllers/IdeaController.php:26
 * @route '/feedback/create'
 */
 create.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -46,7 +46,7 @@ create.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\IdeaController::store
-* @see app/Http/Controllers/IdeaController.php:35
+* @see app/Http/Controllers/IdeaController.php:31
 * @route '/feedback'
 */
 export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -61,7 +61,7 @@ store.definition = {
 
 /**
 * @see \App\Http\Controllers\IdeaController::store
-* @see app/Http/Controllers/IdeaController.php:35
+* @see app/Http/Controllers/IdeaController.php:31
 * @route '/feedback'
 */
 store.url = (options?: RouteQueryOptions) => {
@@ -70,7 +70,7 @@ store.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\IdeaController::store
-* @see app/Http/Controllers/IdeaController.php:35
+* @see app/Http/Controllers/IdeaController.php:31
 * @route '/feedback'
 */
 store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({

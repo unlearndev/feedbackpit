@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Internal;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCommentRequest;
 use App\Models\Comment;
 use App\Models\Idea;
