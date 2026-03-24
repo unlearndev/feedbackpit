@@ -1,15 +1,26 @@
 <script setup>
+import { computed } from 'vue';
+import { usePage } from '@inertiajs/vue3';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import VoteButton from '@/Components/VoteButton.vue';
 import StatusBadge from '@/Components/StatusBadge.vue';
+import CommentCard from '@/Components/CommentCard.vue';
+import CommentForm from '@/Components/CommentForm.vue';
 import { dashboard } from '@/routes';
+import { store } from '@/actions/App/Http/Controllers/CommentController';
 
-defineProps({
+const props = defineProps({
     idea: {
         type: Object,
         required: true,
     },
+    comments: {
+        type: Array,
+        default: () => [],
+    },
 });
+
+const user = computed(() => usePage().props.auth?.user ?? null);
 
 const formatDate = (dateString) => {
     return new Date(dateString).toLocaleDateString('en-US', {
@@ -47,11 +58,21 @@ const formatDate = (dateString) => {
             <p class="text-neutral-700 whitespace-pre-line">{{ idea.description }}</p>
         </div>
 
-        <!-- Comments (coming soon) -->
         <div class="mt-8">
             <h2 class="text-lg font-semibold tracking-tight text-neutral-900 mb-4">Comments</h2>
-            <div class="rounded-none border-2 border-dashed border-black/[0.06] p-8 text-center">
-                <p class="text-sm text-neutral-500">Comments are coming soon.</p>
+
+            <div v-if="comments.length" class="space-y-3 mb-6">
+                <CommentCard v-for="comment in comments" :key="comment.id" :comment="comment" />
+            </div>
+            <div v-else class="rounded-none border-2 border-dashed border-black/[0.06] p-8 text-center mb-6">
+                <p class="text-sm text-neutral-500">No comments yet. Be the first to share your thoughts.</p>
+            </div>
+
+            <div v-if="user">
+                <CommentForm :action="store.url(idea.id)" />
+            </div>
+            <div v-else class="rounded-none border border-black/[0.06] bg-white p-4 text-center">
+                <a href="/login" class="text-sm font-medium text-neutral-900 hover:underline">Sign in to leave a comment</a>
             </div>
         </div>
     </AppLayout>

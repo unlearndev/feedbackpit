@@ -21,7 +21,6 @@ onUnmounted(() => {
 
 <template>
     <AppLayout>
-        <!-- Hero -->
         <section class="blueprint-center-line py-16 sm:py-24 text-center">
             <h1 class="text-4xl sm:text-5xl font-semibold tracking-tight text-neutral-900">
                 Collect feedback.<br>Ship what matters.
@@ -40,7 +39,6 @@ onUnmounted(() => {
             <span class="absolute -top-1 -right-1 block h-2 w-2 bg-neutral-200" />
         </div>
 
-        <!-- Built for learning -->
         <section class="py-16 text-center">
             <h2 class="text-2xl font-semibold tracking-tight text-neutral-900">Built for learning</h2>
             <p class="mt-3 text-sm text-neutral-500 max-w-md mx-auto">
@@ -54,7 +52,6 @@ onUnmounted(() => {
             <span class="absolute -top-1 -right-1 block h-2 w-2 bg-neutral-200" />
         </div>
 
-        <!-- How it works -->
         <section class="relative py-10">
             <span class="hidden md:block absolute top-0 bottom-0 left-1/3 border-l border-dashed border-black/[0.06]" />
             <span class="hidden md:block absolute top-0 bottom-0 left-2/3 border-l border-dashed border-black/[0.06]" />
@@ -83,7 +80,6 @@ onUnmounted(() => {
             <span class="absolute -top-1 -right-1 block h-2 w-2 bg-neutral-200" />
         </div>
 
-        <!-- Open & transparent -->
         <section class="py-16 text-center">
             <h2 class="text-2xl font-semibold tracking-tight text-neutral-900">Open & transparent</h2>
             <p class="mt-3 text-sm text-neutral-500 max-w-md mx-auto">

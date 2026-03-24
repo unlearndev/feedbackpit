@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreIdeaRequest;
+use App\Http\Resources\CommentResource;
 use App\Http\Resources\IdeaResource;
 use App\Models\Idea;
 use Illuminate\Http\RedirectResponse;
@@ -16,6 +17,9 @@ class IdeaController extends Controller
 
         return inertia('Ideas/Show', [
             'idea' => new IdeaResource($idea),
+            'comments' => CommentResource::collection(
+                $idea->comments()->where('is_internal', false)->with('user')->oldest()->get()
+            ),
         ]);
     }
 
