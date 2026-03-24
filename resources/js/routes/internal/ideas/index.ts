@@ -1,5 +1,6 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../wayfinder'
 import comments from './comments'
+import notes from './notes'
 /**
 * @see \App\Http\Controllers\Internal\IdeaDashboardController::__invoke
 * @see app/Http/Controllers/Internal/IdeaDashboardController.php:12
@@ -116,6 +117,7 @@ const ideas = {
     index: Object.assign(index, index),
     show: Object.assign(show, show),
     comments: Object.assign(comments, comments),
+    notes: Object.assign(notes, notes),
 }
 
 export default ideas

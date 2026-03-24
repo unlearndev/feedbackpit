@@ -32,4 +32,5 @@ Route::prefix('internal')->middleware(['auth', 'team'])->name('internal.')->grou
     Route::get('/', Internal\IdeaDashboardController::class)->name('ideas.index');
     Route::get('/ideas/{idea}', [Internal\IdeaDetailController::class, 'show'])->name('ideas.show');
     Route::post('/ideas/{idea}/comments', [Internal\CommentController::class, 'store'])->name('ideas.comments.store');
+    Route::post('/ideas/{idea}/notes', [Internal\NoteController::class, 'store'])->name('ideas.notes.store');
 });

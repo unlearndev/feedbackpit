@@ -3,7 +3,10 @@ import InternalLayout from '@/Layouts/InternalLayout.vue';
 import StatusBadge from '@/Components/StatusBadge.vue';
 import CommentCard from '@/Components/CommentCard.vue';
 import CommentForm from '@/Components/CommentForm.vue';
+import NoteCard from '@/Components/NoteCard.vue';
+import NoteForm from '@/Components/NoteForm.vue';
 import { store as storeComment } from '@/actions/App/Http/Controllers/Internal/CommentController';
+import { store as storeNote } from '@/actions/App/Http/Controllers/Internal/NoteController';
 
 defineProps({
     idea: {
@@ -69,9 +72,14 @@ const formatDate = (dateString) => {
             <div>
                 <h2 class="text-lg font-semibold tracking-tight text-neutral-900 mb-4">Internal Notes</h2>
 
-                <div class="rounded-none border-2 border-dashed border-black/[0.06] p-8 text-center">
-                    <p class="text-sm text-neutral-500">Internal notes coming soon.</p>
+                <div v-if="internalComments.length" class="space-y-3 mb-6">
+                    <NoteCard v-for="note in internalComments" :key="note.id" :note="note" />
                 </div>
+                <div v-else class="rounded-none border-2 border-dashed border-black/[0.06] p-8 text-center mb-6">
+                    <p class="text-sm text-neutral-500">No internal notes yet.</p>
+                </div>
+
+                <NoteForm :action="storeNote.url(idea.id)" />
             </div>
         </div>
     </InternalLayout>
