@@ -17,6 +17,7 @@
 - Always use API Resources (`app/Http/Resources/`) when passing data to Inertia views. Never pass raw models or collections directly. Only include the fields the frontend actually needs.
 - Always use controllers for route handlers. Never use closures in route files.
 - Never use standalone error/success banners on pages. Use inline validation errors via the `:error` prop on form inputs, and the global `FlashMessage` component for success messages.
+- Never set foreign key IDs manually (e.g. `'user_id' => $user->id`). Always use Eloquent relationships (`associate()`, or create through the relationship) to set foreign keys.
 
 # Verification
 After making changes, always run the following checks and fix any issues before considering work complete:

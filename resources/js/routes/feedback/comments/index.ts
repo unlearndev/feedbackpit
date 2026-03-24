@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../wayfinder'
 /**
 * @see \App\Http\Controllers\CommentController::store
-* @see app/Http/Controllers/CommentController.php:11
+* @see app/Http/Controllers/CommentController.php:12
 * @route '/feedback/{idea}/comments'
 */
 export const store = (args: { idea: number | { id: number } } | [idea: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -16,7 +16,7 @@ store.definition = {
 
 /**
 * @see \App\Http\Controllers\CommentController::store
-* @see app/Http/Controllers/CommentController.php:11
+* @see app/Http/Controllers/CommentController.php:12
 * @route '/feedback/{idea}/comments'
 */
 store.url = (args: { idea: number | { id: number } } | [idea: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -49,7 +49,7 @@ store.url = (args: { idea: number | { id: number } } | [idea: number | { id: num
 
 /**
 * @see \App\Http\Controllers\CommentController::store
-* @see app/Http/Controllers/CommentController.php:11
+* @see app/Http/Controllers/CommentController.php:12
 * @route '/feedback/{idea}/comments'
 */
 store.post = (args: { idea: number | { id: number } } | [idea: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({

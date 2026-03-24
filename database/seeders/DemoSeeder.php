@@ -93,22 +93,16 @@ class DemoSeeder extends Seeder
         // Sample comments on "Dark mode support"
         $darkMode = Idea::where('title', 'Dark mode support')->first();
 
-        Comment::create([
-            'idea_id' => $darkMode->id,
-            'user_id' => $users[3]->id,
-            'body' => 'Yes please! I work night shifts and this would be a game changer.',
-        ]);
+        $this->createComment($darkMode, $users[3], 'Yes please! I work night shifts and this would be a game changer.');
+        $this->createComment($darkMode, $users[0], 'Great news — dark mode shipped last week! Let us know if you run into any issues.');
+        $this->createComment($darkMode, $users[4], 'Loving it so far. The contrast is easy on the eyes.');
+    }
 
-        Comment::create([
-            'idea_id' => $darkMode->id,
-            'user_id' => $users[0]->id,
-            'body' => 'Great news — dark mode shipped last week! Let us know if you run into any issues.',
-        ]);
-
-        Comment::create([
-            'idea_id' => $darkMode->id,
-            'user_id' => $users[4]->id,
-            'body' => 'Loving it so far. The contrast is easy on the eyes.',
-        ]);
+    private function createComment(Idea $idea, User $user, string $body): void
+    {
+        $comment = new Comment(['body' => $body]);
+        $comment->user()->associate($user);
+        $comment->idea()->associate($idea);
+        $comment->save();
     }
 }
