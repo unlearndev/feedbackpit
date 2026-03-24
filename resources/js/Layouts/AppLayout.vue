@@ -17,18 +17,15 @@ const logout = () => {
 
 <template>
     <div class="min-h-screen bg-white">
-        <!-- Navbar -->
         <nav class="fixed top-0 inset-x-0 z-50 bg-white/80 backdrop-blur-md border-b border-black/[0.06]">
             <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex items-center justify-between h-16">
-                    <!-- Left: Logo -->
                     <div class="flex-shrink-0">
                         <a :href="user ? '/dashboard' : '/'" class="text-xl font-semibold tracking-tight text-neutral-900">
                             {{ appName }}
                         </a>
                     </div>
 
-                    <!-- Right: Auth + CTA + User (hidden on mobile) -->
                     <div class="hidden md:flex items-center space-x-4">
                         <AppButton :href="user ? '/feedback/create' : '/login'" size="sm">
                             New Feedback
@@ -38,16 +35,14 @@ const logout = () => {
                             <div class="relative">
                                 <button type="button" class="flex items-center p-1" @click="dropdownOpen = !dropdownOpen">
                                     <img
-                                        :src="`https://ui-avatars.com/api/?name=${encodeURIComponent(user.name)}&background=171717&color=fff&size=56&font-size=0.38`"
+                                        :src="user.avatar_url"
                                         :alt="`${user.name} avatar`"
                                         class="h-7 w-7 rounded-full"
                                     >
                                 </button>
 
-                                <!-- Click-outside overlay -->
                                 <div v-if="dropdownOpen" class="fixed inset-0 z-10" @click="dropdownOpen = false" />
 
-                                <!-- Dropdown menu -->
                                 <Transition
                                     enter-active-class="transition ease-out duration-200"
                                     enter-from-class="opacity-0 scale-95"
@@ -57,6 +52,13 @@ const logout = () => {
                                     leave-to-class="opacity-0 scale-95"
                                 >
                                     <div v-if="dropdownOpen" class="absolute right-0 mt-2 w-48 origin-top-right rounded-md bg-white border border-neutral-200 shadow-md py-1 z-20">
+                                        <a
+                                            v-if="user.is_team_member"
+                                            href="/internal"
+                                            class="block w-full text-left px-4 py-2 text-xs text-neutral-700 hover:bg-neutral-100 transition-colors duration-150"
+                                        >
+                                            Internal
+                                        </a>
                                         <a
                                             href="/account/settings"
                                             class="block w-full text-left px-4 py-2 text-xs text-neutral-700 hover:bg-neutral-100 transition-colors duration-150"
@@ -84,11 +86,10 @@ const logout = () => {
                         </template>
                     </div>
 
-                    <!-- Mobile: Hamburger (+ Avatar when logged in) -->
                     <div class="flex items-center space-x-3 md:hidden">
                         <img
                             v-if="user"
-                            :src="`https://ui-avatars.com/api/?name=${encodeURIComponent(user.name)}&background=171717&color=fff&size=56&font-size=0.38`"
+                            :src="user.avatar_url"
                             :alt="`${user.name} avatar`"
                             class="h-7 w-7 rounded-full"
                         >
@@ -107,10 +108,12 @@ const logout = () => {
                 </div>
             </div>
 
-            <!-- Mobile menu panel -->
             <div v-if="mobileMenuOpen" class="md:hidden border-t border-neutral-200 bg-white/80 backdrop-blur-md">
                 <div class="space-y-1 px-4 py-3">
                     <template v-if="user">
+                        <a v-if="user.is_team_member" href="/internal" class="block rounded-md px-3 py-2 text-sm font-medium text-neutral-700 hover:bg-neutral-100 transition-colors duration-150">
+                            Internal
+                        </a>
                         <a href="/account/settings" class="block rounded-md px-3 py-2 text-sm font-medium text-neutral-700 hover:bg-neutral-100 transition-colors duration-150">
                             Account
                         </a>
@@ -139,7 +142,6 @@ const logout = () => {
 
         <FlashMessage />
 
-        <!-- Content area -->
         <main class="pt-24 pb-12">
             <div class="max-w-5xl mx-auto relative blueprint">
                 <div class="blueprint-rule">
@@ -156,7 +158,6 @@ const logout = () => {
             </div>
         </main>
 
-        <!-- Footer -->
         <footer class="border-t border-black/[0.06]">
             <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex items-center justify-between">
                 <a href="https://bitterbrains.com" class="text-xs text-neutral-400 hover:text-neutral-900 transition-colors duration-150">Powered by BitterBrains</a>
