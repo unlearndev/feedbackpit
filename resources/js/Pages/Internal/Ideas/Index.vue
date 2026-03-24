@@ -1,6 +1,7 @@
 <script setup>
 import InternalLayout from '@/Layouts/InternalLayout.vue';
 import StatusBadge from '@/Components/StatusBadge.vue';
+import { show } from '@/actions/App/Http/Controllers/Internal/IdeaDetailController';
 
 defineProps({
     ideas: {
@@ -30,7 +31,7 @@ const formatDate = (dateString) => {
             <a
                 v-for="idea in ideas"
                 :key="idea.id"
-                href="#"
+                :href="show.url(idea.id)"
                 class="flex items-center gap-4 rounded-none border border-black/[0.06] bg-white p-4 hover:border-neutral-300 transition-colors"
             >
                 <div class="flex flex-shrink-0 flex-col items-center justify-center w-12 h-12 rounded-none border border-black/[0.06] text-sm font-semibold text-neutral-900">
