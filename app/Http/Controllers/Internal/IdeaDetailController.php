@@ -14,22 +14,14 @@ class IdeaDetailController extends Controller
     {
         $idea->load('user', 'voters:id');
 
-        $comments = $idea->comments()
-            ->where('is_internal', false)
-            ->with('user')
-            ->oldest()
-            ->get();
-
-        $internalComments = $idea->comments()
-            ->where('is_internal', true)
-            ->with('user')
-            ->oldest()
-            ->get();
-
         return inertia('Internal/Ideas/Show', [
             'idea' => new IdeaResource($idea),
-            'comments' => CommentResource::collection($comments),
-            'internalComments' => CommentResource::collection($internalComments),
+            'comments' => CommentResource::collection(
+                $idea->comments()->where('is_internal', false)->with('user')->oldest()->get()
+            ),
+            'internalComments' => CommentResource::collection(
+                $idea->comments()->where('is_internal', true)->with('user')->oldest()->get()
+            ),
         ]);
     }
 }
