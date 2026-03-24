@@ -1,50 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../wayfinder'
-import comments from './comments'
-import notes from './notes'
-/**
-* @see \App\Http\Controllers\Internal\IdeaDashboardController::__invoke
-* @see app/Http/Controllers/Internal/IdeaDashboardController.php:12
-* @route '/internal'
-*/
-export const index = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
-    url: index.url(options),
-    method: 'get',
-})
-
-index.definition = {
-    methods: ["get","head"],
-    url: '/internal',
-} satisfies RouteDefinition<["get","head"]>
-
-/**
-* @see \App\Http\Controllers\Internal\IdeaDashboardController::__invoke
-* @see app/Http/Controllers/Internal/IdeaDashboardController.php:12
-* @route '/internal'
-*/
-index.url = (options?: RouteQueryOptions) => {
-    return index.definition.url + queryParams(options)
-}
-
-/**
-* @see \App\Http\Controllers\Internal\IdeaDashboardController::__invoke
-* @see app/Http/Controllers/Internal/IdeaDashboardController.php:12
-* @route '/internal'
-*/
-index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
-    url: index.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Internal\IdeaDashboardController::__invoke
-* @see app/Http/Controllers/Internal/IdeaDashboardController.php:12
-* @route '/internal'
-*/
-index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
-    url: index.url(options),
-    method: 'head',
-})
-
+import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Internal\IdeaDetailController::show
 * @see app/Http/Controllers/Internal/IdeaDetailController.php:13
@@ -113,11 +67,6 @@ show.head = (args: { idea: number | { id: number } } | [idea: number | { id: num
     method: 'head',
 })
 
-const ideas = {
-    index: Object.assign(index, index),
-    show: Object.assign(show, show),
-    comments: Object.assign(comments, comments),
-    notes: Object.assign(notes, notes),
-}
+const IdeaDetailController = { show }
 
-export default ideas
+export default IdeaDetailController
