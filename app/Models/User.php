@@ -70,4 +70,12 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Idea::class, 'idea_vote');
     }
+
+    /**
+     * @return HasMany<Comment, $this>
+     */
+    public function comments(): HasMany
+    {
+        return $this->hasMany(Comment::class);
+    }
 }

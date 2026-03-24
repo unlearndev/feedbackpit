@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\AccountSettingsController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\IdeaController;
 use App\Http\Controllers\LandingController;
@@ -21,6 +22,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/feedback', [IdeaController::class, 'store'])->name('feedback.store');
 
     Route::post('/feedback/{idea}/vote', VoteController::class)->name('feedback.vote');
+    Route::post('/feedback/{idea}/comments', [CommentController::class, 'store'])->name('feedback.comments.store');
 });
 
 Route::get('/feedback/{idea}', [IdeaController::class, 'show'])->name('feedback.show');

@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Comment;
 use App\Models\Idea;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -88,5 +89,26 @@ class DemoSeeder extends Seeder
             $voterIds = $users->only($data['voters'])->pluck('id');
             $idea->voters()->attach($voterIds);
         }
+
+        // Sample comments on "Dark mode support"
+        $darkMode = Idea::where('title', 'Dark mode support')->first();
+
+        Comment::create([
+            'idea_id' => $darkMode->id,
+            'user_id' => $users[3]->id,
+            'body' => 'Yes please! I work night shifts and this would be a game changer.',
+        ]);
+
+        Comment::create([
+            'idea_id' => $darkMode->id,
+            'user_id' => $users[0]->id,
+            'body' => 'Great news — dark mode shipped last week! Let us know if you run into any issues.',
+        ]);
+
+        Comment::create([
+            'idea_id' => $darkMode->id,
+            'user_id' => $users[4]->id,
+            'body' => 'Loving it so far. The contrast is easy on the eyes.',
+        ]);
     }
 }
