@@ -59,7 +59,7 @@ class User extends Authenticatable
     {
         return 'https://ui-avatars.com/api/?name='.urlencode($this->name).'&background=171717&color=fff&size='.$size.'&font-size=0.38';
     }
-  
+
     /**
      * @return HasMany<Idea, $this>
      */
