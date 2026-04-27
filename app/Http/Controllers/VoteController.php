@@ -23,6 +23,7 @@ class VoteController extends Controller
             } else {
                 $idea->voters()->attach($user->id);
                 $idea->increment('votes');
+                $idea->subscribers()->syncWithoutDetaching([$user->id]);
             }
         });
 

@@ -79,3 +79,23 @@ it('redirects back after voting', function () {
         ->post(route('feedback.vote', $idea))
         ->assertRedirect(route('feedback.show', $idea));
 });
+
+it('subscribes the voter to notifications when they vote', function () {
+    $user = User::factory()->create();
+    $idea = Idea::factory()->for(User::factory())->create();
+
+    $this->actingAs($user)->post(route('feedback.vote', $idea));
+
+    expect($idea->subscribers()->where('users.id', $user->id)->exists())->toBeTrue();
+});
+
+it('keeps the subscription when the voter unvotes', function () {
+    $user = User::factory()->create();
+    $idea = Idea::factory()->for(User::factory())->create();
+    $idea->voters()->attach($user);
+    $idea->subscribers()->attach($user);
+
+    $this->actingAs($user)->post(route('feedback.vote', $idea));
+
+    expect($idea->subscribers()->where('users.id', $user->id)->exists())->toBeTrue();
+});
