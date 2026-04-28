@@ -31,7 +31,7 @@ class DemoSeeder extends Seeder
             [
                 'title' => 'Dark mode support',
                 'description' => 'I use the app late at night and the bright white interface is tough on the eyes. A dark mode toggle would make a big difference.',
-                'status' => 'completed',
+                'status' => 'in_progress',
                 'user' => 2,
                 'voters' => [3, 4],
             ],
@@ -96,18 +96,17 @@ class DemoSeeder extends Seeder
         $darkMode = Idea::where('title', 'Dark mode support')->first();
 
         $this->createComment($darkMode, $users[3], 'Yes please! I work night shifts and this would be a game changer.');
-        $this->createComment($darkMode, $users[0], 'Great news — dark mode shipped last week! Let us know if you run into any issues.');
-        $this->createComment($darkMode, $users[4], 'Loving it so far. The contrast is easy on the eyes.');
+        $this->createComment($darkMode, $users[0], 'Thanks for the suggestion — engineering has picked this up for the current sprint.');
+        $this->createComment($darkMode, $users[4], 'Excited for this. Any chance of a system-default option too?');
 
         // Sample internal notes
         $emailNotifications = Idea::where('title', 'Email notifications for order updates')->first();
 
         $this->createNote($emailNotifications, $users[0], 'We should scope this to transactional emails only for v1.');
-        $this->createNote($darkMode, $users[1], 'Confirmed with design — no issues in the latest QA pass.');
+        $this->createNote($darkMode, $users[1], 'Design has signed off on the palette — engineering is implementing now.');
 
         $this->createStatusUpdate($darkMode, $users[0], IdeaStatus::UnderReview, IdeaStatus::Planned, null);
         $this->createStatusUpdate($darkMode, $users[1], IdeaStatus::Planned, IdeaStatus::InProgress, 'Picked up for the current sprint.');
-        $this->createStatusUpdate($darkMode, $users[0], IdeaStatus::InProgress, IdeaStatus::Completed, 'Shipped in v2.4 — toggle lives in Settings → Appearance.');
 
         $this->createStatusUpdate($emailNotifications, $users[1], IdeaStatus::UnderReview, IdeaStatus::Planned, 'Scoping to transactional emails for v1.');
         $this->createStatusUpdate($emailNotifications, $users[0], IdeaStatus::Planned, IdeaStatus::InProgress, 'Engineering started this week.');
