@@ -25,6 +25,8 @@ class IdeaResource extends JsonResource
             'has_voted' => $user ? $this->voters->contains('id', $user->id) : false,
             'user' => new UserResource($this->whenLoaded('user')),
             'comments_count' => $this->whenCounted('comments'),
+            'latest_status_update' => new IdeaStatusUpdateResource($this->whenLoaded('latestStatusUpdate')),
+            'status_updates' => IdeaStatusUpdateResource::collection($this->whenLoaded('statusUpdates')),
             'created_at' => $this->created_at,
         ];
     }

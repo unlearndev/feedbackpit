@@ -2,8 +2,7 @@
 
 namespace App\Notifications;
 
-use App\Enums\IdeaStatus;
-use App\Models\Idea;
+use App\Models\IdeaStatusUpdate;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -14,7 +13,7 @@ class IdeaStatusChanged extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    public function __construct(public Idea $idea, public IdeaStatus $oldStatus) {}
+    public function __construct(public IdeaStatusUpdate $statusUpdate) {}
 
     /**
      * @return array<int, string>
@@ -26,14 +25,18 @@ class IdeaStatusChanged extends Notification implements ShouldQueue
 
     public function toMail(object $notifiable): MailMessage
     {
+        $idea = $this->statusUpdate->idea;
+
         return (new MailMessage)
-            ->subject('Status update on "'.$this->idea->title.'"')
+            ->subject('Status update on "'.$idea->title.'"')
             ->markdown('mail.ideas.status-changed', [
-                'idea' => $this->idea,
-                'oldStatus' => $this->oldStatus,
-                'ideaUrl' => route('feedback.show', $this->idea),
+                'idea' => $idea,
+                'oldStatus' => $this->statusUpdate->from_status,
+                'newStatus' => $this->statusUpdate->to_status,
+                'message' => $this->statusUpdate->message,
+                'ideaUrl' => route('feedback.show', $idea),
                 'unsubscribeUrl' => URL::signedRoute('feedback.unsubscribe', [
-                    'idea' => $this->idea->id,
+                    'idea' => $idea->id,
                     'user' => $notifiable->id,
                 ]),
             ]);

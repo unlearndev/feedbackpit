@@ -2,70 +2,32 @@
 
 use App\Enums\IdeaStatus;
 use App\Models\Idea;
+use App\Models\IdeaStatusUpdate;
 use App\Models\User;
 use App\Notifications\IdeaStatusChanged;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Support\Facades\Notification;
 
 uses(\Illuminate\Foundation\Testing\RefreshDatabase::class);
 
-it('notifies all subscribers when status changes', function () {
-    Notification::fake();
-
+it('builds the mail message from the status update payload', function () {
     $author = User::factory()->create();
-    $voter = User::factory()->create();
-    $idea = Idea::factory()->for($author)->create(['status' => IdeaStatus::UnderReview]);
-    $idea->subscribers()->attach($voter);
+    $idea = Idea::factory()->for($author)->create(['status' => IdeaStatus::Planned]);
+    $statusUpdate = IdeaStatusUpdate::factory()
+        ->for($idea)
+        ->for(User::factory()->teamMember())
+        ->create([
+            'from_status' => IdeaStatus::UnderReview,
+            'to_status' => IdeaStatus::Planned,
+            'message' => 'Roadmapped for Q2',
+        ]);
 
-    $idea->status = IdeaStatus::Planned;
-    $idea->save();
+    $mail = (new IdeaStatusChanged($statusUpdate))->toMail($author);
 
-    Notification::assertSentTo($author, IdeaStatusChanged::class);
-    Notification::assertSentTo($voter, IdeaStatusChanged::class);
-});
-
-it('does not notify the actor performing the status change', function () {
-    Notification::fake();
-
-    $author = User::factory()->create();
-    $teamMember = User::factory()->create(['is_team_member' => true]);
-    $idea = Idea::factory()->for($author)->create(['status' => IdeaStatus::UnderReview]);
-    $idea->subscribers()->attach($teamMember);
-
-    $this->actingAs($teamMember);
-    $idea->status = IdeaStatus::Planned;
-    $idea->save();
-
-    Notification::assertSentTo($author, IdeaStatusChanged::class);
-    Notification::assertNotSentTo($teamMember, IdeaStatusChanged::class);
-});
-
-it('does not notify on non-status updates', function () {
-    Notification::fake();
-
-    $author = User::factory()->create();
-    $idea = Idea::factory()->for($author)->create();
-
-    $idea->update(['title' => 'Renamed title']);
-
-    Notification::assertNothingSentTo($author);
-});
-
-it('passes the previous status to the notification', function () {
-    Notification::fake();
-
-    $author = User::factory()->create();
-    $idea = Idea::factory()->for($author)->create(['status' => IdeaStatus::UnderReview]);
-
-    $idea->status = IdeaStatus::Planned;
-    $idea->save();
-
-    Notification::assertSentTo(
-        $author,
-        IdeaStatusChanged::class,
-        fn ($notification) => $notification->oldStatus === IdeaStatus::UnderReview
-            && $notification->idea->status === IdeaStatus::Planned,
-    );
+    expect($mail->subject)->toContain($idea->title)
+        ->and($mail->viewData['message'])->toBe('Roadmapped for Q2')
+        ->and($mail->viewData['oldStatus'])->toBe(IdeaStatus::UnderReview)
+        ->and($mail->viewData['newStatus'])->toBe(IdeaStatus::Planned)
+        ->and($mail->viewData['idea']->is($idea))->toBeTrue();
 });
 
 it('queues the notification', function () {
