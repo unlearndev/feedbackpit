@@ -85,6 +85,7 @@ it('does not require authentication', function () {
 it('only unsubscribes the specified user from the specified idea', function () {
     Notification::fake();
 
+    $teamUser = User::factory()->teamMember()->create();
     $userA = User::factory()->create();
     $userB = User::factory()->create();
     $ideaOne = Idea::factory()->for(User::factory())->create(['status' => IdeaStatus::UnderReview]);
@@ -99,8 +100,10 @@ it('only unsubscribes the specified user from the specified idea', function () {
     expect($ideaOne->subscribers()->where('users.id', $userB->id)->exists())->toBeTrue();
     expect($ideaTwo->subscribers()->where('users.id', $userA->id)->exists())->toBeTrue();
 
-    $ideaOne->status = IdeaStatus::Planned;
-    $ideaOne->save();
+    $this->actingAs($teamUser)
+        ->patch(route('internal.ideas.status.update', $ideaOne), [
+            'status' => IdeaStatus::Planned->value,
+        ]);
 
     Notification::assertSentTo($userB, IdeaStatusChanged::class);
     Notification::assertNotSentTo($userA, IdeaStatusChanged::class);

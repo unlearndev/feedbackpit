@@ -1,7 +1,11 @@
 <x-mail::message>
 # Status update
 
-The status of your feedback **{{ $idea->title }}** changed from **{{ $oldStatus->label() }}** to **{{ $idea->status->label() }}**.
+The status of your feedback **{{ $idea->title }}** changed from **{{ $oldStatus->label() }}** to **{{ $newStatus->label() }}**.
+
+@if ($message)
+> {{ $message }}
+@endif
 
 <x-mail::button :url="$ideaUrl">
 View your idea
