@@ -7,6 +7,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\IdeaController;
 use App\Http\Controllers\Internal;
 use App\Http\Controllers\LandingController;
+use App\Http\Controllers\UnsubscribeController;
 use App\Http\Controllers\VoteController;
 use Illuminate\Support\Facades\Route;
 
@@ -27,6 +28,10 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/feedback/{idea}', [IdeaController::class, 'show'])->name('feedback.show');
+
+Route::get('/feedback/{idea}/unsubscribe/{user}', UnsubscribeController::class)
+    ->middleware('signed')
+    ->name('feedback.unsubscribe');
 
 Route::prefix('internal')->middleware(['auth', 'team'])->name('internal.')->group(function () {
     Route::get('/', Internal\IdeaDashboardController::class)->name('ideas.index');
