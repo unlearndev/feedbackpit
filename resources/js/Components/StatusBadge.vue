@@ -5,7 +5,7 @@ const props = defineProps({
     status: {
         type: String,
         required: true,
-        validator: (v) => ['under_review', 'planned', 'in_progress', 'completed'].includes(v),
+        validator: (v) => ['under_review', 'planned', 'in_progress', 'completed', 'declined'].includes(v),
     },
 });
 
@@ -14,6 +14,7 @@ const labels = {
     planned: 'Planned',
     in_progress: 'In Progress',
     completed: 'Completed',
+    declined: 'Declined',
 };
 
 const colorClasses = {
@@ -21,6 +22,7 @@ const colorClasses = {
     planned: 'border-blue-200 bg-blue-50 text-blue-700',
     in_progress: 'border-amber-200 bg-amber-50 text-amber-700',
     completed: 'border-green-200 bg-green-50 text-green-700',
+    declined: 'border-red-200 bg-red-50 text-red-700',
 };
 
 const label = computed(() => labels[props.status]);

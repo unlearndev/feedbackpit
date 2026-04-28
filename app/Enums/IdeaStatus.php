@@ -8,6 +8,7 @@ enum IdeaStatus: string
     case Planned = 'planned';
     case InProgress = 'in_progress';
     case Completed = 'completed';
+    case Declined = 'declined';
 
     public function label(): string
     {
@@ -16,6 +17,7 @@ enum IdeaStatus: string
             self::Planned => 'Planned',
             self::InProgress => 'In Progress',
             self::Completed => 'Completed',
+            self::Declined => 'Declined',
         };
     }
 }

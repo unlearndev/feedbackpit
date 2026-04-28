@@ -50,6 +50,13 @@ const formatDate = (dateString) => {
                 Submitted by {{ idea.user.name }} on {{ formatDate(idea.created_at) }}
             </p>
 
+            <div v-if="idea.latest_status_update?.message" class="mb-6 rounded-none border-l-2 border-neutral-900 bg-neutral-50 p-4">
+                <p class="text-sm text-neutral-700 whitespace-pre-line">{{ idea.latest_status_update.message }}</p>
+                <p class="mt-2 text-xs uppercase tracking-wider text-neutral-400">
+                    {{ idea.latest_status_update.user?.name ?? 'Team' }} — {{ formatDate(idea.latest_status_update.created_at) }}
+                </p>
+            </div>
+
             <div class="flex items-center gap-2 mb-6">
                 <VoteButton :idea-id="idea.id" :votes="idea.votes" :has-voted="idea.has_voted" />
                 <span class="text-sm text-neutral-500">votes</span>
