@@ -77,6 +77,14 @@ class User extends Authenticatable
     }
 
     /**
+     * @return BelongsToMany<Idea, $this>
+     */
+    public function subscribedIdeas(): BelongsToMany
+    {
+        return $this->belongsToMany(Idea::class, 'idea_subscribers')->withTimestamps();
+    }
+
+    /**
      * @return HasMany<Comment, $this>
      */
     public function comments(): HasMany

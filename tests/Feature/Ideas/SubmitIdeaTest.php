@@ -43,6 +43,19 @@ it('creates an idea in the database', function () use ($validPayload) {
     ]);
 });
 
+it('auto-subscribes the author to their idea', function () {
+    $user = User::factory()->create();
+
+    $this->actingAs($user)->post(route('feedback.store'), [
+        'title' => 'Dark mode support',
+        'description' => 'It would be great to have a dark mode option for the app.',
+    ]);
+
+    $idea = \App\Models\Idea::firstWhere('title', 'Dark mode support');
+
+    expect($idea->subscribers()->where('users.id', $user->id)->exists())->toBeTrue();
+});
+
 it('redirects to home with a flash message after submission', function () use ($validPayload) {
     $this->actingAs(User::factory()->create())
         ->post(route('feedback.store'), $validPayload())

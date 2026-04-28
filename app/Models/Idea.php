@@ -46,6 +46,14 @@ class Idea extends Model
     }
 
     /**
+     * @return BelongsToMany<User, $this>
+     */
+    public function subscribers(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'idea_subscribers')->withTimestamps();
+    }
+
+    /**
      * @return HasMany<Comment, $this>
      */
     public function comments(): HasMany
