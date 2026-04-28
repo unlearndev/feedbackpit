@@ -2,8 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Enums\IdeaStatus;
 use App\Models\Comment;
 use App\Models\Idea;
+use App\Models\IdeaStatusUpdate;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -102,6 +104,13 @@ class DemoSeeder extends Seeder
 
         $this->createNote($emailNotifications, $users[0], 'We should scope this to transactional emails only for v1.');
         $this->createNote($darkMode, $users[1], 'Confirmed with design — no issues in the latest QA pass.');
+
+        $this->createStatusUpdate($darkMode, $users[0], IdeaStatus::UnderReview, IdeaStatus::Planned, null);
+        $this->createStatusUpdate($darkMode, $users[1], IdeaStatus::Planned, IdeaStatus::InProgress, 'Picked up for the current sprint.');
+        $this->createStatusUpdate($darkMode, $users[0], IdeaStatus::InProgress, IdeaStatus::Completed, 'Shipped in v2.4 — toggle lives in Settings → Appearance.');
+
+        $this->createStatusUpdate($emailNotifications, $users[1], IdeaStatus::UnderReview, IdeaStatus::Planned, 'Scoping to transactional emails for v1.');
+        $this->createStatusUpdate($emailNotifications, $users[0], IdeaStatus::Planned, IdeaStatus::InProgress, 'Engineering started this week.');
     }
 
     private function createComment(Idea $idea, User $user, string $body): void
@@ -118,5 +127,17 @@ class DemoSeeder extends Seeder
         $comment->user()->associate($user);
         $comment->idea()->associate($idea);
         $comment->save();
+    }
+
+    private function createStatusUpdate(Idea $idea, User $user, IdeaStatus $from, IdeaStatus $to, ?string $message): void
+    {
+        $statusUpdate = new IdeaStatusUpdate([
+            'from_status' => $from,
+            'to_status' => $to,
+            'message' => $message,
+        ]);
+        $statusUpdate->user()->associate($user);
+        $statusUpdate->idea()->associate($idea);
+        $statusUpdate->save();
     }
 }

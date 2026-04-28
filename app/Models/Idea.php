@@ -8,7 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
+/**
+ * @property IdeaStatus $status
+ */
 class Idea extends Model
 {
     /** @use HasFactory<\Database\Factories\IdeaFactory> */
@@ -59,5 +63,21 @@ class Idea extends Model
     public function comments(): HasMany
     {
         return $this->hasMany(Comment::class);
+    }
+
+    /**
+     * @return HasMany<IdeaStatusUpdate, $this>
+     */
+    public function statusUpdates(): HasMany
+    {
+        return $this->hasMany(IdeaStatusUpdate::class)->latest();
+    }
+
+    /**
+     * @return HasOne<IdeaStatusUpdate, $this>
+     */
+    public function latestStatusUpdate(): HasOne
+    {
+        return $this->hasOne(IdeaStatusUpdate::class)->latestOfMany();
     }
 }

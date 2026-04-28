@@ -1,6 +1,7 @@
 <script setup>
 import InternalLayout from '@/Layouts/InternalLayout.vue';
 import StatusBadge from '@/Components/StatusBadge.vue';
+import StatusUpdateForm from '@/Components/StatusUpdateForm.vue';
 import CommentCard from '@/Components/CommentCard.vue';
 import CommentForm from '@/Components/CommentForm.vue';
 import NoteCard from '@/Components/NoteCard.vue';
@@ -53,6 +54,28 @@ const formatDate = (dateString) => {
             </div>
 
             <p class="text-neutral-700 whitespace-pre-line">{{ idea.description }}</p>
+        </div>
+
+        <div class="rounded-none border border-black/[0.06] bg-white p-6 mb-8">
+            <h2 class="text-lg font-semibold tracking-tight text-neutral-900 mb-4">Update Status</h2>
+            <StatusUpdateForm :idea="idea" />
+
+            <div v-if="idea.status_updates && idea.status_updates.length" class="mt-8 border-t border-black/[0.06] pt-6">
+                <h3 class="text-xs font-medium uppercase tracking-wider text-neutral-500 mb-3">History</h3>
+                <ul class="space-y-3">
+                    <li v-for="update in idea.status_updates" :key="update.id" class="text-sm">
+                        <div class="flex flex-wrap items-center gap-2 text-neutral-600">
+                            <span class="font-medium text-neutral-900">{{ update.user?.name ?? 'Team' }}</span>
+                            <span>moved this from</span>
+                            <StatusBadge :status="update.from_status" />
+                            <span>to</span>
+                            <StatusBadge :status="update.to_status" />
+                            <span class="text-xs text-neutral-400">{{ formatDate(update.created_at) }}</span>
+                        </div>
+                        <p v-if="update.message" class="mt-1 text-neutral-700 whitespace-pre-line">{{ update.message }}</p>
+                    </li>
+                </ul>
+            </div>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">

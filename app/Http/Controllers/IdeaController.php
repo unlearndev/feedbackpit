@@ -13,7 +13,7 @@ class IdeaController extends Controller
 {
     public function show(Idea $idea): Response
     {
-        $idea->load('user', 'voters:id');
+        $idea->load(['user', 'voters:id', 'latestStatusUpdate.user']);
 
         return inertia('Ideas/Show', [
             'idea' => new IdeaResource($idea),
