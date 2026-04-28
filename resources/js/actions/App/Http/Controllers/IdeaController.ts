@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\IdeaController::create
-* @see app/Http/Controllers/IdeaController.php:26
+* @see app/Http/Controllers/IdeaController.php:27
 * @route '/feedback/create'
 */
 export const create = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -16,7 +16,7 @@ create.definition = {
 
 /**
 * @see \App\Http\Controllers\IdeaController::create
-* @see app/Http/Controllers/IdeaController.php:26
+* @see app/Http/Controllers/IdeaController.php:27
 * @route '/feedback/create'
 */
 create.url = (options?: RouteQueryOptions) => {
@@ -25,7 +25,7 @@ create.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\IdeaController::create
-* @see app/Http/Controllers/IdeaController.php:26
+* @see app/Http/Controllers/IdeaController.php:27
 * @route '/feedback/create'
 */
 create.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -35,7 +35,7 @@ create.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\IdeaController::create
-* @see app/Http/Controllers/IdeaController.php:26
+* @see app/Http/Controllers/IdeaController.php:27
 * @route '/feedback/create'
 */
 create.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -45,7 +45,7 @@ create.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\IdeaController::store
-* @see app/Http/Controllers/IdeaController.php:31
+* @see app/Http/Controllers/IdeaController.php:32
 * @route '/feedback'
 */
 export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -60,7 +60,7 @@ store.definition = {
 
 /**
 * @see \App\Http\Controllers\IdeaController::store
-* @see app/Http/Controllers/IdeaController.php:31
+* @see app/Http/Controllers/IdeaController.php:32
 * @route '/feedback'
 */
 store.url = (options?: RouteQueryOptions) => {
@@ -69,7 +69,7 @@ store.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\IdeaController::store
-* @see app/Http/Controllers/IdeaController.php:31
+* @see app/Http/Controllers/IdeaController.php:32
 * @route '/feedback'
 */
 store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -79,7 +79,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
 /**
 * @see \App\Http\Controllers\IdeaController::show
-* @see app/Http/Controllers/IdeaController.php:14
+* @see app/Http/Controllers/IdeaController.php:15
 * @route '/feedback/{idea}'
 */
 export const show = (args: { idea: number | { id: number } } | [idea: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -94,7 +94,7 @@ show.definition = {
 
 /**
 * @see \App\Http\Controllers\IdeaController::show
-* @see app/Http/Controllers/IdeaController.php:14
+* @see app/Http/Controllers/IdeaController.php:15
 * @route '/feedback/{idea}'
 */
 show.url = (args: { idea: number | { id: number } } | [idea: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -127,7 +127,7 @@ show.url = (args: { idea: number | { id: number } } | [idea: number | { id: numb
 
 /**
 * @see \App\Http\Controllers\IdeaController::show
-* @see app/Http/Controllers/IdeaController.php:14
+* @see app/Http/Controllers/IdeaController.php:15
 * @route '/feedback/{idea}'
 */
 show.get = (args: { idea: number | { id: number } } | [idea: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -137,7 +137,7 @@ show.get = (args: { idea: number | { id: number } } | [idea: number | { id: numb
 
 /**
 * @see \App\Http\Controllers\IdeaController::show
-* @see app/Http/Controllers/IdeaController.php:14
+* @see app/Http/Controllers/IdeaController.php:15
 * @route '/feedback/{idea}'
 */
 show.head = (args: { idea: number | { id: number } } | [idea: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({

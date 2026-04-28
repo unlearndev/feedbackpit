@@ -17,6 +17,7 @@ return Application::configure(basePath: dirname(__DIR__))
 
         $middleware->alias([
             'team' => \App\Http\Middleware\EnsureTeamMember::class,
+            'preprocess.idea' => \App\Http\Middleware\PreprocessIdeaSubmission::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

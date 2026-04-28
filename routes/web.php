@@ -21,7 +21,7 @@ Route::middleware('auth')->group(function () {
     Route::put('/account/password', [AccountSettingsController::class, 'updatePassword'])->name('account.password.update');
 
     Route::get('/feedback/create', [IdeaController::class, 'create'])->name('feedback.create');
-    Route::post('/feedback', [IdeaController::class, 'store'])->name('feedback.store');
+    Route::post('/feedback', [IdeaController::class, 'store'])->middleware('preprocess.idea')->name('feedback.store');
 
     Route::post('/feedback/{idea}/vote', VoteController::class)->name('feedback.vote');
     Route::post('/feedback/{idea}/comments', [CommentController::class, 'store'])->name('feedback.comments.store');
