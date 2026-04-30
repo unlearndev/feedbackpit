@@ -2,9 +2,7 @@
 
 namespace App\Providers;
 
-use App\Models\Comment;
 use App\Models\Idea;
-use App\Observers\CommentObserver;
 use App\Observers\IdeaObserver;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\ServiceProvider;
@@ -27,6 +25,5 @@ class AppServiceProvider extends ServiceProvider
         JsonResource::withoutWrapping();
 
         Idea::observe(IdeaObserver::class);
-        Comment::observe(CommentObserver::class);
     }
 }

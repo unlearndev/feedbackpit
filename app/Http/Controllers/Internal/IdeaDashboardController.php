@@ -11,7 +11,7 @@ class IdeaDashboardController extends Controller
 {
     public function __invoke(): Response
     {
-        $ideas = Idea::with('user', 'voters:id')
+        $ideas = Idea::with('user', 'voters:id', 'subscribers:id')
             ->withCount(['comments' => fn ($query) => $query->where('is_internal', false)])
             ->latest()
             ->get();
