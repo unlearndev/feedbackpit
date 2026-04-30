@@ -23,6 +23,7 @@ class IdeaResource extends JsonResource
             'status' => $this->status,
             'votes' => $this->votes,
             'has_voted' => $user ? $this->voters->contains('id', $user->id) : false,
+            'is_subscribed' => $user ? $this->subscribers->contains('id', $user->id) : false,
             'user' => new UserResource($this->whenLoaded('user')),
             'comments_count' => $this->whenCounted('comments'),
             'latest_status_update' => new IdeaStatusUpdateResource($this->whenLoaded('latestStatusUpdate')),

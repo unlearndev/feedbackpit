@@ -65,6 +65,12 @@ const logout = () => {
                                         >
                                             Account
                                         </a>
+                                        <a
+                                            href="/account/notifications"
+                                            class="block w-full text-left px-4 py-2 text-xs text-neutral-700 hover:bg-neutral-100 transition-colors duration-150"
+                                        >
+                                            Notifications
+                                        </a>
                                         <button
                                             type="button"
                                             class="block w-full text-left px-4 py-2 text-xs text-neutral-700 hover:bg-neutral-100 transition-colors duration-150"
@@ -116,6 +122,9 @@ const logout = () => {
                         </a>
                         <a href="/account/settings" class="block rounded-md px-3 py-2 text-sm font-medium text-neutral-700 hover:bg-neutral-100 transition-colors duration-150">
                             Account
+                        </a>
+                        <a href="/account/notifications" class="block rounded-md px-3 py-2 text-sm font-medium text-neutral-700 hover:bg-neutral-100 transition-colors duration-150">
+                            Notifications
                         </a>
                         <button
                             type="button"
