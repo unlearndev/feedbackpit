@@ -1,6 +1,6 @@
 <script setup>
 import { computed } from 'vue';
-import { usePage } from '@inertiajs/vue3';
+import { usePage, useForm } from '@inertiajs/vue3';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import VoteButton from '@/Components/VoteButton.vue';
 import StatusBadge from '@/Components/StatusBadge.vue';
@@ -8,6 +8,7 @@ import CommentCard from '@/Components/CommentCard.vue';
 import CommentForm from '@/Components/CommentForm.vue';
 import { dashboard } from '@/routes';
 import { store } from '@/actions/App/Http/Controllers/CommentController';
+import { store as subscribe, destroy as unsubscribe } from '@/routes/account/notifications';
 
 const props = defineProps({
     idea: {
@@ -21,6 +22,16 @@ const props = defineProps({
 });
 
 const user = computed(() => usePage().props.auth?.user ?? null);
+
+const subscriptionForm = useForm({});
+
+const toggleSubscription = () => {
+    if (props.idea.is_subscribed) {
+        subscriptionForm.delete(unsubscribe.url(props.idea.id), { preserveScroll: true });
+    } else {
+        subscriptionForm.post(subscribe.url(props.idea.id), { preserveScroll: true });
+    }
+};
 
 const formatDate = (dateString) => {
     return new Date(dateString).toLocaleDateString('en-US', {
@@ -60,6 +71,16 @@ const formatDate = (dateString) => {
             <div class="flex items-center gap-2 mb-6">
                 <VoteButton :idea-id="idea.id" :votes="idea.votes" :has-voted="idea.has_voted" />
                 <span class="text-sm text-neutral-500">votes</span>
+
+                <button
+                    v-if="user"
+                    type="button"
+                    class="ml-auto text-xs uppercase tracking-wider text-neutral-400 hover:text-neutral-900 transition-colors disabled:opacity-50"
+                    :disabled="subscriptionForm.processing"
+                    @click="toggleSubscription"
+                >
+                    {{ idea.is_subscribed ? 'Unsubscribe' : 'Subscribe' }}
+                </button>
             </div>
 
             <p class="text-neutral-700 whitespace-pre-line">{{ idea.description }}</p>
