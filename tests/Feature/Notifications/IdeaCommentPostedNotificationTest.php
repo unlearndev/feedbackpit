@@ -18,7 +18,8 @@ it('notifies all subscribers when a team member posts a public comment', functio
     $idea = Idea::factory()->for($author)->create();
     $idea->subscribers()->attach($voter);
 
-    Comment::factory()->for($idea)->for($teamMember)->create(['is_internal' => false]);
+    $this->actingAs($teamMember)
+        ->post(route('internal.ideas.comments.store', $idea), ['body' => 'Thanks for the feedback!']);
 
     Notification::assertSentTo($author, IdeaCommentPosted::class);
     Notification::assertSentTo($voter, IdeaCommentPosted::class);
@@ -32,7 +33,8 @@ it('does not notify the commenter themselves', function () {
     $idea = Idea::factory()->for($author)->create();
     $idea->subscribers()->attach($teamMember);
 
-    Comment::factory()->for($idea)->for($teamMember)->create(['is_internal' => false]);
+    $this->actingAs($teamMember)
+        ->post(route('internal.ideas.comments.store', $idea), ['body' => 'Looking into this.']);
 
     Notification::assertSentTo($author, IdeaCommentPosted::class);
     Notification::assertNotSentTo($teamMember, IdeaCommentPosted::class);
@@ -45,7 +47,8 @@ it('does not notify when the comment is internal', function () {
     $teamMember = User::factory()->create(['is_team_member' => true]);
     $idea = Idea::factory()->for($author)->create();
 
-    Comment::factory()->for($idea)->for($teamMember)->internal()->create();
+    $this->actingAs($teamMember)
+        ->post(route('internal.ideas.notes.store', $idea), ['body' => 'Private note.']);
 
     Notification::assertNothingSentTo($author);
 });
@@ -57,7 +60,8 @@ it('does not notify when a non-team-member customer comments', function () {
     $otherCustomer = User::factory()->create(['is_team_member' => false]);
     $idea = Idea::factory()->for($author)->create();
 
-    Comment::factory()->for($idea)->for($otherCustomer)->create(['is_internal' => false]);
+    $this->actingAs($otherCustomer)
+        ->post(route('feedback.comments.store', $idea), ['body' => '+1 from me.']);
 
     Notification::assertNothingSentTo($author);
 });
@@ -69,7 +73,8 @@ it('auto-subscribes any public commenter, even non-team-members', function () {
     $otherCustomer = User::factory()->create(['is_team_member' => false]);
     $idea = Idea::factory()->for($author)->create();
 
-    Comment::factory()->for($idea)->for($otherCustomer)->create(['is_internal' => false]);
+    $this->actingAs($otherCustomer)
+        ->post(route('feedback.comments.store', $idea), ['body' => '+1 from me.']);
 
     expect($idea->subscribers()->where('users.id', $otherCustomer->id)->exists())->toBeTrue();
 });
@@ -80,7 +85,8 @@ it('does not auto-subscribe internal commenters', function () {
     $idea = Idea::factory()->for($author)->create();
     $idea->subscribers()->detach($teamMember->id);
 
-    Comment::factory()->for($idea)->for($teamMember)->internal()->create();
+    $this->actingAs($teamMember)
+        ->post(route('internal.ideas.notes.store', $idea), ['body' => 'Private note.']);
 
     expect($idea->subscribers()->where('users.id', $teamMember->id)->exists())->toBeFalse();
 });
