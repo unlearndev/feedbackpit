@@ -37,7 +37,9 @@ jobs:
         with:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
           prompt: |
-            Run the /triage skill against base branch `origin/${{ github.base_ref }}` and return the full triage report verbatim as the `body` field of the structured output. Do not include any other commentary.
+            Read `.claude/skills/triage/SKILL.md` and follow its instructions exactly. Treat its `$ARGUMENTS` as `origin/${{ github.base_ref }}`.
+
+            Return ONLY the triage report it specifies as the `body` field of the structured output — risk-tiered groups in the exact format under "6. Output the report", ending with the one-line summary. Do not produce a code review, verdict, walkthrough, suggestions, or "potential concerns". The skill's "Rules" section is binding.
 
             You MUST always populate `body`. If there are no changes between the base and HEAD, set `body` to "No changes detected between `origin/${{ github.base_ref }}` and HEAD — nothing to triage."
           claude_args: |
