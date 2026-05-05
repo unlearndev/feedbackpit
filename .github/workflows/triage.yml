@@ -1,0 +1,79 @@
+name: Triage
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  triage:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Fetch triage skill
+        uses: actions/checkout@v4
+        with:
+          repository: unlearndev/skills
+          ref: main
+          path: _skills
+          sparse-checkout: skills/triage
+          sparse-checkout-cone-mode: false
+
+      - name: Install triage skill
+        run: |
+          mkdir -p .claude/skills
+          mv _skills/skills/triage .claude/skills/triage
+          rm -rf _skills
+
+      - name: Run triage skill
+        id: triage
+        uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          prompt: |
+            Run the /triage skill against base branch `origin/${{ github.base_ref }}` and return the full triage report verbatim as the `body` field of the structured output. Do not include any other commentary.
+
+            You MUST always populate `body`. If there are no changes between the base and HEAD, set `body` to "No changes detected between `origin/${{ github.base_ref }}` and HEAD — nothing to triage."
+          claude_args: |
+            --json-schema '{"type":"object","properties":{"body":{"type":"string"}},"required":["body"]}'
+            --allowedTools "Bash(git diff:*),Bash(git log:*),Bash(git merge-base:*),Bash(git rev-parse:*),Bash(git status:*),Read,Grep,Glob"
+
+      - name: Debug action outputs
+        if: always()
+        env:
+          STRUCTURED: ${{ steps.triage.outputs.structured_output }}
+          CONCLUSION: ${{ steps.triage.outputs.conclusion }}
+        run: |
+          echo "conclusion: $CONCLUSION"
+          echo "structured_output:"
+          echo "$STRUCTURED"
+
+      - name: Build comment body
+        if: always()
+        id: body
+        env:
+          STRUCTURED: ${{ steps.triage.outputs.structured_output }}
+        run: |
+          if [ -n "$STRUCTURED" ]; then
+            message=$(echo "$STRUCTURED" | jq -r '.body')
+          else
+            message="Triage did not produce a report."
+          fi
+          {
+            echo 'message<<TRIAGE_EOF'
+            echo "$message"
+            echo 'TRIAGE_EOF'
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Post sticky comment
+        if: always()
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          header: triage
+          message: ${{ steps.body.outputs.message }}
