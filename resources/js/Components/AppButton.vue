@@ -5,7 +5,7 @@ const props = defineProps({
     variant: {
         type: String,
         default: 'primary',
-        validator: (v) => ['primary', 'secondary', 'outline'].includes(v),
+        validator: (v) => ['primary', 'secondary', 'outline', 'danger'].includes(v),
     },
     size: {
         type: String,
@@ -38,6 +38,7 @@ const classes = computed(() => {
         primary: 'bg-neutral-900 text-white border border-neutral-900 hover:bg-neutral-800',
         outline: 'border border-neutral-300 text-neutral-900 hover:border-neutral-900',
         secondary: 'bg-neutral-100 text-neutral-900 border border-neutral-200 hover:bg-neutral-200',
+        danger: 'bg-red-600 text-white border border-red-600 hover:bg-red-700',
     };
 
     return [base, sizes[props.size], variants[props.variant]].join(' ');

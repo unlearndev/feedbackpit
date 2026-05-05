@@ -1,4 +1,5 @@
 <script setup>
+import { ref } from 'vue';
 import { useForm, usePage } from '@inertiajs/vue3';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import AppInput from '@/Components/AppInput.vue';
@@ -21,6 +22,29 @@ const passwordForm = useForm({
 const submitPassword = () => {
     passwordForm.put('/account/password', {
         onFinish: () => passwordForm.reset(),
+    });
+};
+
+const confirmingDeletion = ref(false);
+
+const deleteForm = useForm({
+    password: '',
+});
+
+const confirmDeletion = () => {
+    confirmingDeletion.value = true;
+};
+
+const cancelDeletion = () => {
+    confirmingDeletion.value = false;
+    deleteForm.reset();
+    deleteForm.clearErrors();
+};
+
+const deleteAccount = () => {
+    deleteForm.delete('/account', {
+        preserveScroll: true,
+        onError: () => deleteForm.reset('password'),
     });
 };
 </script>
@@ -84,6 +108,42 @@ const submitPassword = () => {
                     <AppButton type="submit" :disabled="passwordForm.processing" class="w-full">
                         Update password
                     </AppButton>
+                </form>
+            </div>
+
+            <div class="mt-8 rounded-none border border-red-200 bg-white p-6">
+                <h2 class="text-lg font-semibold tracking-tight text-neutral-900 mb-2">Delete account</h2>
+                <p class="text-sm text-neutral-600 mb-5">
+                    Once your account is deleted, all of its resources and data will be permanently deleted. This action cannot be undone.
+                </p>
+
+                <AppButton v-if="!confirmingDeletion" type="button" variant="danger" @click="confirmDeletion">
+                    Delete account
+                </AppButton>
+
+                <form v-else class="space-y-5" @submit.prevent="deleteAccount">
+                    <p class="text-sm text-neutral-600">
+                        Please enter your password to confirm you would like to permanently delete your account.
+                    </p>
+
+                    <AppInput
+                        id="delete_password"
+                        v-model="deleteForm.password"
+                        label="Password"
+                        type="password"
+                        autocomplete="current-password"
+                        required
+                        :error="deleteForm.errors.password"
+                    />
+
+                    <div class="flex gap-3">
+                        <AppButton type="submit" variant="danger" :disabled="deleteForm.processing">
+                            Permanently delete account
+                        </AppButton>
+                        <AppButton type="button" variant="outline" @click="cancelDeletion">
+                            Cancel
+                        </AppButton>
+                    </div>
                 </form>
             </div>
         </div>

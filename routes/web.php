@@ -20,6 +20,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/account/settings', [AccountSettingsController::class, 'edit'])->name('account.settings.edit');
     Route::put('/account/settings', [AccountSettingsController::class, 'update'])->name('account.settings.update');
     Route::put('/account/password', [AccountSettingsController::class, 'updatePassword'])->name('account.password.update');
+    Route::delete('/account', [AccountSettingsController::class, 'destroy'])->name('account.destroy');
 
     Route::get('/account/notifications', [AccountNotificationsController::class, 'edit'])->name('account.notifications.edit');
     Route::post('/account/notifications/{idea}', [AccountNotificationsController::class, 'store'])->name('account.notifications.store');
