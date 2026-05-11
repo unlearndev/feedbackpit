@@ -91,4 +91,12 @@ class User extends Authenticatable
     {
         return $this->hasMany(Comment::class);
     }
+
+    /**
+     * @return HasMany<SignInCode, $this>
+     */
+    public function signInCodes(): HasMany
+    {
+        return $this->hasMany(SignInCode::class);
+    }
 }

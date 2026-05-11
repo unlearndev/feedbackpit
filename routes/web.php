@@ -8,6 +8,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\IdeaController;
 use App\Http\Controllers\Internal;
 use App\Http\Controllers\LandingController;
+use App\Http\Controllers\SignInCodeController;
 use App\Http\Controllers\UnsubscribeController;
 use App\Http\Controllers\VoteController;
 use Illuminate\Support\Facades\Route;
@@ -15,6 +16,11 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', LandingController::class)->name('landing');
 Route::get('/about', AboutController::class)->name('about');
 Route::get('/dashboard', DashboardController::class)->name('dashboard');
+
+Route::get('/login/code', [SignInCodeController::class, 'create'])->name('login.code.create');
+Route::post('/login/code', [SignInCodeController::class, 'store'])->name('login.code.store');
+Route::get('/login/code/confirm', [SignInCodeController::class, 'confirmForm'])->name('login.code.confirm');
+Route::post('/login/code/confirm', [SignInCodeController::class, 'confirm'])->name('login.code.confirm.store');
 
 Route::middleware('auth')->group(function () {
     Route::get('/account/settings', [AccountSettingsController::class, 'edit'])->name('account.settings.edit');
