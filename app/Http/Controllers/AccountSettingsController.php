@@ -15,10 +15,7 @@ class AccountSettingsController extends Controller
 
     public function update(Request $request, UpdatesUserProfileInformation $updater)
     {
-        $updater->update($request->user(), [
-            'name' => $request->user()->name,
-            'email' => $request->input('email'),
-        ]);
+        $updater->update($request->user(), $request->only(['first_name', 'last_name', 'email']));
 
         return redirect()->route('account.settings.edit')->with('status', 'Your changes have been saved.');
     }
