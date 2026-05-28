@@ -4,49 +4,68 @@ use App\Models\User;
 
 uses(\Illuminate\Foundation\Testing\RefreshDatabase::class);
 
-// ---------------------------------------------------------------------------
-// Successful name update
-// ---------------------------------------------------------------------------
-
-it('updates the name to a valid value', function () {
-    $user = User::factory()->create(['name' => 'Old Name', 'email' => 'user@example.com']);
+it('updates first and last name when both are provided', function () {
+    $user = User::factory()->create([
+        'first_name' => 'Old',
+        'last_name' => 'Name',
+        'email' => 'jane@example.com',
+    ]);
 
     $this->actingAs($user)
-        ->put('/account/settings', ['name' => 'New Name', 'email' => $user->email])
+        ->put('/account/settings', [
+            'first_name' => 'New',
+            'last_name' => 'Person',
+            'email' => 'jane@example.com',
+        ])
         ->assertSessionHasNoErrors();
 
     $this->assertDatabaseHas('users', [
         'id' => $user->id,
-        'name' => 'New Name',
+        'first_name' => 'New',
+        'last_name' => 'Person',
     ]);
 });
 
-// ---------------------------------------------------------------------------
-// Validation
-// ---------------------------------------------------------------------------
-
-it('returns a validation error when the name is empty', function () {
-    $user = User::factory()->create(['name' => 'Old Name']);
+it('rejects an empty first name', function () {
+    $user = User::factory()->create([
+        'first_name' => 'Jane',
+        'last_name' => 'Doe',
+        'email' => 'jane@example.com',
+    ]);
 
     $this->actingAs($user)
-        ->put('/account/settings', ['name' => '', 'email' => $user->email])
-        ->assertSessionHasErrors('name');
+        ->put('/account/settings', [
+            'first_name' => '',
+            'last_name' => 'Doe',
+            'email' => 'jane@example.com',
+        ])
+        ->assertSessionHasErrors('first_name');
 
     $this->assertDatabaseHas('users', [
         'id' => $user->id,
-        'name' => 'Old Name',
+        'first_name' => 'Jane',
+        'last_name' => 'Doe',
     ]);
 });
 
-it('returns a validation error when the name is longer than 255 characters', function () {
-    $user = User::factory()->create(['name' => 'Old Name']);
+it('rejects an empty last name', function () {
+    $user = User::factory()->create([
+        'first_name' => 'Jane',
+        'last_name' => 'Doe',
+        'email' => 'jane@example.com',
+    ]);
 
     $this->actingAs($user)
-        ->put('/account/settings', ['name' => str_repeat('a', 256), 'email' => $user->email])
-        ->assertSessionHasErrors('name');
+        ->put('/account/settings', [
+            'first_name' => 'Jane',
+            'last_name' => '',
+            'email' => 'jane@example.com',
+        ])
+        ->assertSessionHasErrors('last_name');
 
     $this->assertDatabaseHas('users', [
         'id' => $user->id,
-        'name' => 'Old Name',
+        'first_name' => 'Jane',
+        'last_name' => 'Doe',
     ]);
 });

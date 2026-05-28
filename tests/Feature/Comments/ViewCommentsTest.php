@@ -55,7 +55,7 @@ it('shows comments in chronological order', function () {
 
 it('includes the comment author name and team member flag', function () {
     $idea = Idea::factory()->for(User::factory())->create();
-    $teamUser = User::factory()->teamMember()->create(['name' => 'Staff Person']);
+    $teamUser = User::factory()->teamMember()->create(['first_name' => 'Staff', 'last_name' => 'Person']);
     Comment::factory()->for($idea)->for($teamUser)->create();
 
     $this->get(route('feedback.show', $idea))
