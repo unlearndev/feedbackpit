@@ -37,7 +37,7 @@ it('returns 404 for a non-existent idea', function () {
 // ---------------------------------------------------------------------------
 
 it('includes the idea author name', function () {
-    $user = User::factory()->create(['name' => 'Jane Doe']);
+    $user = User::factory()->create(['first_name' => 'Jane', 'last_name' => 'Doe']);
     $idea = Idea::factory()->for($user)->create();
 
     $this->get(route('feedback.show', $idea))

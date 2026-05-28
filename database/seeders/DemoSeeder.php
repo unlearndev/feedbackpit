@@ -17,11 +17,11 @@ class DemoSeeder extends Seeder
         User::query()->delete();
 
         $users = collect([
-            ['name' => 'Sarah Chen', 'email' => 'sarah@example.com', 'is_team_member' => true],
-            ['name' => 'Marcus Johnson', 'email' => 'marcus@example.com', 'is_team_member' => true],
-            ['name' => 'Emily Rivera', 'email' => 'emily@example.com'],
-            ['name' => 'David Kim', 'email' => 'david@example.com'],
-            ['name' => 'Rachel Foster', 'email' => 'rachel@example.com'],
+            ['first_name' => 'Sarah', 'last_name' => 'Chen', 'email' => 'sarah@example.com', 'is_team_member' => true],
+            ['first_name' => 'Marcus', 'last_name' => 'Johnson', 'email' => 'marcus@example.com', 'is_team_member' => true],
+            ['first_name' => 'Emily', 'last_name' => 'Rivera', 'email' => 'emily@example.com'],
+            ['first_name' => 'David', 'last_name' => 'Kim', 'email' => 'david@example.com'],
+            ['first_name' => 'Rachel', 'last_name' => 'Foster', 'email' => 'rachel@example.com'],
         ])->map(fn (array $data) => User::create([
             ...$data,
             'password' => 'password',
