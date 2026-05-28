@@ -10,7 +10,7 @@ uses(\Illuminate\Foundation\Testing\RefreshDatabase::class);
 
 it('redirects a guest to the login page', function () {
     $this->get('/account/settings')->assertRedirect('/login');
-    $this->put('/account/settings', ['email' => 'new@example.com'])->assertRedirect('/login');
+    $this->put('/account/settings', ['name' => 'Jane', 'email' => 'new@example.com'])->assertRedirect('/login');
 });
 
 // ---------------------------------------------------------------------------
@@ -33,7 +33,7 @@ it('updates the email address to a valid unique address', function () {
     $user = User::factory()->create(['email' => 'old@example.com']);
 
     $this->actingAs($user)
-        ->put('/account/settings', ['email' => 'new@example.com'])
+        ->put('/account/settings', ['name' => $user->name, 'email' => 'new@example.com'])
         ->assertSessionHasNoErrors();
 
     $this->assertDatabaseHas('users', [
@@ -46,7 +46,7 @@ it('takes effect immediately — the customer can log in with the new email', fu
     $user = User::factory()->create(['email' => 'old@example.com', 'password' => 'password123']);
 
     $this->actingAs($user)
-        ->put('/account/settings', ['email' => 'new@example.com']);
+        ->put('/account/settings', ['name' => $user->name, 'email' => 'new@example.com']);
 
     $this->post('/logout');
 
@@ -67,7 +67,7 @@ it('returns a validation error when the email is already in use', function () {
     $user = User::factory()->create();
 
     $this->actingAs($user)
-        ->put('/account/settings', ['email' => 'taken@example.com'])
+        ->put('/account/settings', ['name' => $user->name, 'email' => 'taken@example.com'])
         ->assertSessionHasErrors('email');
 });
 
@@ -75,7 +75,7 @@ it('returns a validation error for a disposable email domain', function () {
     $user = User::factory()->create();
 
     $this->actingAs($user)
-        ->put('/account/settings', ['email' => 'jane@mailinator.com'])
+        ->put('/account/settings', ['name' => $user->name, 'email' => 'jane@mailinator.com'])
         ->assertSessionHasErrors('email');
 });
 
@@ -83,6 +83,6 @@ it('returns a validation error for an invalid email format', function () {
     $user = User::factory()->create();
 
     $this->actingAs($user)
-        ->put('/account/settings', ['email' => 'not-an-email'])
+        ->put('/account/settings', ['name' => $user->name, 'email' => 'not-an-email'])
         ->assertSessionHasErrors('email');
 });
