@@ -5,7 +5,8 @@ import AppInput from '@/Components/AppInput.vue';
 import AppButton from '@/Components/AppButton.vue';
 
 const form = useForm({
-    name: usePage().props.auth.user.name,
+    first_name: usePage().props.auth.user.first_name,
+    last_name: usePage().props.auth.user.last_name,
     email: usePage().props.auth.user.email,
 });
 
@@ -34,12 +35,21 @@ const submitPassword = () => {
             <div class="rounded-none border border-black/[0.06] bg-white p-6">
                 <form class="space-y-5" @submit.prevent="submit">
                     <AppInput
-                        id="name"
-                        v-model="form.name"
-                        label="Name"
-                        autocomplete="name"
+                        id="first_name"
+                        v-model="form.first_name"
+                        label="First name"
+                        autocomplete="given-name"
                         required
-                        :error="form.errors.name"
+                        :error="form.errors.first_name"
+                    />
+
+                    <AppInput
+                        id="last_name"
+                        v-model="form.last_name"
+                        label="Last name"
+                        autocomplete="family-name"
+                        required
+                        :error="form.errors.last_name"
                     />
 
                     <AppInput

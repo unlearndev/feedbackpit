@@ -5,7 +5,8 @@ use App\Models\User;
 uses(\Illuminate\Foundation\Testing\RefreshDatabase::class);
 
 $validPayload = fn () => [
-    'name' => 'Jane Doe',
+    'first_name' => 'Jane',
+    'last_name' => 'Doe',
     'email' => 'jane@example.com',
     'password' => 'password123',
     'password_confirmation' => 'password123',
@@ -19,7 +20,8 @@ it('creates a new user on valid registration', function () use ($validPayload) {
     $this->post('/register', $validPayload());
 
     $this->assertDatabaseHas('users', [
-        'name' => 'Jane Doe',
+        'first_name' => 'Jane',
+        'last_name' => 'Doe',
         'email' => 'jane@example.com',
     ]);
 });
@@ -39,9 +41,14 @@ it('redirects to /dashboard after successful registration', function () use ($va
 // Validation — required fields
 // ---------------------------------------------------------------------------
 
-it('requires a name', function () use ($validPayload) {
-    $this->post('/register', array_merge($validPayload(), ['name' => '']))
-        ->assertSessionHasErrors('name');
+it('requires a first name', function () use ($validPayload) {
+    $this->post('/register', array_merge($validPayload(), ['first_name' => '']))
+        ->assertSessionHasErrors('first_name');
+});
+
+it('requires a last name', function () use ($validPayload) {
+    $this->post('/register', array_merge($validPayload(), ['last_name' => '']))
+        ->assertSessionHasErrors('last_name');
 });
 
 it('requires an email', function () use ($validPayload) {

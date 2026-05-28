@@ -79,7 +79,7 @@ update.put = (options?: RouteQueryOptions): RouteDefinition<'put'> => ({
 
 /**
 * @see \App\Http\Controllers\AccountSettingsController::updatePassword
-* @see app/Http/Controllers/AccountSettingsController.php:26
+* @see app/Http/Controllers/AccountSettingsController.php:23
 * @route '/account/password'
 */
 export const updatePassword = (options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -94,7 +94,7 @@ updatePassword.definition = {
 
 /**
 * @see \App\Http\Controllers\AccountSettingsController::updatePassword
-* @see app/Http/Controllers/AccountSettingsController.php:26
+* @see app/Http/Controllers/AccountSettingsController.php:23
 * @route '/account/password'
 */
 updatePassword.url = (options?: RouteQueryOptions) => {
@@ -103,7 +103,7 @@ updatePassword.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\AccountSettingsController::updatePassword
-* @see app/Http/Controllers/AccountSettingsController.php:26
+* @see app/Http/Controllers/AccountSettingsController.php:23
 * @route '/account/password'
 */
 updatePassword.put = (options?: RouteQueryOptions): RouteDefinition<'put'> => ({
