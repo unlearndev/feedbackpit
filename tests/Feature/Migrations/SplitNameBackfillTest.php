@@ -7,7 +7,9 @@ use Illuminate\Support\Facades\Schema;
 uses(\Illuminate\Foundation\Testing\RefreshDatabase::class);
 
 beforeEach(function () {
-    $this->artisan('migrate:rollback', ['--step' => 1])->run();
+    while (Schema::hasColumn('users', 'first_name')) {
+        $this->artisan('migrate:rollback', ['--step' => 1])->run();
+    }
 
     expect(Schema::hasColumn('users', 'name'))->toBeTrue();
     expect(Schema::hasColumn('users', 'first_name'))->toBeFalse();

@@ -50,6 +50,10 @@ const submit = () => {
                 </AppButton>
             </form>
 
+            <p class="mt-4 text-sm text-neutral-600 text-center">
+                <a href="/login/code" class="font-medium text-neutral-900 hover:underline transition-colors duration-150">Sign in with a code instead</a>
+            </p>
+
             <p class="mt-6 text-sm text-neutral-600 text-center">
                 Don't have an account?
                 <a href="/register" class="font-medium text-neutral-900 hover:underline transition-colors duration-150">Create one</a>

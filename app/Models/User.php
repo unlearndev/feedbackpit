@@ -103,4 +103,12 @@ class User extends Authenticatable
     {
         return $this->hasMany(Comment::class);
     }
+
+    /**
+     * @return HasMany<LoginCode, $this>
+     */
+    public function loginCodes(): HasMany
+    {
+        return $this->hasMany(LoginCode::class);
+    }
 }

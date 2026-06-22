@@ -1,6 +1,7 @@
 import LandingController from './LandingController'
 import AboutController from './AboutController'
 import DashboardController from './DashboardController'
+import Auth from './Auth'
 import AccountSettingsController from './AccountSettingsController'
 import AccountNotificationsController from './AccountNotificationsController'
 import IdeaController from './IdeaController'
@@ -13,6 +14,7 @@ const Controllers = {
     LandingController: Object.assign(LandingController, LandingController),
     AboutController: Object.assign(AboutController, AboutController),
     DashboardController: Object.assign(DashboardController, DashboardController),
+    Auth: Object.assign(Auth, Auth),
     AccountSettingsController: Object.assign(AccountSettingsController, AccountSettingsController),
     AccountNotificationsController: Object.assign(AccountNotificationsController, AccountNotificationsController),
     IdeaController: Object.assign(IdeaController, IdeaController),
