@@ -29,3 +29,51 @@ jobs:
 
       - name: Run tests
         run: composer test
+
+  preflight:
+    needs: tests
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install pre-flight skill
+        run: npx --yes skills@latest add unlearndev/skills --skill preflight --agent claude-code --copy -y
+
+      - name: Run pre-flight skill
+        id: preflight
+        uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          prompt: |
+            Read `.claude/skills/preflight/SKILL.md` and follow it exactly,
+            treating its $ARGUMENTS as `origin/${{ github.base_ref }}`.
+            Return ONLY the checklist as the `body` field of the structured output.
+            You MUST always populate `body`.
+          claude_args: |
+            --json-schema '{"type":"object","properties":{"body":{"type":"string"}},"required":["body"]}'
+            --allowedTools "Bash(git diff:*),Bash(git log:*),Bash(git merge-base:*),Bash(git rev-parse:*),Read,Grep,Glob"
+
+      - name: Build comment body
+        id: body
+        env:
+          STRUCTURED: ${{ steps.preflight.outputs.structured_output }}
+        run: |
+          message=$(echo "$STRUCTURED" | jq -r '.body')
+          {
+            echo 'message<<EOF'
+            echo "$message"
+            echo 'EOF'
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Post sticky comment
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          header: preflight
+          message: ${{ steps.body.outputs.message }}
