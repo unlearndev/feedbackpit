@@ -14,11 +14,6 @@ return [
     |
     */
 
-    'mailer' => [
-        'token' => env('MAILER_TOKEN'),
-        'endpoint' => env('MAILER_ENDPOINT', 'https://api.mailer.example/v1/send'),
-    ],
-
     'postmark' => [
         'key' => env('POSTMARK_API_KEY'),
     ],

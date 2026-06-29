@@ -3,9 +3,9 @@
 namespace App\Jobs;
 
 use App\Models\User;
+use App\Notifications\WelcomeNotification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
-use Illuminate\Support\Facades\Http;
 
 class SendWelcomeEmail implements ShouldQueue
 {
@@ -19,12 +19,7 @@ class SendWelcomeEmail implements ShouldQueue
             return;
         }
 
-        Http::withToken(config('services.mailer.token'))
-            ->post(config('services.mailer.endpoint'), [
-                'to' => $this->user->email,
-                'subject' => 'Welcome to FeedbackPit',
-                'text' => "Hi {$this->user->first_name}, welcome to FeedbackPit! We're glad you're here.",
-            ]);
+        $this->user->notify(new WelcomeNotification);
 
         $this->user->forceFill(['welcome_email_sent_at' => now()])->save();
     }
