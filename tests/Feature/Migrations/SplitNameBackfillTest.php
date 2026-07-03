@@ -7,7 +7,11 @@ use Illuminate\Support\Facades\Schema;
 uses(\Illuminate\Foundation\Testing\RefreshDatabase::class);
 
 beforeEach(function () {
-    $this->artisan('migrate:rollback', ['--step' => 1])->run();
+    // Roll back until the split-name migration is undone, regardless of how
+    // many later migrations sit on top of it.
+    do {
+        $this->artisan('migrate:rollback', ['--step' => 1])->run();
+    } while (! Schema::hasColumn('users', 'name'));
 
     expect(Schema::hasColumn('users', 'name'))->toBeTrue();
     expect(Schema::hasColumn('users', 'first_name'))->toBeFalse();

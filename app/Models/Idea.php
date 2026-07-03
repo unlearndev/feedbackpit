@@ -66,6 +66,14 @@ class Idea extends Model
     }
 
     /**
+     * @return HasMany<Reaction, $this>
+     */
+    public function reactions(): HasMany
+    {
+        return $this->hasMany(Reaction::class);
+    }
+
+    /**
      * @return HasMany<IdeaStatusUpdate, $this>
      */
     public function statusUpdates(): HasMany
