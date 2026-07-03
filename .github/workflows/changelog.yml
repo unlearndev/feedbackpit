@@ -112,6 +112,7 @@ jobs:
       - name: Commit CHANGELOG.md
         env:
           TAG: ${{ inputs.tag }}
+          GITHUB_TOKEN: ${{ github.token }}
         run: |
           git add CHANGELOG.md
           if git diff --cached --quiet -- CHANGELOG.md; then
@@ -121,4 +122,6 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git commit -m "Update CHANGELOG.md for ${TAG}"
-          git push
+          # claude-code-action replaces the checkout credentials, so push with
+          # the workflow token explicitly.
+          git push "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" HEAD:main
