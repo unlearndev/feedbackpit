@@ -3,6 +3,7 @@ import { computed } from 'vue';
 import { usePage, useForm } from '@inertiajs/vue3';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import VoteButton from '@/Components/VoteButton.vue';
+import ReactionBar from '@/Components/ReactionBar.vue';
 import StatusBadge from '@/Components/StatusBadge.vue';
 import CommentCard from '@/Components/CommentCard.vue';
 import CommentForm from '@/Components/CommentForm.vue';
@@ -84,6 +85,11 @@ const formatDate = (dateString) => {
             </div>
 
             <p class="text-neutral-700 whitespace-pre-line">{{ idea.description }}</p>
+
+            <div v-if="idea.reactions" class="mt-6 flex flex-wrap items-center gap-3 border-t border-black/[0.06] pt-6">
+                <ReactionBar :idea-id="idea.id" :reactions="idea.reactions" />
+                <span v-if="!user" class="text-xs uppercase tracking-wider text-neutral-400">Sign in to react</span>
+            </div>
         </div>
 
         <div class="mt-8">

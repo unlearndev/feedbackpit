@@ -137,6 +137,64 @@ vote.post = (args: { idea: number | { id: number } } | [idea: number | { id: num
 })
 
 /**
+* @see \App\Http\Controllers\ReactionController::__invoke
+* @see app/Http/Controllers/ReactionController.php:11
+* @route '/feedback/{idea}/reactions'
+*/
+export const react = (args: { idea: number | { id: number } } | [idea: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: react.url(args, options),
+    method: 'post',
+})
+
+react.definition = {
+    methods: ["post"],
+    url: '/feedback/{idea}/reactions',
+} satisfies RouteDefinition<["post"]>
+
+/**
+* @see \App\Http\Controllers\ReactionController::__invoke
+* @see app/Http/Controllers/ReactionController.php:11
+* @route '/feedback/{idea}/reactions'
+*/
+react.url = (args: { idea: number | { id: number } } | [idea: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+    if (typeof args === 'string' || typeof args === 'number') {
+        args = { idea: args }
+    }
+
+    if (typeof args === 'object' && !Array.isArray(args) && 'id' in args) {
+        args = { idea: args.id }
+    }
+
+    if (Array.isArray(args)) {
+        args = {
+            idea: args[0],
+        }
+    }
+
+    args = applyUrlDefaults(args)
+
+    const parsedArgs = {
+        idea: typeof args.idea === 'object'
+        ? args.idea.id
+        : args.idea,
+    }
+
+    return react.definition.url
+            .replace('{idea}', parsedArgs.idea.toString())
+            .replace(/\/+$/, '') + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\ReactionController::__invoke
+* @see app/Http/Controllers/ReactionController.php:11
+* @route '/feedback/{idea}/reactions'
+*/
+react.post = (args: { idea: number | { id: number } } | [idea: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: react.url(args, options),
+    method: 'post',
+})
+
+/**
 * @see \App\Http\Controllers\IdeaController::show
 * @see app/Http/Controllers/IdeaController.php:14
 * @route '/feedback/{idea}'
@@ -273,6 +331,7 @@ const feedback = {
     create: Object.assign(create, create),
     store: Object.assign(store, store),
     vote: Object.assign(vote, vote),
+    react: Object.assign(react, react),
     comments: Object.assign(comments, comments),
     show: Object.assign(show, show),
     unsubscribe: Object.assign(unsubscribe, unsubscribe),
