@@ -78,3 +78,49 @@ jobs:
         with:
           header: preflight
           message: ${{ steps.body.outputs.message }}
+
+  qa-checklist:
+    needs: tests
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+      id-token: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Run QA checklist skill
+        id: qa
+        uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          prompt: |
+            Read `.github/skills/qa-checklist/SKILL.md` and follow it exactly,
+            comparing against `origin/${{ github.base_ref }}` as the base branch.
+            Return ONLY the checklist as the `body` field of the structured output.
+            You MUST always populate `body`.
+          claude_args: |
+            --json-schema '{"type":"object","properties":{"body":{"type":"string"}},"required":["body"]}'
+            --allowedTools "Bash(git diff:*),Bash(git log:*),Bash(git merge-base:*),Bash(git rev-parse:*),Read,Grep,Glob"
+
+      - name: Build comment body
+        id: body
+        env:
+          STRUCTURED: ${{ steps.qa.outputs.structured_output }}
+        run: |
+          message=$(echo "$STRUCTURED" | jq -r '.body')
+          {
+            echo 'message<<EOF'
+            echo "$message"
+            echo 'EOF'
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Post sticky comment
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          header: qa-checklist
+          message: ${{ steps.body.outputs.message }}
