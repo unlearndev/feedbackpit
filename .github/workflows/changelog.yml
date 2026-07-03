@@ -1,0 +1,104 @@
+name: Changelog
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: write
+
+jobs:
+  changelog:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Collect commits since previous release
+        id: commits
+        env:
+          TAG: ${{ github.event.release.tag_name }}
+        run: |
+          prev=$(git describe --tags --abbrev=0 "${TAG}^" 2>/dev/null || true)
+          if [ -n "$prev" ]; then
+            range="${prev}..${TAG}"
+          else
+            range="$TAG"
+          fi
+          echo "Previous tag: ${prev:-none (first release)}"
+          echo "Range: $range"
+          {
+            echo 'log<<COMMITS_EOF'
+            git log --no-merges --pretty=format:'%h %s' "$range"
+            echo
+            echo 'COMMITS_EOF'
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Write changelog with Claude
+        id: changelog
+        uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          prompt: |
+            Write a technical changelog for release ${{ github.event.release.tag_name }} based on the commits below.
+
+            Rules:
+            - The commits are the ONLY source of truth. Do not invent, embellish, or infer changes that are not stated in a commit subject.
+            - Read each subject literally. Never describe a removal, revert, or rollback as an addition or new feature. "Remove X" means X is gone.
+            - Group entries under exactly these headings, in this order: `### Features`, `### Fixes`, `### Chores`. Omit any heading that has no entries.
+            - Features are user-facing additions or changes. Fixes are bug fixes. Everything else (refactors, CI, dependencies, tooling, docs, removals of internal scaffolding) is a Chore.
+            - One bullet per meaningful change. Fold near-duplicate commits about the same change into one bullet. Skip pure merge/version-bump noise.
+            - Write each bullet as a plain past-tense sentence. No commit hashes, no PR numbers, no marketing language.
+
+            Return ONLY the markdown for these sections as the `body` field of the structured output — no release heading, no preamble. If there are no commits, set `body` to "_No changes._".
+
+            Commits (one per line, `<hash> <subject>`):
+
+            ${{ steps.commits.outputs.log }}
+          claude_args: |
+            --json-schema '{"type":"object","properties":{"body":{"type":"string"}},"required":["body"]}'
+            --allowedTools ""
+
+      - name: Update CHANGELOG.md
+        env:
+          STRUCTURED: ${{ steps.changelog.outputs.structured_output }}
+          TAG: ${{ github.event.release.tag_name }}
+        run: |
+          body=$(echo "$STRUCTURED" | jq -r '.body')
+          if [ -z "$body" ] || [ "$body" = "null" ]; then
+            echo "Claude did not produce a changelog body." >&2
+            exit 1
+          fi
+          if [ -f CHANGELOG.md ] && grep -q "^## ${TAG} " CHANGELOG.md; then
+            echo "CHANGELOG.md already has a section for ${TAG}, skipping."
+            exit 0
+          fi
+          tmp=$(mktemp)
+          {
+            echo "# Changelog"
+            echo
+            echo "## ${TAG} - $(date -u +%Y-%m-%d)"
+            echo
+            echo "$body"
+            echo
+            if [ -f CHANGELOG.md ]; then
+              sed '1{/^# Changelog$/d;}' CHANGELOG.md | sed '/./,$!d'
+            fi
+          } > "$tmp"
+          mv "$tmp" CHANGELOG.md
+
+      - name: Commit CHANGELOG.md
+        env:
+          TAG: ${{ github.event.release.tag_name }}
+        run: |
+          if git diff --quiet -- CHANGELOG.md; then
+            echo "No changelog changes to commit."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add CHANGELOG.md
+          git commit -m "Update CHANGELOG.md for ${TAG}"
+          git push
