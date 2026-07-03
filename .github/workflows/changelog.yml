@@ -1,15 +1,34 @@
 name: Changelog
 
+# claude-code-action does not support the `release` event, so the release
+# trigger only re-dispatches this workflow as a workflow_dispatch run.
 on:
   release:
     types: [published]
-
-permissions:
-  contents: write
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Release tag to write the changelog for
+        required: true
 
 jobs:
-  changelog:
+  dispatch:
+    if: github.event_name == 'release'
     runs-on: ubuntu-latest
+    permissions:
+      actions: write
+    steps:
+      - name: Re-dispatch as workflow_dispatch
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.event.release.tag_name }}
+        run: gh workflow run changelog.yml --repo "$GITHUB_REPOSITORY" --ref main -f "tag=$TAG"
+
+  changelog:
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
         with:
@@ -19,7 +38,7 @@ jobs:
       - name: Collect commits since previous release
         id: commits
         env:
-          TAG: ${{ github.event.release.tag_name }}
+          TAG: ${{ inputs.tag }}
         run: |
           prev=$(git describe --tags --abbrev=0 "${TAG}^" 2>/dev/null || true)
           if [ -n "$prev" ]; then
@@ -42,7 +61,7 @@ jobs:
         with:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
           prompt: |
-            Write a technical changelog for release ${{ github.event.release.tag_name }} based on the commits below.
+            Write a technical changelog for release ${{ inputs.tag }} based on the commits below.
 
             Rules:
             - The commits are the ONLY source of truth. Do not invent, embellish, or infer changes that are not stated in a commit subject.
@@ -64,7 +83,7 @@ jobs:
       - name: Update CHANGELOG.md
         env:
           STRUCTURED: ${{ steps.changelog.outputs.structured_output }}
-          TAG: ${{ github.event.release.tag_name }}
+          TAG: ${{ inputs.tag }}
         run: |
           body=$(echo "$STRUCTURED" | jq -r '.body')
           if [ -z "$body" ] || [ "$body" = "null" ]; then
@@ -91,7 +110,7 @@ jobs:
 
       - name: Commit CHANGELOG.md
         env:
-          TAG: ${{ github.event.release.tag_name }}
+          TAG: ${{ inputs.tag }}
         run: |
           if git diff --quiet -- CHANGELOG.md; then
             echo "No changelog changes to commit."
