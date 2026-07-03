@@ -2,13 +2,8 @@
 
 use App\Models\Idea;
 use App\Models\User;
-use Laravel\Pennant\Feature;
 
 uses(\Illuminate\Foundation\Testing\RefreshDatabase::class);
-
-beforeEach(function () {
-    Feature::define('reactions', fn () => true);
-});
 
 // ---------------------------------------------------------------------------
 // Authorization
