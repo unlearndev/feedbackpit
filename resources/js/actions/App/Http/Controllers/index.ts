@@ -5,6 +5,7 @@ import AccountSettingsController from './AccountSettingsController'
 import AccountNotificationsController from './AccountNotificationsController'
 import IdeaController from './IdeaController'
 import VoteController from './VoteController'
+import ReactionController from './ReactionController'
 import CommentController from './CommentController'
 import UnsubscribeController from './UnsubscribeController'
 import Internal from './Internal'
@@ -17,6 +18,7 @@ const Controllers = {
     AccountNotificationsController: Object.assign(AccountNotificationsController, AccountNotificationsController),
     IdeaController: Object.assign(IdeaController, IdeaController),
     VoteController: Object.assign(VoteController, VoteController),
+    ReactionController: Object.assign(ReactionController, ReactionController),
     CommentController: Object.assign(CommentController, CommentController),
     UnsubscribeController: Object.assign(UnsubscribeController, UnsubscribeController),
     Internal: Object.assign(Internal, Internal),
