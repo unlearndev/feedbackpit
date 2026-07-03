@@ -8,12 +8,17 @@ use App\Http\Resources\IdeaResource;
 use App\Models\Idea;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Response;
+use Laravel\Pennant\Feature;
 
 class IdeaController extends Controller
 {
     public function show(Idea $idea): Response
     {
         $idea->load(['user', 'voters:id', 'subscribers:id', 'latestStatusUpdate.user']);
+
+        if (Feature::active('reactions')) {
+            $idea->load('reactions');
+        }
 
         return inertia('Ideas/Show', [
             'idea' => new IdeaResource($idea),

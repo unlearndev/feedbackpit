@@ -8,9 +8,11 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\IdeaController;
 use App\Http\Controllers\Internal;
 use App\Http\Controllers\LandingController;
+use App\Http\Controllers\ReactionController;
 use App\Http\Controllers\UnsubscribeController;
 use App\Http\Controllers\VoteController;
 use Illuminate\Support\Facades\Route;
+use Laravel\Pennant\Middleware\EnsureFeaturesAreActive;
 
 Route::get('/', LandingController::class)->name('landing');
 Route::get('/about', AboutController::class)->name('about');
@@ -29,6 +31,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/feedback', [IdeaController::class, 'store'])->name('feedback.store');
 
     Route::post('/feedback/{idea}/vote', VoteController::class)->name('feedback.vote');
+    Route::post('/feedback/{idea}/reactions', ReactionController::class)
+        ->middleware(EnsureFeaturesAreActive::using('reactions'))
+        ->name('feedback.react');
     Route::post('/feedback/{idea}/comments', [CommentController::class, 'store'])->name('feedback.comments.store');
 });
 

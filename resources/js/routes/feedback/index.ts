@@ -2,7 +2,7 @@ import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefa
 import comments from './comments'
 /**
 * @see \App\Http\Controllers\IdeaController::create
-* @see app/Http/Controllers/IdeaController.php:26
+* @see app/Http/Controllers/IdeaController.php:31
 * @route '/feedback/create'
 */
 export const create = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -17,7 +17,7 @@ create.definition = {
 
 /**
 * @see \App\Http\Controllers\IdeaController::create
-* @see app/Http/Controllers/IdeaController.php:26
+* @see app/Http/Controllers/IdeaController.php:31
 * @route '/feedback/create'
 */
 create.url = (options?: RouteQueryOptions) => {
@@ -26,7 +26,7 @@ create.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\IdeaController::create
-* @see app/Http/Controllers/IdeaController.php:26
+* @see app/Http/Controllers/IdeaController.php:31
 * @route '/feedback/create'
 */
 create.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -36,7 +36,7 @@ create.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\IdeaController::create
-* @see app/Http/Controllers/IdeaController.php:26
+* @see app/Http/Controllers/IdeaController.php:31
 * @route '/feedback/create'
 */
 create.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -46,7 +46,7 @@ create.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\IdeaController::store
-* @see app/Http/Controllers/IdeaController.php:31
+* @see app/Http/Controllers/IdeaController.php:36
 * @route '/feedback'
 */
 export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -61,7 +61,7 @@ store.definition = {
 
 /**
 * @see \App\Http\Controllers\IdeaController::store
-* @see app/Http/Controllers/IdeaController.php:31
+* @see app/Http/Controllers/IdeaController.php:36
 * @route '/feedback'
 */
 store.url = (options?: RouteQueryOptions) => {
@@ -70,7 +70,7 @@ store.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\IdeaController::store
-* @see app/Http/Controllers/IdeaController.php:31
+* @see app/Http/Controllers/IdeaController.php:36
 * @route '/feedback'
 */
 store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -137,8 +137,66 @@ vote.post = (args: { idea: number | { id: number } } | [idea: number | { id: num
 })
 
 /**
+* @see \App\Http\Controllers\ReactionController::__invoke
+* @see app/Http/Controllers/ReactionController.php:11
+* @route '/feedback/{idea}/reactions'
+*/
+export const react = (args: { idea: number | { id: number } } | [idea: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: react.url(args, options),
+    method: 'post',
+})
+
+react.definition = {
+    methods: ["post"],
+    url: '/feedback/{idea}/reactions',
+} satisfies RouteDefinition<["post"]>
+
+/**
+* @see \App\Http\Controllers\ReactionController::__invoke
+* @see app/Http/Controllers/ReactionController.php:11
+* @route '/feedback/{idea}/reactions'
+*/
+react.url = (args: { idea: number | { id: number } } | [idea: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+    if (typeof args === 'string' || typeof args === 'number') {
+        args = { idea: args }
+    }
+
+    if (typeof args === 'object' && !Array.isArray(args) && 'id' in args) {
+        args = { idea: args.id }
+    }
+
+    if (Array.isArray(args)) {
+        args = {
+            idea: args[0],
+        }
+    }
+
+    args = applyUrlDefaults(args)
+
+    const parsedArgs = {
+        idea: typeof args.idea === 'object'
+        ? args.idea.id
+        : args.idea,
+    }
+
+    return react.definition.url
+            .replace('{idea}', parsedArgs.idea.toString())
+            .replace(/\/+$/, '') + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\ReactionController::__invoke
+* @see app/Http/Controllers/ReactionController.php:11
+* @route '/feedback/{idea}/reactions'
+*/
+react.post = (args: { idea: number | { id: number } } | [idea: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: react.url(args, options),
+    method: 'post',
+})
+
+/**
 * @see \App\Http\Controllers\IdeaController::show
-* @see app/Http/Controllers/IdeaController.php:14
+* @see app/Http/Controllers/IdeaController.php:15
 * @route '/feedback/{idea}'
 */
 export const show = (args: { idea: number | { id: number } } | [idea: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -153,7 +211,7 @@ show.definition = {
 
 /**
 * @see \App\Http\Controllers\IdeaController::show
-* @see app/Http/Controllers/IdeaController.php:14
+* @see app/Http/Controllers/IdeaController.php:15
 * @route '/feedback/{idea}'
 */
 show.url = (args: { idea: number | { id: number } } | [idea: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -186,7 +244,7 @@ show.url = (args: { idea: number | { id: number } } | [idea: number | { id: numb
 
 /**
 * @see \App\Http\Controllers\IdeaController::show
-* @see app/Http/Controllers/IdeaController.php:14
+* @see app/Http/Controllers/IdeaController.php:15
 * @route '/feedback/{idea}'
 */
 show.get = (args: { idea: number | { id: number } } | [idea: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -196,7 +254,7 @@ show.get = (args: { idea: number | { id: number } } | [idea: number | { id: numb
 
 /**
 * @see \App\Http\Controllers\IdeaController::show
-* @see app/Http/Controllers/IdeaController.php:14
+* @see app/Http/Controllers/IdeaController.php:15
 * @route '/feedback/{idea}'
 */
 show.head = (args: { idea: number | { id: number } } | [idea: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -273,6 +331,7 @@ const feedback = {
     create: Object.assign(create, create),
     store: Object.assign(store, store),
     vote: Object.assign(vote, vote),
+    react: Object.assign(react, react),
     comments: Object.assign(comments, comments),
     show: Object.assign(show, show),
     unsubscribe: Object.assign(unsubscribe, unsubscribe),
