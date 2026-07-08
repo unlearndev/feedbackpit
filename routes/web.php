@@ -29,6 +29,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/feedback/create', [IdeaController::class, 'create'])->name('feedback.create');
     Route::post('/feedback', [IdeaController::class, 'store'])->name('feedback.store');
 
+    Route::get('/feedback/{idea}/edit', [IdeaController::class, 'edit'])->name('feedback.edit');
+    Route::put('/feedback/{idea}', [IdeaController::class, 'update'])->name('feedback.update');
+    Route::delete('/feedback/{idea}', [IdeaController::class, 'destroy'])->name('feedback.destroy');
+
     Route::post('/feedback/{idea}/vote', VoteController::class)->name('feedback.vote');
     Route::post('/feedback/{idea}/reactions', ReactionController::class)->name('feedback.react');
     Route::post('/feedback/{idea}/comments', [CommentController::class, 'store'])->name('feedback.comments.store');
