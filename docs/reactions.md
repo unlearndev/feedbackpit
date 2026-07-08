@@ -7,7 +7,7 @@ Signed-in users can add emoji reactions to an idea, in addition to voting.
 Reactions are limited to a fixed set defined on the `Reaction` model:
 
 ```
-👍  ❤️  🎉  🚀  👀  😂
+👍  ❤️  🎉  🚀  👀  😂  🔥
 ```
 
 ## How it works
