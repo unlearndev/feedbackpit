@@ -1,0 +1,51 @@
+#!/usr/bin/env bash
+#
+# Keeps /docs in sync with the code on every commit.
+#
+# Runs the docs-writer subagent (via `claude -p`, headless) against the
+# staged diff, then stages any docs it updates so they land in this commit.
+#
+# This is best-effort: if Claude is unavailable or errors, the commit still
+# proceeds. It never blocks a commit.
+#
+set -euo pipefail
+
+# Prevent re-entry if anything spawned during the hook makes its own commit.
+if [ -n "${FEEDBACKPIT_DOCS_HOOK_RUNNING:-}" ]; then
+  exit 0
+fi
+
+# Nothing we can do without the CLI — skip quietly.
+if ! command -v claude >/dev/null 2>&1; then
+  echo "docs-hook: 'claude' CLI not found — skipping docs update." >&2
+  exit 0
+fi
+
+# The docs-writer works from the staged diff, so look at what's staged.
+staged="$(git diff --cached --name-only --diff-filter=ACMR)"
+if [ -z "$staged" ]; then
+  exit 0
+fi
+
+# If the only staged changes are docs themselves, there's nothing new to document.
+if ! printf '%s\n' "$staged" | grep -qvE '^docs/'; then
+  exit 0
+fi
+
+echo "docs-hook: updating /docs from staged changes via docs-writer…" >&2
+
+if ! FEEDBACKPIT_DOCS_HOOK_RUNNING=1 claude -p \
+  "Use the docs-writer subagent to update the project documentation based on the currently staged git diff. Work only from the staged diff as the source of truth. Update only the docs pages the change affects; add a new page only if the change introduces a brand-new feature. Make no code changes." \
+  --permission-mode acceptEdits \
+  --allowedTools "Task Agent Bash Read Write Edit Glob Grep"; then
+  echo "docs-hook: docs update failed — committing without doc changes." >&2
+  exit 0
+fi
+
+# Stage anything the agent touched under docs/ (modified or newly created).
+if [ -n "$(git status --porcelain -- docs/)" ]; then
+  git add docs/
+  echo "docs-hook: staged updated docs into this commit." >&2
+fi
+
+exit 0
