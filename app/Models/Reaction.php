@@ -16,7 +16,7 @@ class Reaction extends Model
      *
      * @var list<string>
      */
-    public const EMOJIS = ['👍', '❤️', '🎉', '🚀', '👀'];
+    public const EMOJIS = ['👍', '❤️', '🎉', '🚀', '👀', '😂'];
 
     protected $fillable = [
         'emoji',
