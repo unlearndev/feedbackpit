@@ -125,3 +125,43 @@ jobs:
           # claude-code-action replaces the checkout credentials, so push with
           # the workflow token explicitly.
           git push "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" HEAD:main
+
+      - name: Write release notes with Claude
+        id: release_notes
+        uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          prompt: |
+            Write user-facing release notes for release ${{ inputs.tag }} based on the commits below.
+
+            Audience: the people who use the app, not developers. Write for them.
+
+            Rules:
+            - The commits are the ONLY source of truth. Do not invent, embellish, or infer changes that are not stated in a commit subject.
+            - Read each subject literally. Never describe a removal, revert, or rollback as an addition or new feature. "Remove X" means X is gone.
+            - Plain English. No jargon, no code identifiers, no framework or library names, no commit hashes, no PR numbers.
+            - Frame every entry around what changed for the user — what they can now do, what now works better, what looks or behaves differently.
+            - Skip anything purely internal that a user would never notice: refactors, CI, dependency bumps, tooling, tests, docs, and internal scaffolding. If a commit has no user-visible effect, leave it out entirely.
+            - One short bullet per meaningful user-facing change. Fold near-duplicate commits about the same change into one bullet.
+
+            Return ONLY the markdown bullet list as the `body` field of the structured output — no heading, no preamble. If nothing in the commits is user-facing, set `body` to "_No user-facing changes in this release._".
+
+            Commits (one per line, `<hash> <subject>`):
+
+            ${{ steps.commits.outputs.log }}
+          claude_args: |
+            --json-schema '{"type":"object","properties":{"body":{"type":"string"}},"required":["body"]}'
+            --allowedTools ""
+
+      - name: Update release description
+        env:
+          STRUCTURED: ${{ steps.release_notes.outputs.structured_output }}
+          TAG: ${{ inputs.tag }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          body=$(echo "$STRUCTURED" | jq -r '.body')
+          if [ -z "$body" ] || [ "$body" = "null" ]; then
+            echo "Claude did not produce release notes." >&2
+            exit 1
+          fi
+          gh release edit "$TAG" --repo "$GITHUB_REPOSITORY" --notes "$body"
