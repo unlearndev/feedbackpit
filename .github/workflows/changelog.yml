@@ -61,6 +61,9 @@ jobs:
         uses: anthropics/claude-code-action@v1
         with:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          # This workflow is intentionally re-dispatched by the release job, so
+          # the workflow_dispatch run is initiated by github-actions[bot].
+          allowed_bots: github-actions
           prompt: |
             Write a technical changelog for release ${{ inputs.tag }} based on the commits below.
 
@@ -131,6 +134,7 @@ jobs:
         uses: anthropics/claude-code-action@v1
         with:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          allowed_bots: github-actions
           prompt: |
             Write user-facing release notes for release ${{ inputs.tag }} based on the commits below.
 
