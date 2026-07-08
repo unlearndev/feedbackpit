@@ -138,7 +138,12 @@ jobs:
           prompt: |
             Write user-facing release notes for release ${{ inputs.tag }} based on the commits below.
 
-            Audience: the people who use the app, not developers. Write for them.
+            Audience: the people who use the app, not developers. Write for them, and make them excited to try what's new.
+
+            Tone:
+            - Warm, upbeat, and energetic — like a product team genuinely proud to ship this. Lead with the benefit and let real enthusiasm come through.
+            - Confident and specific, never breathless. No hype words that say nothing ("game-changing", "revolutionary", "supercharged"), no exclamation-mark spam (at most one per release), no emoji unless it truly earns its place.
+            - Every ounce of excitement must be backed by something actually in the commits. Enthusiasm is in the framing, never in invented capability.
 
             Rules:
             - The commits are the ONLY source of truth. Do not invent, embellish, or infer changes that are not stated in a commit subject.
@@ -146,9 +151,11 @@ jobs:
             - Plain English. No jargon, no code identifiers, no framework or library names, no commit hashes, no PR numbers.
             - Frame every entry around what changed for the user — what they can now do, what now works better, what looks or behaves differently.
             - Skip anything purely internal that a user would never notice: refactors, CI, dependency bumps, tooling, tests, docs, and internal scaffolding. If a commit has no user-visible effect, leave it out entirely.
-            - One short bullet per meaningful user-facing change. Fold near-duplicate commits about the same change into one bullet.
+            - Be granular. Give each distinct user-facing change its own bullet — don't merge unrelated changes into one line. Only fold together commits that are genuinely the same change.
+            - Structure each bullet as **A short bold headline** — then a sentence or two of plain-English detail: exactly what was added or changed, and where the user finds or uses it. Enough specificity that a reader knows precisely what's new without seeing the app.
+            - Group related bullets under short `###` headings when the release is large enough to warrant it (e.g. `### New`, `### Improved`, `### Fixed`). For a small release, a single flat bullet list is fine — don't force headings.
 
-            Return ONLY the markdown bullet list as the `body` field of the structured output — no heading, no preamble. If nothing in the commits is user-facing, set `body` to "_No user-facing changes in this release._".
+            Return ONLY the markdown as the `body` field of the structured output — no top-level release heading, no preamble. If nothing in the commits is user-facing, set `body` to "_No user-facing changes in this release._".
 
             Commits (one per line, `<hash> <subject>`):
 
