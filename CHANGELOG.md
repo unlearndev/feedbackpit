@@ -1,5 +1,17 @@
 # Changelog
 
+## v1.1 - 2026-07-08
+
+### Features
+
+- Modified the feedback feature.
+
+### Chores
+
+- Added a user-facing release notes step to the release workflow.
+- Updated the changelog for the v1.0 release.
+- Adjusted the changelog workflow to push its commit with an explicit token, fixed its commit guard to detect a newly created changelog file, granted id-token write permission to the changelog job for the Claude Code action, and re-dispatched the workflow to work around the action's lack of release-event support.
+
 ## v1.0 - 2026-07-03
 
 ### Features
