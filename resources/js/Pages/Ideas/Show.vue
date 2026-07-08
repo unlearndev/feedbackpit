@@ -10,6 +10,7 @@ import CommentForm from '@/Components/CommentForm.vue';
 import { dashboard } from '@/routes';
 import { store } from '@/actions/App/Http/Controllers/CommentController';
 import { store as subscribe, destroy as unsubscribe } from '@/routes/account/notifications';
+import { edit, destroy } from '@/routes/feedback';
 
 const props = defineProps({
     idea: {
@@ -25,6 +26,14 @@ const props = defineProps({
 const user = computed(() => usePage().props.auth?.user ?? null);
 
 const subscriptionForm = useForm({});
+
+const deleteForm = useForm({});
+
+const deleteIdea = () => {
+    if (window.confirm('Are you sure you want to delete this feedback? This cannot be undone.')) {
+        deleteForm.delete(destroy.url(props.idea.id));
+    }
+};
 
 const toggleSubscription = () => {
     if (props.idea.is_subscribed) {
@@ -61,6 +70,25 @@ const formatDate = (dateString) => {
             <p class="text-xs uppercase tracking-wider text-neutral-400 mb-6">
                 Submitted by {{ idea.user.name }} on {{ formatDate(idea.created_at) }}
             </p>
+
+            <div v-if="idea.can?.update || idea.can?.delete" class="flex items-center gap-4 mb-6">
+                <a
+                    v-if="idea.can?.update"
+                    :href="edit.url(idea.id)"
+                    class="text-xs uppercase tracking-wider text-neutral-400 hover:text-neutral-900 transition-colors"
+                >
+                    Edit
+                </a>
+                <button
+                    v-if="idea.can?.delete"
+                    type="button"
+                    class="text-xs uppercase tracking-wider text-red-400 hover:text-red-600 transition-colors disabled:opacity-50"
+                    :disabled="deleteForm.processing"
+                    @click="deleteIdea"
+                >
+                    Delete
+                </button>
+            </div>
 
             <div v-if="idea.latest_status_update?.message" class="mb-6 rounded-none border-l-2 border-neutral-900 bg-neutral-50 p-4">
                 <p class="text-sm text-neutral-700 whitespace-pre-line">{{ idea.latest_status_update.message }}</p>
