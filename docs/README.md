@@ -16,6 +16,7 @@ These pages describe each user-facing feature and how it works, grounded in the 
 - [Internal team dashboard](internal-dashboard.md) — team-only triage, status changes, and internal notes.
 - [Public pages](public-pages.md) — landing page, about page, and the shared dashboard.
 - [Changelog & release notes](changelog.md) — how release notes are generated.
+- [Error monitoring](error-monitoring.md) — Sentry error reporting and performance tracing.
 
 ## Roles
 

@@ -15,7 +15,8 @@
         "laravel/framework": "^12.0",
         "laravel/tinker": "^2.10.1",
         "laravel/wayfinder": "^0.1.14",
-        "propaganistas/laravel-disposable-email": "^2.4"
+        "propaganistas/laravel-disposable-email": "^2.4",
+        "sentry/sentry-laravel": "^4.27"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
