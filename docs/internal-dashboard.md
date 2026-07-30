@@ -40,7 +40,11 @@ Ideas move through the `IdeaStatus` enum:
 - Otherwise, in a transaction, an `IdeaStatusUpdate` record is written capturing `from_status`, `to_status`, the optional message, and the team member who made the change; the idea's status is then updated.
 - Every subscriber **except** the team member who made the change is emailed an `IdeaStatusChanged` notification. See [Subscriptions & email notifications](notifications.md).
 
-Each status change is preserved as history, so the idea detail page can show a full timeline of how an idea has progressed.
+Each status change is preserved as history, so the idea detail page can show a timeline of how an idea has progressed.
+
+The `idea_status_updates` table carries a unique index, `idea_status_transition_unique`, across `idea_id`, `user_id`, `from_status`, and `to_status`. A single team member can therefore only ever record a given transition on a given idea once. This matters when an idea revisits an earlier status: if the same team member moves an idea from Planned to In Progress, it later goes back to Planned, and they move it to In Progress again, the second record duplicates all four columns and the database rejects it. The controller does not catch the violation, so it surfaces as a database error (reported to Sentry — see [Error monitoring](error-monitoring.md)) rather than as an inline validation message.
+
+The same transition made by a **different** team member is unaffected, as is the same team member making any other transition on that idea.
 
 ## Comments and internal notes
 
