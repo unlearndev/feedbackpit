@@ -13,13 +13,13 @@ class ReactionController extends Controller
         $user = $request->user();
         $emoji = $request->validated('emoji');
 
-        $existing = $idea->reactions()
+        $existingReaction = $idea->reactions()
             ->where('user_id', $user->id)
             ->where('emoji', $emoji)
             ->first();
 
-        if ($existing) {
-            $existing->delete();
+        if ($existingReaction) {
+            $existingReaction->delete();
         } else {
             $reaction = $idea->reactions()->make(['emoji' => $emoji]);
             $reaction->user()->associate($user);

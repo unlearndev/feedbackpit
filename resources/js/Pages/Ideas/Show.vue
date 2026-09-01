@@ -101,10 +101,13 @@ const formatDate = (dateString) => {
                 <VoteButton :idea-id="idea.id" :votes="idea.votes" :has-voted="idea.has_voted" />
                 <span class="text-sm text-neutral-500">votes</span>
 
+                <span class="ml-auto text-xs uppercase tracking-wider text-neutral-400">
+                    {{ idea.subscribers_count }} {{ idea.subscribers_count === 1 ? 'subscriber' : 'subscribers' }}
+                </span>
                 <button
                     v-if="user"
                     type="button"
-                    class="ml-auto text-xs uppercase tracking-wider text-neutral-400 hover:text-neutral-900 transition-colors disabled:opacity-50"
+                    class="text-xs uppercase tracking-wider text-neutral-400 hover:text-neutral-900 transition-colors disabled:opacity-50"
                     :disabled="subscriptionForm.processing"
                     @click="toggleSubscription"
                 >

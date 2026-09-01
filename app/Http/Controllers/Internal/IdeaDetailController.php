@@ -17,10 +17,10 @@ class IdeaDetailController extends Controller
         return inertia('Internal/Ideas/Show', [
             'idea' => new IdeaResource($idea),
             'comments' => CommentResource::collection(
-                $idea->comments()->where('is_internal', false)->with('user')->oldest()->get()
+                $idea->publicComments()->with('user')->oldest()->get()
             ),
             'internalComments' => CommentResource::collection(
-                $idea->comments()->where('is_internal', true)->with('user')->oldest()->get()
+                $idea->internalComments()->with('user')->oldest()->get()
             ),
         ]);
     }

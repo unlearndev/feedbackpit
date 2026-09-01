@@ -74,6 +74,17 @@ it('includes the vote count', function () {
         );
 });
 
+it('includes the subscriber count', function () {
+    $idea = Idea::factory()->for(User::factory())->create();
+    $idea->subscribers()->attach(User::factory()->count(2)->create());
+
+    // The author is auto-subscribed on creation, so two more makes three.
+    $this->get(route('feedback.show', $idea))
+        ->assertInertia(fn ($page) => $page
+            ->where('idea.subscribers_count', 3)
+        );
+});
+
 // ---------------------------------------------------------------------------
 // Vote status
 // ---------------------------------------------------------------------------
