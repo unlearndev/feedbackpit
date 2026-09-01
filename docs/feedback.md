@@ -17,6 +17,7 @@ New ideas start with the default status defined by the database (see [Internal t
 `GET /feedback/{idea}` (`feedback.show`) renders the `Ideas/Show` page. This route is public — anyone, signed in or not, can view an idea. The page includes:
 
 - The idea itself (title, description, status, vote count, reactions, latest status update).
+- The number of subscribers following the idea, displayed next to the subscribe toggle (visible to everyone, signed in or not).
 - Whether the current user has voted, is subscribed, and can edit/delete it.
 - All **public** comments (internal comments are excluded), oldest first.
 
@@ -32,4 +33,4 @@ On success the user is redirected to the idea page with "Your feedback has been 
 
 ## What the frontend receives
 
-Ideas are serialized by `IdeaResource`, which exposes: `id`, `title`, `description`, `status`, `votes`, `has_voted`, `reactions` (when loaded), `is_subscribed`, `can.update` / `can.delete` (per-user permissions), the author, comment counts, and status-update history. This resource is reused across the dashboard, the idea page, and the internal dashboard.
+Ideas are serialized by `IdeaResource`, which exposes: `id`, `title`, `description`, `status`, `votes`, `has_voted`, `reactions` (when loaded), `is_subscribed`, `subscribers_count` (only when the count is loaded — currently on the public idea page), `can.update` / `can.delete` (per-user permissions), the author, comment counts, and status-update history. This resource is reused across the dashboard, the idea page, and the internal dashboard.

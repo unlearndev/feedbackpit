@@ -14,12 +14,13 @@ class IdeaController extends Controller
 {
     public function show(Idea $idea): Response
     {
-        $idea->load(['user', 'voters:id', 'subscribers:id', 'latestStatusUpdate.user', 'reactions']);
+        $idea->load(['user', 'voters:id', 'subscribers:id', 'latestStatusUpdate.user', 'reactions'])
+            ->loadCount('subscribers');
 
         return inertia('Ideas/Show', [
             'idea' => new IdeaResource($idea),
             'comments' => CommentResource::collection(
-                $idea->comments()->where('is_internal', false)->with('user')->oldest()->get()
+                $idea->publicComments()->with('user')->oldest()->get()
             ),
         ]);
     }

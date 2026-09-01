@@ -66,6 +66,22 @@ class Idea extends Model
     }
 
     /**
+     * @return HasMany<Comment, $this>
+     */
+    public function publicComments(): HasMany
+    {
+        return $this->hasMany(Comment::class)->where('is_internal', false);
+    }
+
+    /**
+     * @return HasMany<Comment, $this>
+     */
+    public function internalComments(): HasMany
+    {
+        return $this->hasMany(Comment::class)->where('is_internal', true);
+    }
+
+    /**
      * @return HasMany<Reaction, $this>
      */
     public function reactions(): HasMany

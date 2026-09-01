@@ -33,6 +33,7 @@ class IdeaResource extends JsonResource
                 ])->values(),
             ),
             'is_subscribed' => $user ? $this->subscribers->contains('id', $user->id) : false,
+            'subscribers_count' => $this->whenCounted('subscribers'),
             'can' => [
                 'update' => $user ? $user->can('update', $this->resource) : false,
                 'delete' => $user ? $user->can('delete', $this->resource) : false,

@@ -2,30 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\Votes\ToggleVote;
 use App\Models\Idea;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
 
 class VoteController extends Controller
 {
-    public function __invoke(Idea $idea): RedirectResponse
+    public function __invoke(Request $request, Idea $idea, ToggleVote $toggleVote): RedirectResponse
     {
-        $user = request()->user();
-
-        DB::transaction(function () use ($idea, $user) {
-            $idea->lockForUpdate();
-
-            $exists = $idea->voters()->where('user_id', $user->id)->exists();
-
-            if ($exists) {
-                $idea->voters()->detach($user->id);
-                $idea->decrement('votes');
-            } else {
-                $idea->voters()->attach($user->id);
-                $idea->increment('votes');
-                $idea->subscribers()->syncWithoutDetaching([$user->id]);
-            }
-        });
+        $toggleVote($request->user(), $idea);
 
         return redirect()->back();
     }
