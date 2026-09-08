@@ -10,7 +10,9 @@ class DashboardController extends Controller
 {
     public function __invoke(): Response
     {
-        $ideas = Idea::with('user', 'voters:id', 'subscribers:id')->latest()->get();
+        $ideas = Idea::with('user', 'voters:id', 'subscribers:id')
+            ->orderByDesc('votes')
+            ->paginate(12);
 
         return inertia('Dashboard', ['ideas' => IdeaResource::collection($ideas)]);
     }

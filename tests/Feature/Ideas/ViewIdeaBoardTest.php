@@ -17,21 +17,36 @@ it('renders the home page with ideas', function () {
         ->assertOk()
         ->assertInertia(fn ($page) => $page
             ->component('Dashboard')
-            ->has('ideas', 1)
-            ->where('ideas.0.title', 'My great idea')
-            ->where('ideas.0.user.name', $user->name)
+            ->has('ideas.data', 1)
+            ->where('ideas.data.0.title', 'My great idea')
+            ->where('ideas.data.0.user.name', $user->name)
         );
 });
 
-it('shows ideas newest first', function () {
+it('shows the most voted ideas first', function () {
     $user = User::factory()->create();
-    $older = Idea::factory()->for($user)->create(['title' => 'Older idea', 'created_at' => now()->subDay()]);
-    $newer = Idea::factory()->for($user)->create(['title' => 'Newer idea', 'created_at' => now()]);
+    Idea::factory()->for($user)->create(['title' => 'Less popular idea', 'votes' => 2]);
+    Idea::factory()->for($user)->create(['title' => 'Popular idea', 'votes' => 9]);
 
     $this->get(route('dashboard'))
         ->assertInertia(fn ($page) => $page
-            ->where('ideas.0.title', 'Newer idea')
-            ->where('ideas.1.title', 'Older idea')
+            ->where('ideas.data.0.title', 'Popular idea')
+            ->where('ideas.data.1.title', 'Less popular idea')
+        );
+});
+
+it('shows twelve ideas per page', function () {
+    Idea::factory()->for(User::factory())->count(15)->create();
+
+    $this->get(route('dashboard'))
+        ->assertInertia(fn ($page) => $page
+            ->has('ideas.data', 12)
+            ->where('ideas.meta.last_page', 2)
+        );
+
+    $this->get(route('dashboard', ['page' => 2]))
+        ->assertInertia(fn ($page) => $page
+            ->has('ideas.data', 3)
         );
 });
 
@@ -40,7 +55,7 @@ it('shows an empty state when no ideas exist', function () {
         ->assertOk()
         ->assertInertia(fn ($page) => $page
             ->component('Dashboard')
-            ->has('ideas', 0)
+            ->has('ideas.data', 0)
         );
 });
 
@@ -49,7 +64,7 @@ it('includes the status for each idea', function () {
 
     $this->get(route('dashboard'))
         ->assertInertia(fn ($page) => $page
-            ->where('ideas.0.status', 'planned')
+            ->where('ideas.data.0.status', 'planned')
         );
 });
 
@@ -58,7 +73,7 @@ it('includes the votes for each idea', function () {
 
     $this->get(route('dashboard'))
         ->assertInertia(fn ($page) => $page
-            ->where('ideas.0.votes', 5)
+            ->where('ideas.data.0.votes', 5)
         );
 });
 
@@ -74,7 +89,7 @@ it('includes has_voted as true when the user has voted', function () {
     $this->actingAs($user)
         ->get(route('dashboard'))
         ->assertInertia(fn ($page) => $page
-            ->where('ideas.0.has_voted', true)
+            ->where('ideas.data.0.has_voted', true)
         );
 });
 
@@ -85,6 +100,6 @@ it('includes has_voted as false when the user has not voted', function () {
     $this->actingAs($user)
         ->get(route('dashboard'))
         ->assertInertia(fn ($page) => $page
-            ->where('ideas.0.has_voted', false)
+            ->where('ideas.data.0.has_voted', false)
         );
 });
