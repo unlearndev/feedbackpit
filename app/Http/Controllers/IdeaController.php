@@ -32,9 +32,9 @@ class IdeaController extends Controller
 
     public function store(StoreIdeaRequest $request): RedirectResponse
     {
-        $request->user()->ideas()->create($request->only(['title', 'description']));
+        $idea = $request->user()->ideas()->create($request->only(['title', 'description']));
 
-        return redirect()->route('dashboard')->with('status', 'Your feedback has been submitted!');
+        return redirect()->route('feedback.show', $idea)->with('status', 'Your feedback has been submitted!');
     }
 
     public function edit(Idea $idea): Response
