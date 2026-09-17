@@ -12,6 +12,8 @@ Signed-in users create feedback from the `Ideas/Create` page.
 
 New ideas start with the default status defined by the database (see [Internal team dashboard](internal-dashboard.md) for the status pipeline).
 
+If an idea turns out to be a duplicate, a team member can merge it into the idea being kept, which moves its comments, reactions, and votes across and closes the duplicate as Declined. See [Merging duplicate ideas](internal-dashboard.md#merging-duplicate-ideas).
+
 ## Viewing feedback
 
 `GET /feedback/{idea}` (`feedback.show`) renders the `Ideas/Show` page. This route is public — anyone, signed in or not, can view an idea. The page includes:

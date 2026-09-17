@@ -25,7 +25,9 @@ export default defineConfig({
             },
         }),
         tailwindcss(),
-        wayfinder(),
+        wayfinder({
+            patterns: ['routes/**/*.php', 'app/**/Http/**/*.php', 'app/Modules/*/Routes/*.php'],
+        }),
     ],
     server: {
         watch: {

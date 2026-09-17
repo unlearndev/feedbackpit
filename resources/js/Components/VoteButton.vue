@@ -1,7 +1,7 @@
 <script setup>
 import { computed } from 'vue';
 import { router, usePage } from '@inertiajs/vue3';
-import VoteController from '@/actions/App/Http/Controllers/VoteController';
+import VoteController from '@/actions/App/Modules/Feedback/Http/Controllers/VoteController';
 
 const props = defineProps({
     ideaId: {

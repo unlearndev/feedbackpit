@@ -6,8 +6,9 @@ import CommentCard from '@/Components/CommentCard.vue';
 import CommentForm from '@/Components/CommentForm.vue';
 import NoteCard from '@/Components/NoteCard.vue';
 import NoteForm from '@/Components/NoteForm.vue';
-import { store as storeComment } from '@/actions/App/Http/Controllers/Internal/CommentController';
-import { store as storeNote } from '@/actions/App/Http/Controllers/Internal/NoteController';
+import MergeIdeaForm from '@/Components/MergeIdeaForm.vue';
+import { store as storeComment } from '@/actions/App/Modules/Internal/Http/Controllers/CommentController';
+import { store as storeNote } from '@/actions/App/Modules/Internal/Http/Controllers/NoteController';
 
 defineProps({
     idea: {
@@ -19,6 +20,10 @@ defineProps({
         default: () => [],
     },
     internalComments: {
+        type: Array,
+        default: () => [],
+    },
+    mergeTargets: {
         type: Array,
         default: () => [],
     },
@@ -59,6 +64,10 @@ const formatDate = (dateString) => {
         <div class="rounded-none border border-black/[0.06] bg-white p-6 mb-8">
             <h2 class="text-lg font-semibold tracking-tight text-neutral-900 mb-4">Update Status</h2>
             <StatusUpdateForm :idea="idea" />
+
+            <div class="mt-6">
+                <MergeIdeaForm :idea="idea" :targets="mergeTargets" />
+            </div>
 
             <div v-if="idea.status_updates && idea.status_updates.length" class="mt-8 border-t border-black/[0.06] pt-6">
                 <h3 class="text-xs font-medium uppercase tracking-wider text-neutral-500 mb-3">History</h3>

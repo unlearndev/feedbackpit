@@ -1,7 +1,7 @@
 <script setup>
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
 import { router, usePage } from '@inertiajs/vue3';
-import ReactionController from '@/actions/App/Http/Controllers/ReactionController';
+import ReactionController from '@/actions/App/Modules/Feedback/Http/Controllers/ReactionController';
 
 const props = defineProps({
     ideaId: {

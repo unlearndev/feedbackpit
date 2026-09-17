@@ -1,0 +1,30 @@
+<?php
+
+namespace App\Modules\Internal\Http\Controllers;
+
+use App\Http\Controllers\Controller;
+use App\Http\Resources\CommentResource;
+use App\Http\Resources\IdeaResource;
+use App\Models\Idea;
+use Inertia\Response;
+
+class IdeaDetailController extends Controller
+{
+    public function show(Idea $idea): Response
+    {
+        $idea->load(['user', 'voters:id', 'subscribers:id', 'latestStatusUpdate.user', 'statusUpdates.user']);
+
+        return inertia('Internal/Ideas/Show', [
+            'idea' => new IdeaResource($idea),
+            'mergeTargets' => Idea::where('id', '!=', $idea->id)
+                ->orderBy('title')
+                ->get(['id', 'title']),
+            'comments' => CommentResource::collection(
+                $idea->publicComments()->with('user')->oldest()->get()
+            ),
+            'internalComments' => CommentResource::collection(
+                $idea->internalComments()->with('user')->oldest()->get()
+            ),
+        ]);
+    }
+}

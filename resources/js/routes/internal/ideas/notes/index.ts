@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../../wayfinder'
 /**
-* @see \App\Http\Controllers\Internal\NoteController::store
-* @see app/Http/Controllers/Internal/NoteController.php:13
+* @see \App\Modules\Internal\Http\Controllers\NoteController::store
+* @see app/Modules/Internal/Http/Controllers/NoteController.php:13
 * @route '/internal/ideas/{idea}/notes'
 */
 export const store = (args: { idea: number | { id: number } } | [idea: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -15,8 +15,8 @@ store.definition = {
 } satisfies RouteDefinition<["post"]>
 
 /**
-* @see \App\Http\Controllers\Internal\NoteController::store
-* @see app/Http/Controllers/Internal/NoteController.php:13
+* @see \App\Modules\Internal\Http\Controllers\NoteController::store
+* @see app/Modules/Internal/Http/Controllers/NoteController.php:13
 * @route '/internal/ideas/{idea}/notes'
 */
 store.url = (args: { idea: number | { id: number } } | [idea: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -48,8 +48,8 @@ store.url = (args: { idea: number | { id: number } } | [idea: number | { id: num
 }
 
 /**
-* @see \App\Http\Controllers\Internal\NoteController::store
-* @see app/Http/Controllers/Internal/NoteController.php:13
+* @see \App\Modules\Internal\Http\Controllers\NoteController::store
+* @see app/Modules/Internal/Http/Controllers/NoteController.php:13
 * @route '/internal/ideas/{idea}/notes'
 */
 store.post = (args: { idea: number | { id: number } } | [idea: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({

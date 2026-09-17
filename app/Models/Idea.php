@@ -21,6 +21,7 @@ class Idea extends Model
     protected $fillable = [
         'title',
         'description',
+        'merged_into_id',
     ];
 
     /**
@@ -39,6 +40,14 @@ class Idea extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * @return BelongsTo<Idea, $this>
+     */
+    public function mergedInto(): BelongsTo
+    {
+        return $this->belongsTo(Idea::class, 'merged_into_id');
     }
 
     /**

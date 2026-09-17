@@ -2,9 +2,10 @@ import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefa
 import comments from './comments'
 import notes from './notes'
 import status from './status'
+import merge from './merge'
 /**
-* @see \App\Http\Controllers\Internal\IdeaDashboardController::__invoke
-* @see app/Http/Controllers/Internal/IdeaDashboardController.php:12
+* @see \App\Modules\Internal\Http\Controllers\IdeaDashboardController::__invoke
+* @see app/Modules/Internal/Http/Controllers/IdeaDashboardController.php:12
 * @route '/internal'
 */
 export const index = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -18,8 +19,8 @@ index.definition = {
 } satisfies RouteDefinition<["get","head"]>
 
 /**
-* @see \App\Http\Controllers\Internal\IdeaDashboardController::__invoke
-* @see app/Http/Controllers/Internal/IdeaDashboardController.php:12
+* @see \App\Modules\Internal\Http\Controllers\IdeaDashboardController::__invoke
+* @see app/Modules/Internal/Http/Controllers/IdeaDashboardController.php:12
 * @route '/internal'
 */
 index.url = (options?: RouteQueryOptions) => {
@@ -27,8 +28,8 @@ index.url = (options?: RouteQueryOptions) => {
 }
 
 /**
-* @see \App\Http\Controllers\Internal\IdeaDashboardController::__invoke
-* @see app/Http/Controllers/Internal/IdeaDashboardController.php:12
+* @see \App\Modules\Internal\Http\Controllers\IdeaDashboardController::__invoke
+* @see app/Modules/Internal/Http/Controllers/IdeaDashboardController.php:12
 * @route '/internal'
 */
 index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -37,8 +38,8 @@ index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 
 /**
-* @see \App\Http\Controllers\Internal\IdeaDashboardController::__invoke
-* @see app/Http/Controllers/Internal/IdeaDashboardController.php:12
+* @see \App\Modules\Internal\Http\Controllers\IdeaDashboardController::__invoke
+* @see app/Modules/Internal/Http/Controllers/IdeaDashboardController.php:12
 * @route '/internal'
 */
 index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -47,8 +48,8 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 })
 
 /**
-* @see \App\Http\Controllers\Internal\IdeaDetailController::show
-* @see app/Http/Controllers/Internal/IdeaDetailController.php:13
+* @see \App\Modules\Internal\Http\Controllers\IdeaDetailController::show
+* @see app/Modules/Internal/Http/Controllers/IdeaDetailController.php:13
 * @route '/internal/ideas/{idea}'
 */
 export const show = (args: { idea: number | { id: number } } | [idea: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -62,8 +63,8 @@ show.definition = {
 } satisfies RouteDefinition<["get","head"]>
 
 /**
-* @see \App\Http\Controllers\Internal\IdeaDetailController::show
-* @see app/Http/Controllers/Internal/IdeaDetailController.php:13
+* @see \App\Modules\Internal\Http\Controllers\IdeaDetailController::show
+* @see app/Modules/Internal/Http/Controllers/IdeaDetailController.php:13
 * @route '/internal/ideas/{idea}'
 */
 show.url = (args: { idea: number | { id: number } } | [idea: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -95,8 +96,8 @@ show.url = (args: { idea: number | { id: number } } | [idea: number | { id: numb
 }
 
 /**
-* @see \App\Http\Controllers\Internal\IdeaDetailController::show
-* @see app/Http/Controllers/Internal/IdeaDetailController.php:13
+* @see \App\Modules\Internal\Http\Controllers\IdeaDetailController::show
+* @see app/Modules/Internal/Http/Controllers/IdeaDetailController.php:13
 * @route '/internal/ideas/{idea}'
 */
 show.get = (args: { idea: number | { id: number } } | [idea: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -105,8 +106,8 @@ show.get = (args: { idea: number | { id: number } } | [idea: number | { id: numb
 })
 
 /**
-* @see \App\Http\Controllers\Internal\IdeaDetailController::show
-* @see app/Http/Controllers/Internal/IdeaDetailController.php:13
+* @see \App\Modules\Internal\Http\Controllers\IdeaDetailController::show
+* @see app/Modules/Internal/Http/Controllers/IdeaDetailController.php:13
 * @route '/internal/ideas/{idea}'
 */
 show.head = (args: { idea: number | { id: number } } | [idea: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -120,6 +121,7 @@ const ideas = {
     comments: Object.assign(comments, comments),
     notes: Object.assign(notes, notes),
     status: Object.assign(status, status),
+    merge: Object.assign(merge, merge),
 }
 
 export default ideas

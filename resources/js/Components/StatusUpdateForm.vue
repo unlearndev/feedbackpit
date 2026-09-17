@@ -2,7 +2,7 @@
 import { useForm } from '@inertiajs/vue3';
 import AppTextarea from '@/Components/AppTextarea.vue';
 import AppButton from '@/Components/AppButton.vue';
-import { update } from '@/actions/App/Http/Controllers/Internal/IdeaStatusController';
+import { update } from '@/actions/App/Modules/Internal/Http/Controllers/IdeaStatusController';
 
 const props = defineProps({
     idea: {

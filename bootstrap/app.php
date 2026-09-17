@@ -17,7 +17,7 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
 
         $middleware->alias([
-            'team' => \App\Http\Middleware\EnsureTeamMember::class,
+            'team' => \App\Modules\Internal\Http\Middleware\EnsureTeamMember::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

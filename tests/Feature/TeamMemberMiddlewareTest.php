@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Middleware\EnsureTeamMember;
 use App\Models\User;
+use App\Modules\Internal\Http\Middleware\EnsureTeamMember;
 use Illuminate\Support\Facades\Route;
 
 uses(\Illuminate\Foundation\Testing\RefreshDatabase::class);

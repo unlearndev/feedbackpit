@@ -2,7 +2,7 @@
 import AppLayout from '@/Layouts/AppLayout.vue';
 import VoteButton from '@/Components/VoteButton.vue';
 import StatusBadge from '@/Components/StatusBadge.vue';
-import { show } from '@/actions/App/Http/Controllers/IdeaController';
+import { show } from '@/actions/App/Modules/Feedback/Http/Controllers/IdeaController';
 
 defineProps({
     ideas: {

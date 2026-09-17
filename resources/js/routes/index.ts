@@ -122,6 +122,50 @@ register.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 })
 
 /**
+* @see \App\Modules\Feedback\Http\Controllers\DashboardController::__invoke
+* @see app/Modules/Feedback/Http/Controllers/DashboardController.php:12
+* @route '/dashboard'
+*/
+export const dashboard = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: dashboard.url(options),
+    method: 'get',
+})
+
+dashboard.definition = {
+    methods: ["get","head"],
+    url: '/dashboard',
+} satisfies RouteDefinition<["get","head"]>
+
+/**
+* @see \App\Modules\Feedback\Http\Controllers\DashboardController::__invoke
+* @see app/Modules/Feedback/Http/Controllers/DashboardController.php:12
+* @route '/dashboard'
+*/
+dashboard.url = (options?: RouteQueryOptions) => {
+    return dashboard.definition.url + queryParams(options)
+}
+
+/**
+* @see \App\Modules\Feedback\Http\Controllers\DashboardController::__invoke
+* @see app/Modules/Feedback/Http/Controllers/DashboardController.php:12
+* @route '/dashboard'
+*/
+dashboard.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: dashboard.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Modules\Feedback\Http\Controllers\DashboardController::__invoke
+* @see app/Modules/Feedback/Http/Controllers/DashboardController.php:12
+* @route '/dashboard'
+*/
+dashboard.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+    url: dashboard.url(options),
+    method: 'head',
+})
+
+/**
 * @see \App\Http\Controllers\LandingController::__invoke
 * @see app/Http/Controllers/LandingController.php:9
 * @route '/'
@@ -206,50 +250,6 @@ about.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 */
 about.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: about.url(options),
-    method: 'head',
-})
-
-/**
-* @see \App\Http\Controllers\DashboardController::__invoke
-* @see app/Http/Controllers/DashboardController.php:11
-* @route '/dashboard'
-*/
-export const dashboard = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
-    url: dashboard.url(options),
-    method: 'get',
-})
-
-dashboard.definition = {
-    methods: ["get","head"],
-    url: '/dashboard',
-} satisfies RouteDefinition<["get","head"]>
-
-/**
-* @see \App\Http\Controllers\DashboardController::__invoke
-* @see app/Http/Controllers/DashboardController.php:11
-* @route '/dashboard'
-*/
-dashboard.url = (options?: RouteQueryOptions) => {
-    return dashboard.definition.url + queryParams(options)
-}
-
-/**
-* @see \App\Http\Controllers\DashboardController::__invoke
-* @see app/Http/Controllers/DashboardController.php:11
-* @route '/dashboard'
-*/
-dashboard.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
-    url: dashboard.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\DashboardController::__invoke
-* @see app/Http/Controllers/DashboardController.php:11
-* @route '/dashboard'
-*/
-dashboard.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
-    url: dashboard.url(options),
     method: 'head',
 })
 

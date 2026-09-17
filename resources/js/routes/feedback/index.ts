@@ -1,8 +1,8 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../wayfinder'
 import comments from './comments'
 /**
-* @see \App\Http\Controllers\IdeaController::create
-* @see app/Http/Controllers/IdeaController.php:27
+* @see \App\Modules\Feedback\Http\Controllers\IdeaController::create
+* @see app/Modules/Feedback/Http/Controllers/IdeaController.php:29
 * @route '/feedback/create'
 */
 export const create = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -16,8 +16,8 @@ create.definition = {
 } satisfies RouteDefinition<["get","head"]>
 
 /**
-* @see \App\Http\Controllers\IdeaController::create
-* @see app/Http/Controllers/IdeaController.php:27
+* @see \App\Modules\Feedback\Http\Controllers\IdeaController::create
+* @see app/Modules/Feedback/Http/Controllers/IdeaController.php:29
 * @route '/feedback/create'
 */
 create.url = (options?: RouteQueryOptions) => {
@@ -25,8 +25,8 @@ create.url = (options?: RouteQueryOptions) => {
 }
 
 /**
-* @see \App\Http\Controllers\IdeaController::create
-* @see app/Http/Controllers/IdeaController.php:27
+* @see \App\Modules\Feedback\Http\Controllers\IdeaController::create
+* @see app/Modules/Feedback/Http/Controllers/IdeaController.php:29
 * @route '/feedback/create'
 */
 create.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -35,8 +35,8 @@ create.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 
 /**
-* @see \App\Http\Controllers\IdeaController::create
-* @see app/Http/Controllers/IdeaController.php:27
+* @see \App\Modules\Feedback\Http\Controllers\IdeaController::create
+* @see app/Modules/Feedback/Http/Controllers/IdeaController.php:29
 * @route '/feedback/create'
 */
 create.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -45,8 +45,8 @@ create.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 })
 
 /**
-* @see \App\Http\Controllers\IdeaController::store
-* @see app/Http/Controllers/IdeaController.php:32
+* @see \App\Modules\Feedback\Http\Controllers\IdeaController::store
+* @see app/Modules/Feedback/Http/Controllers/IdeaController.php:34
 * @route '/feedback'
 */
 export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -60,8 +60,8 @@ store.definition = {
 } satisfies RouteDefinition<["post"]>
 
 /**
-* @see \App\Http\Controllers\IdeaController::store
-* @see app/Http/Controllers/IdeaController.php:32
+* @see \App\Modules\Feedback\Http\Controllers\IdeaController::store
+* @see app/Modules/Feedback/Http/Controllers/IdeaController.php:34
 * @route '/feedback'
 */
 store.url = (options?: RouteQueryOptions) => {
@@ -69,8 +69,8 @@ store.url = (options?: RouteQueryOptions) => {
 }
 
 /**
-* @see \App\Http\Controllers\IdeaController::store
-* @see app/Http/Controllers/IdeaController.php:32
+* @see \App\Modules\Feedback\Http\Controllers\IdeaController::store
+* @see app/Modules/Feedback/Http/Controllers/IdeaController.php:34
 * @route '/feedback'
 */
 store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -79,8 +79,8 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 })
 
 /**
-* @see \App\Http\Controllers\IdeaController::edit
-* @see app/Http/Controllers/IdeaController.php:39
+* @see \App\Modules\Feedback\Http\Controllers\IdeaController::edit
+* @see app/Modules/Feedback/Http/Controllers/IdeaController.php:41
 * @route '/feedback/{idea}/edit'
 */
 export const edit = (args: { idea: number | { id: number } } | [idea: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -94,8 +94,8 @@ edit.definition = {
 } satisfies RouteDefinition<["get","head"]>
 
 /**
-* @see \App\Http\Controllers\IdeaController::edit
-* @see app/Http/Controllers/IdeaController.php:39
+* @see \App\Modules\Feedback\Http\Controllers\IdeaController::edit
+* @see app/Modules/Feedback/Http/Controllers/IdeaController.php:41
 * @route '/feedback/{idea}/edit'
 */
 edit.url = (args: { idea: number | { id: number } } | [idea: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -127,8 +127,8 @@ edit.url = (args: { idea: number | { id: number } } | [idea: number | { id: numb
 }
 
 /**
-* @see \App\Http\Controllers\IdeaController::edit
-* @see app/Http/Controllers/IdeaController.php:39
+* @see \App\Modules\Feedback\Http\Controllers\IdeaController::edit
+* @see app/Modules/Feedback/Http/Controllers/IdeaController.php:41
 * @route '/feedback/{idea}/edit'
 */
 edit.get = (args: { idea: number | { id: number } } | [idea: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -137,8 +137,8 @@ edit.get = (args: { idea: number | { id: number } } | [idea: number | { id: numb
 })
 
 /**
-* @see \App\Http\Controllers\IdeaController::edit
-* @see app/Http/Controllers/IdeaController.php:39
+* @see \App\Modules\Feedback\Http\Controllers\IdeaController::edit
+* @see app/Modules/Feedback/Http/Controllers/IdeaController.php:41
 * @route '/feedback/{idea}/edit'
 */
 edit.head = (args: { idea: number | { id: number } } | [idea: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -147,8 +147,8 @@ edit.head = (args: { idea: number | { id: number } } | [idea: number | { id: num
 })
 
 /**
-* @see \App\Http\Controllers\IdeaController::update
-* @see app/Http/Controllers/IdeaController.php:48
+* @see \App\Modules\Feedback\Http\Controllers\IdeaController::update
+* @see app/Modules/Feedback/Http/Controllers/IdeaController.php:50
 * @route '/feedback/{idea}'
 */
 export const update = (args: { idea: number | { id: number } } | [idea: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -162,8 +162,8 @@ update.definition = {
 } satisfies RouteDefinition<["put"]>
 
 /**
-* @see \App\Http\Controllers\IdeaController::update
-* @see app/Http/Controllers/IdeaController.php:48
+* @see \App\Modules\Feedback\Http\Controllers\IdeaController::update
+* @see app/Modules/Feedback/Http/Controllers/IdeaController.php:50
 * @route '/feedback/{idea}'
 */
 update.url = (args: { idea: number | { id: number } } | [idea: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -195,8 +195,8 @@ update.url = (args: { idea: number | { id: number } } | [idea: number | { id: nu
 }
 
 /**
-* @see \App\Http\Controllers\IdeaController::update
-* @see app/Http/Controllers/IdeaController.php:48
+* @see \App\Modules\Feedback\Http\Controllers\IdeaController::update
+* @see app/Modules/Feedback/Http/Controllers/IdeaController.php:50
 * @route '/feedback/{idea}'
 */
 update.put = (args: { idea: number | { id: number } } | [idea: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -205,8 +205,8 @@ update.put = (args: { idea: number | { id: number } } | [idea: number | { id: nu
 })
 
 /**
-* @see \App\Http\Controllers\IdeaController::destroy
-* @see app/Http/Controllers/IdeaController.php:55
+* @see \App\Modules\Feedback\Http\Controllers\IdeaController::destroy
+* @see app/Modules/Feedback/Http/Controllers/IdeaController.php:57
 * @route '/feedback/{idea}'
 */
 export const destroy = (args: { idea: number | { id: number } } | [idea: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -220,8 +220,8 @@ destroy.definition = {
 } satisfies RouteDefinition<["delete"]>
 
 /**
-* @see \App\Http\Controllers\IdeaController::destroy
-* @see app/Http/Controllers/IdeaController.php:55
+* @see \App\Modules\Feedback\Http\Controllers\IdeaController::destroy
+* @see app/Modules/Feedback/Http/Controllers/IdeaController.php:57
 * @route '/feedback/{idea}'
 */
 destroy.url = (args: { idea: number | { id: number } } | [idea: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -253,8 +253,8 @@ destroy.url = (args: { idea: number | { id: number } } | [idea: number | { id: n
 }
 
 /**
-* @see \App\Http\Controllers\IdeaController::destroy
-* @see app/Http/Controllers/IdeaController.php:55
+* @see \App\Modules\Feedback\Http\Controllers\IdeaController::destroy
+* @see app/Modules/Feedback/Http/Controllers/IdeaController.php:57
 * @route '/feedback/{idea}'
 */
 destroy.delete = (args: { idea: number | { id: number } } | [idea: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -263,8 +263,8 @@ destroy.delete = (args: { idea: number | { id: number } } | [idea: number | { id
 })
 
 /**
-* @see \App\Http\Controllers\VoteController::__invoke
-* @see app/Http/Controllers/VoteController.php:11
+* @see \App\Modules\Feedback\Http\Controllers\VoteController::__invoke
+* @see app/Modules/Feedback/Http/Controllers/VoteController.php:13
 * @route '/feedback/{idea}/vote'
 */
 export const vote = (args: { idea: number | { id: number } } | [idea: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -278,8 +278,8 @@ vote.definition = {
 } satisfies RouteDefinition<["post"]>
 
 /**
-* @see \App\Http\Controllers\VoteController::__invoke
-* @see app/Http/Controllers/VoteController.php:11
+* @see \App\Modules\Feedback\Http\Controllers\VoteController::__invoke
+* @see app/Modules/Feedback/Http/Controllers/VoteController.php:13
 * @route '/feedback/{idea}/vote'
 */
 vote.url = (args: { idea: number | { id: number } } | [idea: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -311,8 +311,8 @@ vote.url = (args: { idea: number | { id: number } } | [idea: number | { id: numb
 }
 
 /**
-* @see \App\Http\Controllers\VoteController::__invoke
-* @see app/Http/Controllers/VoteController.php:11
+* @see \App\Modules\Feedback\Http\Controllers\VoteController::__invoke
+* @see app/Modules/Feedback/Http/Controllers/VoteController.php:13
 * @route '/feedback/{idea}/vote'
 */
 vote.post = (args: { idea: number | { id: number } } | [idea: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -321,8 +321,8 @@ vote.post = (args: { idea: number | { id: number } } | [idea: number | { id: num
 })
 
 /**
-* @see \App\Http\Controllers\ReactionController::__invoke
-* @see app/Http/Controllers/ReactionController.php:11
+* @see \App\Modules\Feedback\Http\Controllers\ReactionController::__invoke
+* @see app/Modules/Feedback/Http/Controllers/ReactionController.php:12
 * @route '/feedback/{idea}/reactions'
 */
 export const react = (args: { idea: number | { id: number } } | [idea: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -336,8 +336,8 @@ react.definition = {
 } satisfies RouteDefinition<["post"]>
 
 /**
-* @see \App\Http\Controllers\ReactionController::__invoke
-* @see app/Http/Controllers/ReactionController.php:11
+* @see \App\Modules\Feedback\Http\Controllers\ReactionController::__invoke
+* @see app/Modules/Feedback/Http/Controllers/ReactionController.php:12
 * @route '/feedback/{idea}/reactions'
 */
 react.url = (args: { idea: number | { id: number } } | [idea: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -369,8 +369,8 @@ react.url = (args: { idea: number | { id: number } } | [idea: number | { id: num
 }
 
 /**
-* @see \App\Http\Controllers\ReactionController::__invoke
-* @see app/Http/Controllers/ReactionController.php:11
+* @see \App\Modules\Feedback\Http\Controllers\ReactionController::__invoke
+* @see app/Modules/Feedback/Http/Controllers/ReactionController.php:12
 * @route '/feedback/{idea}/reactions'
 */
 react.post = (args: { idea: number | { id: number } } | [idea: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -379,8 +379,8 @@ react.post = (args: { idea: number | { id: number } } | [idea: number | { id: nu
 })
 
 /**
-* @see \App\Http\Controllers\IdeaController::show
-* @see app/Http/Controllers/IdeaController.php:15
+* @see \App\Modules\Feedback\Http\Controllers\IdeaController::show
+* @see app/Modules/Feedback/Http/Controllers/IdeaController.php:16
 * @route '/feedback/{idea}'
 */
 export const show = (args: { idea: number | { id: number } } | [idea: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -394,8 +394,8 @@ show.definition = {
 } satisfies RouteDefinition<["get","head"]>
 
 /**
-* @see \App\Http\Controllers\IdeaController::show
-* @see app/Http/Controllers/IdeaController.php:15
+* @see \App\Modules\Feedback\Http\Controllers\IdeaController::show
+* @see app/Modules/Feedback/Http/Controllers/IdeaController.php:16
 * @route '/feedback/{idea}'
 */
 show.url = (args: { idea: number | { id: number } } | [idea: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -427,8 +427,8 @@ show.url = (args: { idea: number | { id: number } } | [idea: number | { id: numb
 }
 
 /**
-* @see \App\Http\Controllers\IdeaController::show
-* @see app/Http/Controllers/IdeaController.php:15
+* @see \App\Modules\Feedback\Http\Controllers\IdeaController::show
+* @see app/Modules/Feedback/Http/Controllers/IdeaController.php:16
 * @route '/feedback/{idea}'
 */
 show.get = (args: { idea: number | { id: number } } | [idea: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -437,8 +437,8 @@ show.get = (args: { idea: number | { id: number } } | [idea: number | { id: numb
 })
 
 /**
-* @see \App\Http\Controllers\IdeaController::show
-* @see app/Http/Controllers/IdeaController.php:15
+* @see \App\Modules\Feedback\Http\Controllers\IdeaController::show
+* @see app/Modules/Feedback/Http/Controllers/IdeaController.php:16
 * @route '/feedback/{idea}'
 */
 show.head = (args: { idea: number | { id: number } } | [idea: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -447,8 +447,8 @@ show.head = (args: { idea: number | { id: number } } | [idea: number | { id: num
 })
 
 /**
-* @see \App\Http\Controllers\UnsubscribeController::__invoke
-* @see app/Http/Controllers/UnsubscribeController.php:12
+* @see \App\Modules\Feedback\Http\Controllers\UnsubscribeController::__invoke
+* @see app/Modules/Feedback/Http/Controllers/UnsubscribeController.php:13
 * @route '/feedback/{idea}/unsubscribe/{user}'
 */
 export const unsubscribe = (args: { idea: number | { id: number }, user: number | { id: number } } | [idea: number | { id: number }, user: number | { id: number } ], options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -462,8 +462,8 @@ unsubscribe.definition = {
 } satisfies RouteDefinition<["get","head"]>
 
 /**
-* @see \App\Http\Controllers\UnsubscribeController::__invoke
-* @see app/Http/Controllers/UnsubscribeController.php:12
+* @see \App\Modules\Feedback\Http\Controllers\UnsubscribeController::__invoke
+* @see app/Modules/Feedback/Http/Controllers/UnsubscribeController.php:13
 * @route '/feedback/{idea}/unsubscribe/{user}'
 */
 unsubscribe.url = (args: { idea: number | { id: number }, user: number | { id: number } } | [idea: number | { id: number }, user: number | { id: number } ], options?: RouteQueryOptions) => {
@@ -492,8 +492,8 @@ unsubscribe.url = (args: { idea: number | { id: number }, user: number | { id: n
 }
 
 /**
-* @see \App\Http\Controllers\UnsubscribeController::__invoke
-* @see app/Http/Controllers/UnsubscribeController.php:12
+* @see \App\Modules\Feedback\Http\Controllers\UnsubscribeController::__invoke
+* @see app/Modules/Feedback/Http/Controllers/UnsubscribeController.php:13
 * @route '/feedback/{idea}/unsubscribe/{user}'
 */
 unsubscribe.get = (args: { idea: number | { id: number }, user: number | { id: number } } | [idea: number | { id: number }, user: number | { id: number } ], options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -502,8 +502,8 @@ unsubscribe.get = (args: { idea: number | { id: number }, user: number | { id: n
 })
 
 /**
-* @see \App\Http\Controllers\UnsubscribeController::__invoke
-* @see app/Http/Controllers/UnsubscribeController.php:12
+* @see \App\Modules\Feedback\Http\Controllers\UnsubscribeController::__invoke
+* @see app/Modules/Feedback/Http/Controllers/UnsubscribeController.php:13
 * @route '/feedback/{idea}/unsubscribe/{user}'
 */
 unsubscribe.head = (args: { idea: number | { id: number }, user: number | { id: number } } | [idea: number | { id: number }, user: number | { id: number } ], options?: RouteQueryOptions): RouteDefinition<'head'> => ({

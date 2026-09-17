@@ -46,6 +46,28 @@ The `idea_status_updates` table carries a unique index, `idea_status_transition_
 
 The same transition made by a **different** team member is unaffected, as is the same team member making any other transition on that idea.
 
+## Merging duplicate ideas
+
+When the same suggestion has been submitted more than once, a team member can merge the duplicate into the idea they want to keep. The merge form sits on the idea detail page, below the status controls: a dropdown listing every **other** idea (passed to the page as `mergeTargets` — id and title only, ordered by title) and a **Merge** button.
+
+`POST /internal/ideas/{idea}/merge` (`internal.ideas.merge.store`) takes `target_id`, the idea being kept. The idea in the URL is the duplicate being merged away, and for it the controller:
+
+- Reassigns **all** of its comments to the target, internal notes included.
+- Reassigns its reactions to the target.
+- Attaches each of its voters to the target.
+- Stores the target in `merged_into_id` (exposed on the model as the `mergedInto` relationship).
+- Sets its status to **Declined**.
+
+The team member is redirected to the target idea with "Idea merged into ...".
+
+### Things to know
+
+- The status change is written straight to the idea. Unlike a status change made through the status pipeline, no `IdeaStatusUpdate` record is created and **no subscribers are emailed**, so the merge leaves no trace in the idea's history and people following the duplicate are not told about it.
+- Votes and reactions are moved without checking for overlap. `idea_vote` is unique across `idea_id` and `user_id`, and `reactions` is unique across `idea_id`, `user_id`, and `emoji`. If the same person voted on both ideas, or left the same emoji on both, the merge fails with a database error (reported to Sentry — see [Error monitoring](error-monitoring.md)) rather than an inline message.
+- The merge is not wrapped in a transaction, so a failure part-way through leaves the earlier steps applied — comments and reactions may already have moved to the target while the votes did not.
+- `target_id` is not validated. The dropdown's placeholder option submits an empty value, and an empty or unknown id fails with an error rather than a validation message. Nothing stops an idea being merged into itself or into an idea that has already been merged away.
+- Merging does not hide or redirect the duplicate. It still appears (as Declined) on the public dashboard, in the internal idea list, and in the merge dropdown of other ideas — but its comments, reactions, and votes now live on the target. `merged_into_id` is not exposed by `IdeaResource`, so no page links a merged idea to the idea it was merged into.
+
 ## Comments and internal notes
 
 Team members can post to either thread on an idea:

@@ -8,7 +8,7 @@ import StatusBadge from '@/Components/StatusBadge.vue';
 import CommentCard from '@/Components/CommentCard.vue';
 import CommentForm from '@/Components/CommentForm.vue';
 import { dashboard } from '@/routes';
-import { store } from '@/actions/App/Http/Controllers/CommentController';
+import { store } from '@/actions/App/Modules/Feedback/Http/Controllers/CommentController';
 import { store as subscribe, destroy as unsubscribe } from '@/routes/account/notifications';
 import { edit, destroy } from '@/routes/feedback';
 

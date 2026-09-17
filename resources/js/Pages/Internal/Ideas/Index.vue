@@ -1,7 +1,7 @@
 <script setup>
 import InternalLayout from '@/Layouts/InternalLayout.vue';
 import StatusBadge from '@/Components/StatusBadge.vue';
-import { show } from '@/actions/App/Http/Controllers/Internal/IdeaDetailController';
+import { show } from '@/actions/App/Modules/Internal/Http/Controllers/IdeaDetailController';
 
 defineProps({
     ideas: {

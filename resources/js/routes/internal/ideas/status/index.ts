@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../../wayfinder'
 /**
-* @see \App\Http\Controllers\Internal\IdeaStatusController::update
-* @see app/Http/Controllers/Internal/IdeaStatusController.php:17
+* @see \App\Modules\Internal\Http\Controllers\IdeaStatusController::update
+* @see app/Modules/Internal/Http/Controllers/IdeaStatusController.php:17
 * @route '/internal/ideas/{idea}/status'
 */
 export const update = (args: { idea: number | { id: number } } | [idea: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
@@ -15,8 +15,8 @@ update.definition = {
 } satisfies RouteDefinition<["patch"]>
 
 /**
-* @see \App\Http\Controllers\Internal\IdeaStatusController::update
-* @see app/Http/Controllers/Internal/IdeaStatusController.php:17
+* @see \App\Modules\Internal\Http\Controllers\IdeaStatusController::update
+* @see app/Modules/Internal/Http/Controllers/IdeaStatusController.php:17
 * @route '/internal/ideas/{idea}/status'
 */
 update.url = (args: { idea: number | { id: number } } | [idea: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -48,8 +48,8 @@ update.url = (args: { idea: number | { id: number } } | [idea: number | { id: nu
 }
 
 /**
-* @see \App\Http\Controllers\Internal\IdeaStatusController::update
-* @see app/Http/Controllers/Internal/IdeaStatusController.php:17
+* @see \App\Modules\Internal\Http\Controllers\IdeaStatusController::update
+* @see app/Modules/Internal/Http/Controllers/IdeaStatusController.php:17
 * @route '/internal/ideas/{idea}/status'
 */
 update.patch = (args: { idea: number | { id: number } } | [idea: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
