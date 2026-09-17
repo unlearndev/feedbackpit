@@ -2,6 +2,7 @@ import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefa
 import comments from './comments'
 import notes from './notes'
 import status from './status'
+import merge from './merge'
 /**
 * @see \App\Http\Controllers\Internal\IdeaDashboardController::__invoke
 * @see app/Http/Controllers/Internal/IdeaDashboardController.php:12
@@ -120,6 +121,7 @@ const ideas = {
     comments: Object.assign(comments, comments),
     notes: Object.assign(notes, notes),
     status: Object.assign(status, status),
+    merge: Object.assign(merge, merge),
 }
 
 export default ideas

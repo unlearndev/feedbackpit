@@ -16,6 +16,9 @@ class IdeaDetailController extends Controller
 
         return inertia('Internal/Ideas/Show', [
             'idea' => new IdeaResource($idea),
+            'mergeTargets' => Idea::where('id', '!=', $idea->id)
+                ->orderBy('title')
+                ->get(['id', 'title']),
             'comments' => CommentResource::collection(
                 $idea->publicComments()->with('user')->oldest()->get()
             ),
