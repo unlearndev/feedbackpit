@@ -9,3 +9,4 @@ Artisan::command('inspire', function () {
 })->purpose('Display an inspiring quote');
 
 Schedule::command('disposable:update')->weekly();
+Schedule::command('votes:recount')->dailyAt('03:00');
