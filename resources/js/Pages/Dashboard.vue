@@ -1,4 +1,5 @@
 <script setup>
+import { Link } from '@inertiajs/vue3';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import VoteButton from '@/Components/VoteButton.vue';
 import StatusBadge from '@/Components/StatusBadge.vue';
@@ -6,7 +7,7 @@ import { show } from '@/actions/App/Http/Controllers/IdeaController';
 
 defineProps({
     ideas: {
-        type: Array,
+        type: Object,
         required: true,
     },
 });
@@ -16,13 +17,13 @@ defineProps({
     <AppLayout>
         <h1 class="text-2xl font-semibold tracking-tight text-neutral-900 mb-6">Dashboard</h1>
 
-        <div v-if="ideas.length === 0" class="rounded-none border-2 border-dashed border-black/[0.06] p-12 text-center">
+        <div v-if="ideas.data.length === 0" class="rounded-none border-2 border-dashed border-black/[0.06] p-12 text-center">
             <p class="text-sm text-neutral-500">No feedback has been submitted yet.</p>
         </div>
 
         <div v-else class="space-y-3">
             <div
-                v-for="idea in ideas"
+                v-for="idea in ideas.data"
                 :key="idea.id"
                 class="flex items-center gap-4 rounded-none border border-black/[0.06] bg-white p-4 hover:border-black/[0.06] transition-colors"
             >
@@ -36,5 +37,27 @@ defineProps({
                 <StatusBadge :status="idea.status" class="flex-shrink-0" />
             </div>
         </div>
+
+        <nav v-if="ideas.meta.last_page > 1" class="mt-6 flex items-center justify-between text-sm">
+            <Link
+                v-if="ideas.links.prev"
+                :href="ideas.links.prev"
+                class="text-neutral-900 hover:text-neutral-600 transition-colors"
+            >
+                Previous
+            </Link>
+            <span v-else />
+
+            <span class="text-neutral-500">Page {{ ideas.meta.current_page }} of {{ ideas.meta.last_page }}</span>
+
+            <Link
+                v-if="ideas.links.next"
+                :href="ideas.links.next"
+                class="text-neutral-900 hover:text-neutral-600 transition-colors"
+            >
+                Next
+            </Link>
+            <span v-else />
+        </nav>
     </AppLayout>
 </template>
