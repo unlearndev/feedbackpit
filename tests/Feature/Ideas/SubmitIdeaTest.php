@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Idea;
 use App\Models\User;
 
 uses(\Illuminate\Foundation\Testing\RefreshDatabase::class);
@@ -56,10 +57,12 @@ it('auto-subscribes the author to their idea', function () {
     expect($idea->subscribers()->where('users.id', $user->id)->exists())->toBeTrue();
 });
 
-it('redirects to home with a flash message after submission', function () use ($validPayload) {
-    $this->actingAs(User::factory()->create())
-        ->post(route('feedback.store'), $validPayload())
-        ->assertRedirect(route('dashboard'))
+it('redirects to the new idea with a flash message after submission', function () use ($validPayload) {
+    $response = $this->actingAs(User::factory()->create())
+        ->post(route('feedback.store'), $validPayload());
+
+    $response
+        ->assertRedirect(route('feedback.show', Idea::sole()))
         ->assertSessionHas('status');
 });
 

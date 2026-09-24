@@ -8,7 +8,7 @@ Signed-in users create feedback from the `Ideas/Create` page.
 
 - `POST /feedback` (`feedback.store`) validates `title` (required, max 255) and `description` (required, max 5000).
 - The idea is created through the author's relationship (`$request->user()->ideas()->create(...)`), so the author is set automatically.
-- The user is redirected to the dashboard with "Your feedback has been submitted!"
+- The user is redirected to their new idea's page with "Your feedback has been submitted!"
 
 New ideas start with the default status defined by the database (see [Internal team dashboard](internal-dashboard.md) for the status pipeline).
 
