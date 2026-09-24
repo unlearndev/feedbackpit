@@ -34,6 +34,10 @@ defineProps({
                     <p class="text-sm text-neutral-500 truncate">{{ idea.description }}</p>
                 </div>
 
+                <span class="flex-shrink-0 text-xs text-neutral-400">
+                    {{ idea.comments_count }} {{ idea.comments_count === 1 ? 'comment' : 'comments' }}
+                </span>
+
                 <StatusBadge :status="idea.status" class="flex-shrink-0" />
             </div>
         </div>

@@ -11,6 +11,7 @@ class DashboardController extends Controller
     public function __invoke(): Response
     {
         $ideas = Idea::with('user', 'voters:id', 'subscribers:id')
+            ->withCount(['publicComments as comments_count'])
             ->orderByDesc('votes')
             ->paginate(12);
 

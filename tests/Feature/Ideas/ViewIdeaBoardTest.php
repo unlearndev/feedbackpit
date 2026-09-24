@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Comment;
 use App\Models\Idea;
 use App\Models\User;
 
@@ -74,6 +75,17 @@ it('includes the votes for each idea', function () {
     $this->get(route('dashboard'))
         ->assertInertia(fn ($page) => $page
             ->where('ideas.data.0.votes', 5)
+        );
+});
+
+it('includes the public comment count for each idea', function () {
+    $idea = Idea::factory()->for(User::factory())->create();
+    Comment::factory()->for($idea)->for(User::factory())->count(2)->create();
+    Comment::factory()->internal()->for($idea)->for(User::factory())->create();
+
+    $this->get(route('dashboard'))
+        ->assertInertia(fn ($page) => $page
+            ->where('ideas.data.0.comments_count', 2)
         );
 });
 
