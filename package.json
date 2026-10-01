@@ -23,6 +23,7 @@
         "@inertiajs/vue3": "^2.3.17",
         "@vitejs/plugin-vue": "^6.0.4",
         "@vueuse/core": "^13.9.0",
+        "marked": "^16.4.2",
         "vue": "^3.5.29"
     }
 }

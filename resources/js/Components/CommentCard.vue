@@ -1,5 +1,6 @@
 <script setup>
 import StaffBadge from '@/Components/StaffBadge.vue';
+import { marked } from 'marked';
 
 defineProps({
     comment: {
@@ -29,6 +30,6 @@ const formatDate = (dateString) => {
             <StaffBadge v-if="comment.user.is_team_member" />
             <span class="text-xs text-neutral-400">{{ formatDate(comment.created_at) }}</span>
         </div>
-        <p class="text-sm text-neutral-700 whitespace-pre-line">{{ comment.body }}</p>
+        <div class="prose prose-sm text-neutral-700" v-html="marked.parse(comment.body)" />
     </div>
 </template>
