@@ -9,6 +9,7 @@ import NoteForm from '@/Components/NoteForm.vue';
 import MergeIdeaForm from '@/Components/MergeIdeaForm.vue';
 import { store as storeComment } from '@/actions/App/Http/Controllers/Internal/CommentController';
 import { store as storeNote } from '@/actions/App/Http/Controllers/Internal/NoteController';
+import { useClipboard } from '@vueuse/core';
 
 defineProps({
     idea: {
@@ -28,6 +29,9 @@ defineProps({
         default: () => [],
     },
 });
+
+const { copy, copied } = useClipboard();
+const pageUrl = window.location.href;
 
 const formatDate = (dateString) => {
     return new Date(dateString).toLocaleDateString('en-US', {
@@ -56,6 +60,9 @@ const formatDate = (dateString) => {
             <div class="flex items-center gap-4 text-xs text-neutral-400 mb-6">
                 <span>Submitted by {{ idea.user.name }} on {{ formatDate(idea.created_at) }}</span>
                 <span>{{ idea.votes }} {{ idea.votes === 1 ? 'vote' : 'votes' }}</span>
+                <button type="button" class="hover:text-neutral-900 transition-colors" @click="copy(pageUrl)">
+                    {{ copied ? 'Copied' : 'Copy link' }}
+                </button>
             </div>
 
             <p class="text-neutral-700 whitespace-pre-line">{{ idea.description }}</p>
