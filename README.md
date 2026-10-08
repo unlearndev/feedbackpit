@@ -51,56 +51,6 @@ composer analyse   # Static analysis (Larastan)
 composer test      # Tests (Pest)
 ```
 
-## Login Flow
+## Claude Code Skills
 
-Login is handled by Laravel Fortify. This is the path a sign-in takes from the form to the redirect.
-
-```text
-╭─ 👆 CLICK ──────────────────────────────────────────
-│  "Sign In" posts email + password
-│  › useForm() submit(), password reset onFinish
-│  resources/js/pages/Auth/Login.vue:13
-╰──────┬─────────────────────────────────────────────
-       │  POST /login {email, password} · login.store
-       ▼
-╭─ 🔒 GUARD ──────────────────────────────────────────
-│  Guests only, 5 tries a minute per email + IP
-│  › guest:web, throttle:login (fortify.limiters)
-│  app/Providers/FortifyServiceProvider.php:43
-╰──────┬─────────────────────────────────────────────
-       │
-       ├──✗──▶ 6th try in a minute: 429 Too Many
-       │       app/Providers/FortifyServiceProvider.php:46
-       ▼ ✓
-┌┄ 📦 VENDOR · laravel/fortify ┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄
-┆  validate → lowercase email → guard->attempt()
-┆  › LoginRequest → CanonicalizeUsername →
-┆    AttemptToAuthenticate; remember always false
-┆  Http/Controllers/AuthenticatedSessionController.php:58
-└┄┄┄┄┄┄┬┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄
-       │  credentials {email, password}
-       ▼
-╭─ 💾 DATABASE ───────────────────────────────────────
-│  Find the user by email, check the password hash
-│  › eloquent provider, App\Models\User
-│  › users.email, users.password
-│  config/auth.php:65
-╰──────┬─────────────────────────────────────────────
-       │
-       ├──✗──▶ no match: auth.failed on email,
-       │       shown under email field (Login.vue:32)
-       │       Actions/AttemptToAuthenticate.php:101
-       ▼ ✓
-┌┄ 📦 VENDOR · laravel/fortify ┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄
-┆  regenerate session → clear rate limit
-┆  Actions/PrepareAuthenticatedSession.php:37
-└┄┄┄┄┄┄┬┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄
-       ▼
-╭─ 🏁 RESPONSE ───────────────────────────────────────
-│  Redirect to intended page, else /dashboard
-│  › 302 from LoginResponse, fortify.redirects.login
-│  config/fortify.php:79
-╰────────────────────────────────────────────────────
-```
-
-_╭─ app code · ┌┄ vendor (paths relative to `vendor/laravel/fortify/src/`) · ✗ failure branch · ✓ main path_
+- **`/trace <question>`**: answers a question about how something works by tracing one journey through the code and drawing it as a flow diagram, with the file and line for each step. For example, `/trace login flow`.
