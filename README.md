@@ -50,7 +50,3 @@ npm run lint:fix   # JS/Vue linting (ESLint)
 composer analyse   # Static analysis (Larastan)
 composer test      # Tests (Pest)
 ```
-
-## Claude Code Skills
-
-- **`/trace <question>`**: answers a question about how something works by tracing one journey through the code and drawing it as a flow diagram, with the file and line for each step. For example, `/trace login flow`.

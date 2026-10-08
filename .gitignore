@@ -1,8 +1,5 @@
 /.claude/*
 !/.claude/agents/
-!/.claude/skills/
-/.claude/skills/*
-!/.claude/skills/trace/
 *.log
 .DS_Store
 .env
